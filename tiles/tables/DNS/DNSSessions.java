@@ -1,0 +1,117 @@
+package test_java.tiles.tables.DNS;
+
+import test_java.tiles.tables.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import test_java.tiles.common.Common;
+
+public class DNSSessions extends Table {
+
+    //**************************************************************************
+
+    public DNSSessions() {
+
+        this.isSingleLine = true;
+        this.title = "DNS Sessions";
+        this.window = "0.0";
+        this.prefix = "DnsFlow";
+        this.fields = new String [] {""};
+        this.filters = new String [] {};
+        this.columns = new LinkedHashMap<String, HashMap<String, Object>>() {{
+            put("Start Time", new HashMap<String, Object>() {{
+                put("order", 0);
+                put("startTime", "");
+            }});
+            put("DNS Type", new HashMap<String, Object>() {{
+                put("order", 1);
+                put("compare", "true");
+            }});
+            put("Unknown", new HashMap<String, Object>() {{
+                put("order", 2);
+            }});
+            put("Domain Name", new HashMap<String, Object>() {{
+                put("order", 3);
+                put("compare", "true");
+            }});
+            put("Resolved IP", new HashMap<String, Object>() {{
+                put("order", 4);
+                put("compare", "true");
+            }});
+            put("Unknown", new HashMap<String, Object>() {{
+                put("order", 5);
+            }});
+            put("Unknown", new HashMap<String, Object>() {{
+                put("order", 6);
+            }});
+            put("DNS Response Code", new HashMap<String, Object>() {{
+                put("order", 7);
+                put("compare", "true");
+            }});
+            put("Unknown", new HashMap<String, Object>() {{
+                put("order", 8);
+            }});
+            put("Client", new HashMap<String, Object>() {{
+                put("order", 9);
+                put("filter", new String [] {
+                    "host {{value}}",
+                });
+            }});
+            put("Destination", new HashMap<String, Object>() {{
+                put("order", 10);
+                put("filter", new String [] {
+                    "host {{value}}",
+                });
+            }});
+            put("Client Port", new HashMap<String, Object>() {{
+                put("order", 11);
+                put("filter", new String [] {
+                    "port {{value}}",
+                });
+            }});
+            put("Server Port", new HashMap<String, Object>() {{
+                put("order", 12);
+                put("filter", new String [] {
+                    "app_port {{value}}",
+                });
+            }});
+            put("Unknown", new HashMap<String, Object>() {{
+                put("order", 13);
+            }});
+            put("DNS TTL Mean Value", new HashMap<String, Object>() {{
+                put("order", 14);
+                put("compare", "number");
+            }});
+            put("DNS Number of Records", new HashMap<String, Object>() {{
+                put("order", 15);
+                put("compare", "number");
+            }});
+            put("Unknown", new HashMap<String, Object>() {{
+                put("order", 16);
+            }});
+            put("RDNS Response Data	", new HashMap<String, Object>() {{
+                put("order", 17);
+                put("compare", "true");
+            }});
+            put("Stop Time", new HashMap<String, Object>() {{
+                put("order", 18);
+                put("stopTime", "+ 1 μs");
+            }});
+            put("Unknown", new HashMap<String, Object>() {{
+                put("order", 19);
+            }});
+        }};
+    }
+
+    //**************************************************************************
+
+    @Override
+    protected String getRowFilter(HashMap<String, Object> data) {
+
+        data.put("columns", this.columns);
+
+        return Common.getRowFilter(data);
+    }
+
+    //**************************************************************************
+
+}
