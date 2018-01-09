@@ -864,7 +864,7 @@ public abstract class Tile {
             }};
 
             if (this.checkNot == true) {
-//                this.drillFieldNot(params);
+                this.drillFieldNot(params);
             }
 
             params.remove("parentLines");
