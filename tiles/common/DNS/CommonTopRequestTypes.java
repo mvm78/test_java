@@ -34,6 +34,7 @@ public class CommonTopRequestTypes extends Common {
                 put("filter", new String [] {
                     "dns.type \"{{value}}\"",
                 });
+                put("cellDrill", new String [] {});
             }});
         }};
     }

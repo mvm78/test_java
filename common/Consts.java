@@ -9,6 +9,7 @@ public final class Consts  {
     public static final String BRIGHT_MAGENTA = (char)27 + "[35;1m";
     public static final String MAGENTA = (char)27 + "[35m";
     public static final String DARK_GREEN = (char)27 + "[32;1;2m";
+    public static final String DARK_GREY = (char)27 + "[40;1m";
     public static final String RESET_COLOR = (char)27 + "[0m";
 
 }

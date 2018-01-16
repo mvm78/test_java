@@ -58,21 +58,21 @@ public class DatabaseSessions extends Table {
             }});
             put("Query Type", new HashMap<String, Object>() {{
                 put("order", 8);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "querytype \"{{value}}\"",
                 });
                 put("compare", "true");
             }});
             put("Query Status", new HashMap<String, Object>() {{
                 put("order", 9);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "querystatus \"{{value}}\""
                 });
                 put("compare", "true");
             }});
             put("Query", new HashMap<String, Object>() {{
                 put("order", 10);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "query \"{{value}}\"",
                 });
                 put("compare", "true");

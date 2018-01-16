@@ -3,6 +3,7 @@ package test_java.tiles.tables.Database;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicReference;
 import test_java.common.Consts;
 import test_java.common.Util;
 import test_java.reports.Report;
@@ -39,8 +40,6 @@ public class DatabaseTopVLAN extends Table {
 
         data.put("columns", this.columns);
 
-        String line;
-        String result = "";
         String cmd = "/usr/local/mercury/bin/agg" +
                 report.getCmdAppliance() +
                 report.getCmdTime() +
@@ -48,29 +47,33 @@ public class DatabaseTopVLAN extends Table {
                 " q '" + Common.getRowFilter(data) + "'" +
                 " w 0.0";
 
-        BufferedReader results = this.getQueryResults(cmd);
+        AtomicReference<String> result = new AtomicReference<>("");
 
-        try {
-            while ((line = results.readLine()) != null) {
+        try (BufferedReader results = this.getQueryResults(cmd)) {
+            results.lines()
+                    .filter(line -> {
 
-                line = line.trim();
+                        String [] split = Util.split(line.trim(), this.getSplitChar());
 
-                String [] split = Util.split(line, " ");
+                        return Util.getBufferLineFilter(split);
+                    })
+                    .forEach(line -> {
 
-                if (split[0].equals("#I;") || split[0].equals("window")) {
-                    continue;
-                }
+                        String [] split = Util.split(line.trim(), this.getSplitChar());
 
-                result += result.isEmpty() ? "" : " or ";
-                result += "(host " + split[1] + " and port " + split[3] +
-                        " and host " + split[2] + " and app_port " + split[4] + ")";
-            }
+                        String filter = result.get().isEmpty() ? "" : " or ";
+
+                        filter += "(host " + split[1] + " and port " + split[3] + " and" +
+                                  " host " + split[2] + " and app_port " + split[4] + ")";
+
+                        result.set(result.get() + filter);
+                    });
         } catch (IOException e) {
             System.err.println(Consts.BRIGHT_RED + "Error reading query file");
             System.exit(1);
         }
 
-        return result;
+        return result.toString();
     }
 
     //**************************************************************************

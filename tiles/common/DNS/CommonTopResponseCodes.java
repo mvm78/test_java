@@ -34,6 +34,7 @@ public class CommonTopResponseCodes extends Common {
                 put("filter", new String [] {
                     "dns.rcode \"{{value}}\"",
                 });
+                put("cellDrill", new String [] {});
             }});
         }};
     }

@@ -1,11 +1,8 @@
 package test_java.common;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.*;
 
 import test_java.tiles.Tile;
 
@@ -13,15 +10,25 @@ public class Util {
 
     //**************************************************************************
 
-    public static void debugOutput(Tile tile, String finalCmd, String parentLine) {
+    @SuppressWarnings("unchecked")
+    public static void debugOutput(HashMap<String, Object> data) {
+
+        Tile tile = (Tile)data.get("tile");
+        String finalCmd = (String)data.get("finalCmd");
+        List<String []> lines = (List<String []>)((ArrayList<String []>)data.get("lines")).clone();
+        String parentLine = (String)data.get("parentLine");
+        boolean skipCompare = data.get("skipCompare") == null ? true :
+                (boolean)data.get("skipCompare");
 
         if (tile.getDebug() == 0) {
             return;
         }
 
+        String resetColor = Consts.RESET_COLOR;
+
         if (parentLine.isEmpty()) {
-            System.out.println(Consts.RESET_COLOR); // empty line
-            System.out.println(Consts.BRIGHT_MAGENTA + tile.getTitle() + ":" + Consts.RESET_COLOR);
+            System.out.println(resetColor); // empty line
+            System.out.println(Consts.BRIGHT_MAGENTA + tile.getTitle() + ":" + resetColor);
             System.out.println(Consts.MAGENTA + finalCmd);
         } else {
 
@@ -36,31 +43,21 @@ public class Util {
             return;
         }
 
-        String line;
-        boolean isEmpty = true;
-
-        BufferedReader results = tile.getQueryResults(finalCmd);
-
-        try {
-            while ((line = results.readLine()) != null) {
-
-                line = line.trim();
-                isEmpty = false;
-
-                String lineColor = Util.getLineColor(line, parentLine);
-
-                System.out.println(lineColor + "\t" + line + Consts.RESET_COLOR);
-            }
-        } catch (IOException e) {
-            System.err.println(Consts.BRIGHT_RED + "Error reading query file");
-            System.exit(1);
-        }
-
-        if (isEmpty) {
+        if (lines.isEmpty()) {
             System.out.println(Consts.RED + "\t" + "NO DATA");
+        } else {
+            lines.forEach(split -> {
+
+                    String line = String.join(tile.getSplitChar(), split);
+
+                    String lineColor = skipCompare ? Consts.DARK_GREY :
+                            Util.getLineColor(line, parentLine);
+
+                    System.out.println(resetColor + lineColor + "\t" + line + resetColor);
+                });
         }
 
-        System.out.println(Consts.RESET_COLOR);
+        System.out.println(resetColor);
     }
 
     //**************************************************************************
@@ -103,7 +100,7 @@ public class Util {
 
     public static String getTimeString(String dateTime) {
 
-        HashMap<String, Long> parsedTime = Util.getParsedTime(dateTime);
+        Map<String, Long> parsedTime = Util.getParsedTime(dateTime);
 
         Long unixTime = parsedTime.get("unixTime") / 1000;
         Long ms = parsedTime.get("ms");
@@ -115,7 +112,7 @@ public class Util {
 
     //**************************************************************************
 
-    protected static HashMap<String, Long> getParsedTime(String dateTime) {
+    private static Map<String, Long> getParsedTime(String dateTime) {
 
         Long unixValue = 0L;
         String milliseconds = "";
@@ -157,8 +154,8 @@ public class Util {
 
     public static float getTimeInterval(String beginTime, String endTime) {
 
-        HashMap<String, Long> begin = Util.getParsedTime(beginTime);
-        HashMap<String, Long> end = Util.getParsedTime(endTime);
+        Map<String, Long> begin = Util.getParsedTime(beginTime);
+        Map<String, Long> end = Util.getParsedTime(endTime);
 
         Long beginUnixTime = begin.get("unixTime") + begin.get("ms");
         Long endUnixTime = end.get("unixTime") + end.get("ms");
@@ -197,6 +194,13 @@ public class Util {
 //       $          - Till the end  (This is necessary, else every comma will satisfy the condition)
 //    )
         return line.split(pattern, -1);
+    }
+
+    //**************************************************************************
+
+    public static boolean getBufferLineFilter(String [] line) {
+
+        return ! line[0].equals("#I;") && ! line[0].equals("window");
     }
 
     //**************************************************************************

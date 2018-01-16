@@ -33,6 +33,7 @@ public class CommonTopQueryStatus extends Common {
                 put("filter", new String [] {
                     "querystatus \"{{value}}\"",
                 });
+                put("cellDrill", new String [] {});
             }});
         }};
     }

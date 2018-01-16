@@ -28,21 +28,21 @@ public class WebSessions extends Table {
             }});
             put("Request Method", new HashMap<String, Object>() {{
                 put("order", 2);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "method \"{{value}}\"",
                 });
                 put("compare", "true");
             }});
             put("Response Phrase", new HashMap<String, Object>() {{
                 put("order", 3);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "reason \"{{value}}\"",
                 });
                 put("compare", "true");
             }});
             put("Status Code", new HashMap<String, Object>() {{
                 put("order", 4);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "statusnum {{value}}",
                 });
                 put("compare", "true");
@@ -53,38 +53,38 @@ public class WebSessions extends Table {
             }});
             put("Request Version", new HashMap<String, Object>() {{
                 put("order", 6);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "version {{value}}",
                 });
                 put("compare", "true");
             }});
             put("Host", new HashMap<String, Object>() {{
                 put("order", 7);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "hosthttp \"{{value}}\"",
                 });
             }});
             put("Request URI", new HashMap<String, Object>() {{
                 put("order", 8);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "urihttp \"{{value}}\"",
                 });
             }});
             put("Referer", new HashMap<String, Object>() {{
                 put("order", 9);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "referer \"{{value}}\"",
                 });
             }});
             put("User-Agent", new HashMap<String, Object>() {{
                 put("order", 10);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "useragent \"{{value}}\"",
                 });
             }});
             put("X-Forwarded-For", new HashMap<String, Object>() {{
                 put("order", 11);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "xff \"{{value}}\"",
                 });
             }});
@@ -118,7 +118,7 @@ public class WebSessions extends Table {
             }});
             put("VLAN", new HashMap<String, Object>() {{
                 put("order", 17);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "vlan {{value}}",
                 });
             }});

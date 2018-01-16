@@ -33,6 +33,7 @@ public class CommonTopTypes extends Common {
                 put("filter", new String [] {
                     "dbtype \"{{value}}\"",
                 });
+                put("cellDrill", new String [] {});
             }});
         }};
     }

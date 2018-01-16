@@ -18,8 +18,8 @@ public abstract class Report implements Cloneable {
     protected HashMap<String, Boolean> skipTiles = new HashMap<>();
     protected String tilesFolder = "";
 
-    private final String beginTime = "12:00:00 01/04/2018";
-    private final String endTime = "12:00:10 01/04/2018";
+    private final String beginTime = "11:40:00 01/16/2018";
+    private final String endTime = "11:41:00 01/16/2018";
     private final String hashKey = "1";
     private final String appliance = "Appliance-PM_Perf";
     private final String pcap = "em1";
@@ -27,7 +27,7 @@ public abstract class Report implements Cloneable {
     protected String appPath;
     protected String refresh;
 
-    protected HashMap<String, String> tiles;
+    protected Map<String, String> tiles;
     protected HashMap<String, String []> tallyCheck;
 
     //**************************************************************************
@@ -116,7 +116,7 @@ public abstract class Report implements Cloneable {
 
     //**************************************************************************
 
-    protected LinkedHashMap<String, HashMap<String, HashMap<String, Object>>> runTileTests(
+    protected LinkedHashMap<String, Map<String, Map<String, Object>>> runTileTests(
             String [] classNames
     ) {
 
@@ -125,7 +125,7 @@ public abstract class Report implements Cloneable {
 
     //**************************************************************************
 
-    protected LinkedHashMap<String, HashMap<String, HashMap<String, Object>>> runTileTests(
+    protected LinkedHashMap<String, Map<String, Map<String, Object>>> runTileTests(
             String [] classNames,
             int drillLevel,
             String filter
@@ -133,7 +133,7 @@ public abstract class Report implements Cloneable {
 
         float timeInterval = Util.getTimeInterval(this.beginTime, this.endTime);
 
-        LinkedHashMap<String, HashMap<String, HashMap<String, Object>>> results =
+        LinkedHashMap<String, Map<String, Map<String, Object>>> results =
                 new LinkedHashMap<>();
 
         for (String className: classNames) {
@@ -143,7 +143,7 @@ public abstract class Report implements Cloneable {
             if (tile != null) {
 
                 String classTrueName = tile.getTrueName();
-                HashMap<String, HashMap<String, Object>> tileResults =
+                Map<String, Map<String, Object>> tileResults =
                         this.runTileTest(tile, filter, drillLevel);
 
                 results.put(classTrueName, tileResults);
@@ -156,7 +156,7 @@ public abstract class Report implements Cloneable {
     //**************************************************************************
 
     @SuppressWarnings("unchecked")
-    private HashMap<String, HashMap<String, Object>> runTileTest(
+    private Map<String, Map<String, Object>> runTileTest(
             Tile tile,
             String filter,
             int drillLevel
@@ -164,18 +164,18 @@ public abstract class Report implements Cloneable {
 
         Report report = this;
 
-        String tileTitle = tile.getTitle();
-        HashMap<String, HashMap<String, Object>> result = tile.test(new HashMap<String, Object>() {{
+        Map<String, Object> params = new HashMap<String, Object>() {{
             put("report", report);
             put("filter", filter);
             put("drillLevel", drillLevel);
-        }});
+        }};
 
-        result.put("info", new HashMap<String, Object>() {{
-            put("title", tileTitle);
-        }});
+        Map<String, Map<String, Object>> result = tile.test(params);
 
         result.put("columns", (HashMap)tile.getColumns());
+        result.put("info", new HashMap<String, Object>() {{
+            put("title", tile.getTitle());
+        }});
 
         return result;
     }
@@ -206,7 +206,7 @@ public abstract class Report implements Cloneable {
 
         String [] classNames = testTiles.toArray(new String[0]);
 
-        LinkedHashMap<String, HashMap<String, HashMap<String, Object>>> results =
+        LinkedHashMap<String, Map<String, Map<String, Object>>> results =
                 this.runTileTests(classNames, drillLevel, filter);
 
         this.checkTally(results, filter);
@@ -216,7 +216,7 @@ public abstract class Report implements Cloneable {
 
     @SuppressWarnings("unchecked")
     private void checkTally(
-            LinkedHashMap<String, HashMap<String, HashMap<String, Object>>> results,
+            LinkedHashMap<String, Map<String, Map<String, Object>>> results,
             String filter
     ) {
 
@@ -226,7 +226,7 @@ public abstract class Report implements Cloneable {
 
         this.tallyCheck.forEach((compareToTile, compareTiles) -> {
             // loop through parent ("compareTo" tiles)
-            HashMap<String, HashMap<String, Object>> compareToData =
+            Map<String, Map<String, Object>> compareToData =
                     results.get(compareToTile);
 
             if (compareToData == null) {
@@ -240,7 +240,7 @@ public abstract class Report implements Cloneable {
 
             for (byte count=0; count<compareTiles.length; count++) {
                 // loop through child ("compare") tiles
-                HashMap<String, HashMap<String, Object>> compareTile =
+                Map<String, Map<String, Object>> compareTile =
                         (HashMap)results.get(compareTiles[count]);
 
                 if (compareTile == null) {
@@ -257,8 +257,8 @@ public abstract class Report implements Cloneable {
 
     @SuppressWarnings("unchecked")
     private void compareTallies(
-            HashMap<String, HashMap<String, Object>> compareToData,
-            HashMap<String, HashMap<String, Object>> compareTile,
+            Map<String, Map<String, Object>> compareToData,
+            Map<String, Map<String, Object>> compareTile,
             AtomicBoolean isCompareToPrined,
             String compareToTitle,
             String filter

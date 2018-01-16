@@ -33,6 +33,7 @@ public class CommonTopQueryTypes extends Common {
                 put("filter", new String [] {
                     "querytype \"{{value}}\"",
                 });
+                put("cellDrill", new String [] {});
             }});
         }};
     }

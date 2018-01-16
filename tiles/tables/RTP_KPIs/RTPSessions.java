@@ -35,7 +35,7 @@ public class RTPSessions extends Table {
             }});
             put("Tunnel Id", new HashMap<String, Object>() {{
                 put("order", 13);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "teid {{value}}",
                 });
                 put("compare", "true");
@@ -66,14 +66,14 @@ public class RTPSessions extends Table {
             }});
             put("RTP Synchronization Source", new HashMap<String, Object>() {{
                 put("order", 23);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "ssrc {{value}}",
                 });
                 put("compare", "true");
             }});
             put("RTP Payload Type (Codec)", new HashMap<String, Object>() {{
                 put("order", 24);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "pt \"{{value}}\"",
                 });
                 put("compare", "true");

@@ -32,6 +32,7 @@ public class CommonTopApplicationPorts extends Common {
                 put("filter", new String [] {
                     "app_port {{value}}",
                 });
+                put("cellDrill", new String [] {});
             }});
         }};
     }

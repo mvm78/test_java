@@ -1,10 +1,7 @@
 package test_java.tiles.common;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.Base64;
+import java.util.*;
 
 public abstract class Common {
 
@@ -38,40 +35,25 @@ public abstract class Common {
 
     //**************************************************************************
 
+    @SuppressWarnings("unchecked")
     public static String getRowFilter(HashMap<String, Object> data) {
 
-        LinkedHashMap<String, HashMap<String, Object>> columns =
-                (LinkedHashMap<String, HashMap<String, Object>>)data.get("columns");
+        Map<String, HashMap<String, Object>> columns =
+                (Map<String, HashMap<String, Object>>)((LinkedHashMap<String, HashMap<String, Object>>)data.get("columns")).clone();
         String filterColumn = (String)data.get("filterColumn");
         String value = (String)data.get("value");
-        int filterCount = (int)data.get("filterCount");
-        int singleDrill = (int)data.get("singleDrill");
+        int count = (int)data.get("filterCount");
+        int cellDrill = (int)data.get("cellDrill");
 
-        AtomicReference<String> rowFilter = new AtomicReference<>("");
+        Map<String, Object> column = (HashMap<String, Object>)columns.get(filterColumn);
 
-        String type = singleDrill > 0 ? "singleDrill" : "filter";
+        String escaped = value.replace("\"", "\\\"");
+        String type = cellDrill > 0 && ((String [])column.get("cellDrill")).length > 0 ?
+                "cellDrill" : "filter";
 
-        columns.forEach((key, info) -> {
+        String [] filters = (String [])column.get(type);
 
-            Object filter = info.get(type);
-
-            if (filter == null) {
-                return;
-            }
-
-            if (key.equals(filterColumn)) {
-
-                String [] filters = (String [])info.get(type);
-
-                String escaped = value.replace("\"", "\\\"");
-
-                String expression = filters[filterCount].replace("{{value}}", escaped);
-
-                rowFilter.set(expression);
-            }
-        });
-
-        return rowFilter.toString();
+        return filters[count].replace("{{value}}", escaped);
     }
 
     //**************************************************************************

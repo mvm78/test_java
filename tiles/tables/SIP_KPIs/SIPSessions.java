@@ -31,7 +31,7 @@ public class SIPSessions extends Table {
             }});
             put("VLAN", new HashMap<String, Object>() {{
                 put("order", 2);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "valn {{value}}",
                 });
             }});
@@ -45,42 +45,42 @@ public class SIPSessions extends Table {
             }});
             put("Calling Party Number", new HashMap<String, Object>() {{
                 put("order", 13);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "calling_num == \"{{value}}\"",
                 });
                 put("compare", "true");
             }});
             put("Called Party Number", new HashMap<String, Object>() {{
                 put("order", 14);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "called_num == \"{{value}}\"",
                 });
                 put("compare", "true");
             }});
             put("Source", new HashMap<String, Object>() {{
                 put("order", 15);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "host {{value}}",
                 });
                 put("compare", "true");
             }});
             put("Client Port", new HashMap<String, Object>() {{
                 put("order", 16);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "port {{value}}",
                 });
                 put("compare", "true");
             }});
             put("Destination", new HashMap<String, Object>() {{
                 put("order", 17);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "host {{value}}",
                 });
                 put("compare", "true");
             }});
             put("Client Port", new HashMap<String, Object>() {{
                 put("order", 18);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "app_port {{value}}",
                 });
                 put("compare", "true");
@@ -91,7 +91,7 @@ public class SIPSessions extends Table {
             }});
             put("Connection Type", new HashMap<String, Object>() {{
                 put("order", 21); // may need to swap with Reason Header
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "connectionType == \"{{value}}\"",
                 });
                 put("compare", "true");
@@ -102,21 +102,21 @@ public class SIPSessions extends Table {
             }});
             put("Release Cause Code", new HashMap<String, Object>() {{
                 put("order", 23);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "rcode \"{{value}}\"",
                 });
                 put("compare", "true");
             }});
             put("Calling Party User Agent", new HashMap<String, Object>() {{
                 put("order", 30);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "callingPartyProductName == \"{{value}}\"",
                 });
                 put("compare", "true");
             }});
             put("Called Party User Agent", new HashMap<String, Object>() {{
                 put("order", 32);
-                put("singleDrill", new String [] {
+                put("cellDrill", new String [] {
                     "calledPartyProductName == \"{{value}}\"",
                 });
                 put("compare", "true");
@@ -129,9 +129,9 @@ public class SIPSessions extends Table {
     @Override
     protected String getRowFilter(HashMap<String, Object> data) {
 
-        int singleDrill = (int)data.get("singleDrill");
+        int cellDrill = (int)data.get("cellDrill");
 
-        if (singleDrill > 0) {
+        if (cellDrill > 0) {
 
             data.put("columns", this.columns);
 
