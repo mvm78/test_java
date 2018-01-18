@@ -29,6 +29,7 @@ public abstract class Tile {
     protected String [] filters;
     protected LinkedHashMap<String, HashMap<String, Object>> filterColumns;
     protected LinkedHashMap<String, HashMap<String, Object>> columns;
+    protected List<String> cellDrillFilters = new LinkedList<>();
     protected String splitChar = " ";
     protected byte columnIncrement = 1;
 
@@ -288,11 +289,23 @@ public abstract class Tile {
                     params.put("cellDrill", order);
 
                     for (String operator : new String [] {null, "not"}) {
+                        if (operator == null && this.isSingleLine
+                         && ((String [])values.get("cellDrill")).length == 0) {
+                            // skip as row drill will perform the same action as call drill
+                            continue;
+                        }
+
                         // have to reset "filter" before passing it to getDrillFilter() method
                         params.put("filter", filter);
                         params.put("operator", operator);
 
                         String finalFilter = this.getDrillFilter(params);
+
+                        if (this.cellDrillFilters.contains(finalFilter)) {
+                            continue;
+                        }
+
+                        this.cellDrillFilters.add(finalFilter);
 
                         params.put("filter", finalFilter);
 
@@ -826,7 +839,7 @@ public abstract class Tile {
             results.lines()
                     .forEach(line -> {
 
-                        String [] split = Util.split(line, this.splitChar);
+                        String [] split = Util.split(line.trim(), this.splitChar);
 
                         result.add(split);
                     });
@@ -870,9 +883,8 @@ public abstract class Tile {
                     if (! Util.getBufferLineFilter(line)) {
                         return false;
                     } else {
-                        return operator.isEmpty() ?
-                                line[cellDrill].equals(parentValue):
-                                ! line[cellDrill].equals(parentValue);
+                        // either both (empty and equal) TRUE or both FALSE
+                        return operator.isEmpty() == line[cellDrill].equals(parentValue);
                     }
                 })
                 .forEach(line -> {
