@@ -36,7 +36,7 @@ public class WebSessions extends Table {
             put("Response Phrase", new HashMap<String, Object>() {{
                 put("order", 3);
                 put("cellDrill", new String [] {
-                    "reason \"{{value}}\"",
+                    "reason {{value}}",
                 });
                 put("compare", "true");
             }});
@@ -67,13 +67,13 @@ public class WebSessions extends Table {
             put("Request URI", new HashMap<String, Object>() {{
                 put("order", 8);
                 put("cellDrill", new String [] {
-                    "urihttp \"{{value}}\"",
+                    "urihttp {{value}}",
                 });
             }});
             put("Referer", new HashMap<String, Object>() {{
                 put("order", 9);
                 put("cellDrill", new String [] {
-                    "referer \"{{value}}\"",
+                    "referer {{value}}",
                 });
             }});
             put("User-Agent", new HashMap<String, Object>() {{
@@ -93,24 +93,28 @@ public class WebSessions extends Table {
                 put("filter", new String [] {
                     "host {{value}}",
                 });
+                put("cellDrill", new String [] {});
             }});
             put("Destination", new HashMap<String, Object>() {{
                 put("order", 13);
                 put("filter", new String [] {
                     "host {{value}}",
                 });
+                put("cellDrill", new String [] {});
             }});
             put("Client Port", new HashMap<String, Object>() {{
                 put("order", 14);
                 put("filter", new String [] {
                     "port {{value}}",
                 });
+                put("cellDrill", new String [] {});
             }});
             put("Server Port", new HashMap<String, Object>() {{
                 put("order", 15);
                 put("filter", new String [] {
                     "app_port {{value}}",
                 });
+                put("cellDrill", new String [] {});
             }});
             put("Protocol", new HashMap<String, Object>() {{
                 put("order", 16);

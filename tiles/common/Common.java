@@ -47,7 +47,8 @@ public abstract class Common {
 
         Map<String, Object> column = (HashMap<String, Object>)columns.get(filterColumn);
 
-        String escaped = value.replace("\"", "\\\"");
+        String escaped = column.get("escapeQuote") != null && (boolean)column.get("escapeQuote") ?
+                value.replace("\"", "\\\"") : value;
         String type = cellDrill > 0 && ((String [])column.get("cellDrill")).length > 0 ?
                 "cellDrill" : "filter";
 
