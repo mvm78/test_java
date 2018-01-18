@@ -18,7 +18,9 @@ public class CommonTopApplicationPorts extends Common {
     @Override
     public String [] getFilters() {
 
-        return new String [] {};
+        return new String [] {
+            "tcp or udp or sctp",
+        };
     }
 
     //**************************************************************************

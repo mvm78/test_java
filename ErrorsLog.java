@@ -47,9 +47,11 @@ public class ErrorsLog {
             return;
         }
 
-        try (FileWriter fileWriter = new FileWriter(logFile, true);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            PrintWriter errorsLog = new PrintWriter(bufferedWriter)) {
+        try (
+                FileWriter fileWriter = new FileWriter(logFile, true);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                PrintWriter errorsLog = new PrintWriter(bufferedWriter)
+        ) {
 
             errorsLog.println(text);
         } catch (IOException e) {

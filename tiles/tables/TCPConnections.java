@@ -32,12 +32,14 @@ public class TCPConnections extends Table {
                 put("filter", new String [] {
                     "host {{value}}",
                 });
+                put("cellDrill", new String [] {});
             }});
             put("Client Port", new HashMap<String, Object>() {{
                 put("order", 4);
                 put("filter", new String [] {
                     "port {{value}}",
                 });
+                put("cellDrill", new String [] {});
             }});
             put("Client Bytes", new HashMap<String, Object>() {{
                 put("order", 6);
@@ -48,12 +50,14 @@ public class TCPConnections extends Table {
                 put("filter", new String [] {
                     "host {{value}}",
                 });
+                put("cellDrill", new String [] {});
             }});
             put("Server Port", new HashMap<String, Object>() {{
                 put("order", 8);
                 put("filter", new String [] {
                     "app_port {{value}}",
                 });
+                put("cellDrill", new String [] {});
             }});
             put("Server Bytes", new HashMap<String, Object>() {{
                 put("order", 10);
@@ -74,6 +78,12 @@ public class TCPConnections extends Table {
             put("TCP Flags", new HashMap<String, Object>() {{
                 put("order", 16);
                 put("compare", "true");
+            }});
+            put("Application Subtype", new HashMap<String, Object>() {{
+                put("order", 17);
+                put("cellDrill", new String [] {
+                    "apptype {{value}}",
+                });
             }});
             put("URL", new HashMap<String, Object>() {{
                 put("order", 18);
