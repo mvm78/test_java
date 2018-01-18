@@ -11,7 +11,7 @@ public class TCPConnections extends Table {
     public TCPConnections() {
 
         this.isSingleLine = true;
-        this.title = "IP Conversations";
+        this.title = "TCP Connections";
         this.window = "0.0 | /usr/local/niksun/apps/bin/extURL -b";
         this.prefix = "TcpFlow FirstNBytes 256";
         this.fields = new String [] {
