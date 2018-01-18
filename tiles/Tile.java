@@ -348,10 +348,17 @@ public abstract class Tile {
 
             String originalTime = split[order];
 
-            Object index = columnInfo.get("concat");
+            if (originalTime.equals("NA") && this.getTitle().equals("Web Sessions")) {
 
-            if (index != null) {
-                originalTime += "." + split[(int)index];
+                originalTime = Long.toString(System.currentTimeMillis() / 1000L);
+
+            } else {
+
+                Object index = columnInfo.get("concat");
+
+                if (index != null) {
+                    originalTime += "." + split[(int)index];
+                }
             }
 
             String alteration = columnInfo.get(timeField).toString();

@@ -16,6 +16,7 @@ public class CommonTopSIPConnectionTypes extends CommonSIP {
                 put("filter", new String [] {
                     "connectionType == \"{{value}}\"",
                 });
+                put("valueFunction", "getBase64");
             }});
         }};
     }

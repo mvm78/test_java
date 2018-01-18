@@ -3,6 +3,7 @@ package test_java.common;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.nio.charset.StandardCharsets;
 
 import test_java.tiles.Tile;
 
@@ -201,6 +202,16 @@ public class Util {
     public static boolean getBufferLineFilter(String [] line) {
 
         return ! line[0].equals("#I;") && ! line[0].equals("window");
+    }
+
+    //**************************************************************************
+
+    public static String getBase64(String value) {
+
+        byte[] authBytes = value.getBytes(StandardCharsets.UTF_8);
+
+        return "BASE6464BASE" + Base64.getEncoder().encodeToString(authBytes);
+
     }
 
     //**************************************************************************

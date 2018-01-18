@@ -14,7 +14,7 @@ public class SIPSessions extends Table {
         this.isSingleLine = true;
         this.title = "Web Sessions";
         this.window = "0.0";
-        this.prefix = "";
+        this.prefix = "list 999";
         this.fields = new String [] {""};
         this.filters = new String [] {};
         this.splitChar = ",";
@@ -32,7 +32,7 @@ public class SIPSessions extends Table {
             put("VLAN", new HashMap<String, Object>() {{
                 put("order", 2);
                 put("cellDrill", new String [] {
-                    "valn {{value}}",
+                    "vlan {{value}}",
                 });
             }});
             put("Call Ref", new HashMap<String, Object>() {{
@@ -95,6 +95,7 @@ public class SIPSessions extends Table {
                     "connectionType == \"{{value}}\"",
                 });
                 put("compare", "true");
+                put("valueFunction", "getBase64");
             }});
             put("Reason Header", new HashMap<String, Object>() {{
                 put("order", 22); // may need to swap with Connection Type

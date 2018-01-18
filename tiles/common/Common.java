@@ -2,6 +2,8 @@ package test_java.tiles.common;
 
 import java.util.HashMap;
 import java.util.*;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
 
 public abstract class Common {
 
@@ -47,8 +49,33 @@ public abstract class Common {
 
         Map<String, Object> column = (HashMap<String, Object>)columns.get(filterColumn);
 
-        String escaped = column.get("escapeQuote") != null && (boolean)column.get("escapeQuote") ?
-                value.replace("\"", "\\\"") : value;
+        String escaped;
+
+        if (column.get("valueFunction") != null) {
+
+            String valueFunction = (String)column.get("valueFunction");
+
+            try {
+
+                Method method = Class.forName("test_java.common.Util")
+                        .getDeclaredMethod(valueFunction, String.class);
+
+                escaped = (String)method.invoke(null, value);
+
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                return null;
+            }
+        } else {
+            
+            escaped = column.get("escapeDoubleQuote") != null
+                          && (boolean)column.get("escapeDoubleQuote") ?
+                    value.replace("\"", "\\\"") : value;
+
+            escaped = column.get("escapeSingleQuote") != null
+                          && (boolean)column.get("escapeSingleQuote") ?
+                    escaped.replace("\'", "\\\'") : escaped;
+        }
+
         String type = cellDrill > 0 && ((String [])column.get("cellDrill")).length > 0 ?
                 "cellDrill" : "filter";
 
