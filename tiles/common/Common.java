@@ -8,6 +8,8 @@ import java.lang.reflect.InvocationTargetException;
 public abstract class Common {
 
     protected boolean checkNot = true;
+    protected String window;
+    protected String prefix;
 
     public abstract String [] getFields();
     public abstract LinkedHashMap<String, HashMap<String, Object>> getFilterColumns();
@@ -17,6 +19,20 @@ public abstract class Common {
     public boolean getCheckNot() {
 
         return this.checkNot;
+    }
+
+    //**************************************************************************
+
+    public String getWindow() {
+
+        return this.window;
+    }
+
+    //**************************************************************************
+
+    public String getPrefix() {
+
+        return this.prefix;
     }
 
     //**************************************************************************
@@ -66,7 +82,7 @@ public abstract class Common {
                 return null;
             }
         } else {
-            
+
             escaped = column.get("escapeDoubleQuote") != null
                           && (boolean)column.get("escapeDoubleQuote") ?
                     value.replace("\"", "\\\"") : value;

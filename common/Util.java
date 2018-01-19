@@ -201,7 +201,13 @@ public class Util {
 
     public static boolean getBufferLineFilter(String [] line) {
 
-        return ! line[0].equals("#I;") && ! line[0].equals("window");
+        for (String item : new String [] {"#I;", "window", "t=Refresh;"}) {
+            if (item.equals(line[0])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     //**************************************************************************

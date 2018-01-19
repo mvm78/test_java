@@ -24,6 +24,7 @@ public abstract class Tile {
     protected String title;
     protected String tileType;
     protected String prefix;
+    protected String suffix = "";
     protected String window;
     protected String [] fields;
     protected String [] filters;
@@ -32,6 +33,8 @@ public abstract class Tile {
     protected List<String> cellDrillFilters = new LinkedList<>();
     protected String splitChar = " ";
     protected byte columnIncrement = 1;
+    protected String lineTally;
+    protected boolean removeFirstItem = false;
 
     //**************************************************************************
 
@@ -77,6 +80,20 @@ public abstract class Tile {
     public String getSplitChar() {
 
         return this.splitChar;
+    }
+
+    //**************************************************************************
+
+    public String getLineTally() {
+
+        return this.lineTally;
+    }
+
+    //**************************************************************************
+
+    public boolean getRemoveFirstItem() {
+
+        return this.removeFirstItem;
     }
 
     //**************************************************************************
@@ -204,7 +221,13 @@ public abstract class Tile {
 
         if (! isCellDrill) {
             // do not need to tally if drilling on a field
-            testResults.put("tally", tally.get());
+            Map<String, Object> drillTally = tally.get();
+
+            if (this.getLineTally() != null) {
+                drillTally.put(this.getLineTally(), (double)lineCount.get());
+            }
+
+            testResults.put("tally", drillTally);
         }
 
         if (isCellDrill || splitParent.length == 0) {
@@ -671,7 +694,7 @@ public abstract class Tile {
         String filter = finalFilter.isEmpty() ? "" : " q '" + finalFilter + "'";
 
         return " " + this.prefix + " " + this.fields[filterCount] +
-                    filter + " w " + this.window;
+                    filter + " " + this.suffix + " w " + this.window;
     }
 
     //**************************************************************************
@@ -847,6 +870,10 @@ public abstract class Tile {
                     .forEach(line -> {
 
                         String [] split = Util.split(line.trim(), this.splitChar);
+
+                        if (this.removeFirstItem) {
+                            split = Arrays.copyOfRange(split, 1, split.length);
+                        }
 
                         result.add(split);
                     });
