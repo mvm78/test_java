@@ -23,6 +23,7 @@ public class Test_java {
             "RTP_KPIs",
             "AnomalousTCPSessions",
             "SNMP",
+            "MediaFlow",
         };
 
         for (String report : reports) {
