@@ -21,6 +21,8 @@ public class Test_java {
             "DatabasePerformance",
             "SIP_KPIs",
             "RTP_KPIs",
+            "AnomalousTCPSessions",
+            "SNMP",
         };
 
         for (String report : reports) {

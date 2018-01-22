@@ -18,10 +18,10 @@ public abstract class Report implements Cloneable {
     protected HashMap<String, Boolean> skipTiles = new HashMap<>();
     protected String tilesFolder = "";
 
-    private final String beginTime = "11:40:00 01/16/2018";
-    private final String endTime = "11:41:00 01/16/2018";
+    private final String beginTime = "08:25:00 01/22/2018";
+    private final String endTime = "08:25:01 01/22/2018";
     private final String hashKey = "1";
-    private final String appliance = "Appliance-PM_Perf";
+    private final String appliance = "App5100-30";
     private final String pcap = "em1";
 
     protected String appPath;
