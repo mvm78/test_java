@@ -19,6 +19,7 @@ public abstract class Tile {
     private String errorTitle = "";
     protected Common common;
     protected CommonBy commonBy;
+    protected String appPath;
     protected boolean isSingleLine = false;
     protected boolean checkNot = true;
     protected String title;
@@ -98,6 +99,13 @@ public abstract class Tile {
 
     //**************************************************************************
 
+    public String getAppPath() {
+
+        return this.appPath;
+    }
+
+    //**************************************************************************
+
     public BufferedReader getQueryResults(String finalCmd) {
 
         try (PrintWriter out = new PrintWriter("run_query.sh")) {
@@ -135,12 +143,14 @@ public abstract class Tile {
     public Map<String, Map<String, Object>> test(Map<String, Object> data) {
 
         Report report = (Report)data.get("report");
-        String cmd = data.get("cmd") == null ? report.getCmd() : (String)data.get("cmd");
+        String cmd = data.get("cmd") == null ? report.getCmd(this) :
+                (String)data.get("cmd");
         String filter = (String)data.get("filter");
         int drillLevel = (int)data.get("drillLevel");
         String [] splitParent = data.get("split") == null ? new String [] {} :
                 (String [])((String [])data.get("split")).clone();
-        boolean isCellDrill = data.get("isCellDrill") == null ? false : (boolean)data.get("isCellDrill");
+        boolean isCellDrill = data.get("isCellDrill") == null ? false :
+                (boolean)data.get("isCellDrill");
         int cellDrill = data.get("cellDrill") == null ? 0 : (int)data.get("cellDrill");
         List<String []> parentLines = data.get("parentLines") == null ? null :
                 (List<String []>)((ArrayList<String []>)data.get("parentLines")).clone();
@@ -349,7 +359,7 @@ public abstract class Tile {
 
         if (useReportTime) {
             // using report's original start and stop time
-            return report.getCmd(reportStartTime, reportStopTime);
+            return report.getCmd(this, reportStartTime, reportStopTime);
         }
 
         HashMap<String, String> reportTime = new HashMap<String, String>() {{
@@ -399,7 +409,7 @@ public abstract class Tile {
         String startTime = reportTime.get("startTime");
         String stopTime = reportTime.get("stopTime");
 
-        return report.getCmd(startTime, stopTime);
+        return report.getCmd(this, startTime, stopTime);
     }
 
     //**************************************************************************

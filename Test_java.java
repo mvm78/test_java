@@ -24,6 +24,7 @@ public class Test_java {
             "AnomalousTCPSessions",
             "SNMP",
             "MediaFlow",
+            "Experts",
         };
 
         for (String report : reports) {

@@ -18,11 +18,11 @@ public abstract class Report implements Cloneable {
     protected HashMap<String, Boolean> skipTiles = new HashMap<>();
     protected String tilesFolder = "";
 
-    private final String beginTime = "09:30:00 01/22/2018";
-    private final String endTime = "10:30:00 01/22/2018";
+    private final String beginTime = "14:00:00 01/23/2018";
+    private final String endTime = "14:00:20 01/23/2018";
     private final String hashKey = "1";
     private final String appliance = "App5100-30";
-    private final String pcap = "nf0";
+    private final String pcap = "em1";
 
     protected String appPath;
     protected String refresh;
@@ -95,20 +95,23 @@ public abstract class Report implements Cloneable {
 
     //**************************************************************************
 
-    public String getCmd() {
+    public String getCmd(Tile tile) {
 
         String statTime = Util.getTimeString(this.beginTime);
         String stopTime = Util.getTimeString(this.endTime);
 
-        return this.getCmd(statTime, stopTime);
+        return this.getCmd(tile, statTime, stopTime);
     }
 
     //**************************************************************************
 
-    public String getCmd(String beginTime, String endTime) {
+    public String getCmd(Tile tile, String beginTime, String endTime) {
 
-        return this.appPath +
-                this.getCmdAppliance() +
+        String tileAppPath = tile.getAppPath();
+
+        String path = tileAppPath == null ? this.appPath : tileAppPath;
+
+        return path + this.getCmdAppliance() +
                 " " + this.refresh +
                 " B " + beginTime +
                 " E " + endTime;
