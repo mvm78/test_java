@@ -1,6 +1,7 @@
 package test_java.tiles.tables.Web;
 
 import test_java.tiles.tables.*;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import test_java.tiles.common.Common;
@@ -145,7 +146,7 @@ public class WebSessions extends Table {
     //**************************************************************************
 
     @Override
-    protected String getRowFilter(HashMap<String, Object> data) {
+    protected String getRowFilter(Map<String, Object> data) {
 
         data.put("columns", this.columns);
 

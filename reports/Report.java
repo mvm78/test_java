@@ -15,7 +15,7 @@ public abstract class Report implements Cloneable {
     protected String title;
 
     protected HashMap<String, ArrayList<String>> tileList;
-    protected HashMap<String, Boolean> skipTiles = new HashMap<>();
+    protected Map<String, Boolean> skipTiles = new HashMap<>();
     protected String tilesFolder = "";
 
     private final String beginTime = "14:00:00 01/23/2018";
@@ -273,7 +273,7 @@ public abstract class Report implements Cloneable {
 
         compareToData.get("columns").forEach((column, columnInfo) -> {
             // loop through columns in parent ("compareTo") tile
-            HashMap<String, String> info = (HashMap)columnInfo;
+            Map<String, String> info = (HashMap)columnInfo;
 
             if (info.get("compare") == null) {
                 // skip missing or not compareble fields

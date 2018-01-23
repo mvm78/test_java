@@ -1,7 +1,7 @@
 package test_java.tiles.tables.AnomalousTCPSessions;
 
 import test_java.tiles.tables.*;
-import java.util.HashMap;
+import java.util.Map;
 import test_java.tiles.common.CommonTCPSessions;
 
 public class AnomalousTCPSessions extends Table {
@@ -25,7 +25,7 @@ public class AnomalousTCPSessions extends Table {
     //**************************************************************************
 
     @Override
-    protected String getRowFilter(HashMap<String, Object> data) {
+    protected String getRowFilter(Map<String, Object> data) {
 
         data.put("columns", this.columns);
 

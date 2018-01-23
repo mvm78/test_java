@@ -44,7 +44,7 @@ public abstract class Common {
 
     //**************************************************************************
 
-    public String getCommonRowFilter(HashMap<String, Object> data) {
+    public String getCommonRowFilter(Map<String, Object> data) {
 
         data.put("columns", this.getFilterColumns());
 
@@ -54,7 +54,7 @@ public abstract class Common {
     //**************************************************************************
 
     @SuppressWarnings("unchecked")
-    public static String getRowFilter(HashMap<String, Object> data) {
+    public static String getRowFilter(Map<String, Object> data) {
 
         Map<String, HashMap<String, Object>> columns =
                 (Map<String, HashMap<String, Object>>)((LinkedHashMap<String, HashMap<String, Object>>)data.get("columns")).clone();

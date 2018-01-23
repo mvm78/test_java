@@ -2,7 +2,7 @@ package test_java.tiles.tables.Database;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import test_java.common.Consts;
 import test_java.common.Util;
@@ -34,7 +34,7 @@ public class DatabaseTopVLAN extends Table {
     //**************************************************************************
 
     @Override
-    protected String getRowFilter(HashMap<String, Object> data) {
+    protected String getRowFilter(Map<String, Object> data) {
 
         Report report = (Report)data.get("report");
 

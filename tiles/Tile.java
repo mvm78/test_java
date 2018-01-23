@@ -43,7 +43,7 @@ public abstract class Tile {
 
     //**************************************************************************
 
-    protected String getRowFilter(HashMap<String, Object> data) {
+    protected String getRowFilter(Map<String, Object> data) {
 
         return "";
     }
@@ -305,11 +305,10 @@ public abstract class Tile {
     //**************************************************************************
 
     @SuppressWarnings("unchecked")
-    private void drillCell(HashMap<String, Object> data) {
+    private void drillCell(Map<String, Object> data) {
 
         String filter = (String)data.get("filter");
-
-        Map<String, Object> params = (HashMap<String, Object>)data.clone();
+        Map<String, Object> params = (Map<String, Object>)((HashMap<String, Object>)data).clone();
 
         params.put("isCellDrill", true);
 
@@ -478,7 +477,7 @@ public abstract class Tile {
 
     //**************************************************************************
 
-    private boolean checkLine(HashMap<String, Object> data) {
+    private boolean checkLine(Map<String, Object> data) {
 
         String [] splitLine = (String [])data.get("splitLine");
         String [] splitParent = (String [])data.get("splitParent");
@@ -506,7 +505,7 @@ public abstract class Tile {
 
     //**************************************************************************
 
-    private boolean checkLines(HashMap<String, Object> data) {
+    private boolean checkLines(Map<String, Object> data) {
 
         String [] splitLine = (String [])data.get("splitLine");
         String [] splitParent = (String [])data.get("splitParent");
@@ -560,7 +559,7 @@ public abstract class Tile {
 
                     int count = (int)info.getValue().get("order");
 
-                    HashMap<String, Object> params = new HashMap<String, Object>() {{
+                    Map<String, Object> params = new HashMap<String, Object>() {{
                         put("report", report);
                         put("filterColumn", info.getKey());
                         put("value", split[count]);
@@ -774,7 +773,7 @@ public abstract class Tile {
 
         try {
             isCustomRowFilter = this.getClass()
-                    .getDeclaredMethod("getRowFilter", HashMap.class);
+                    .getDeclaredMethod("getRowFilter", Map.class);
         } catch (NoSuchMethodException | SecurityException e) {
             // no need to catch errors
         }
@@ -828,7 +827,7 @@ public abstract class Tile {
             String drillTileCmd = this.getTestCmd(report, split, false);
             int paramFilterCount = filterCount;
 
-            HashMap<String, Object> params = new HashMap<String, Object>() {{
+            Map<String, Object> params = new HashMap<String, Object>() {{
                 put("report", report);
                 put("cmd", drillFieldCmd);
                 put("split", split.clone());
