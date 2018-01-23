@@ -15,20 +15,9 @@ public class MediaFlow extends Report {
         this.tilesFolder = "MediaFlow";
 
         this.tileList = new HashMap<String, ArrayList<String>>() {{
-//            put("charts", new ArrayList<String>() {{
-//                add("SNMPVariablesChart");
-//            }});
             put("tables", new ArrayList<String>() {{
-//                add("MediaFlow");
-                add("MediaFlowTopSources");
+                add("MediaFlow");
             }});
-        }};
-
-        this.tallyCheck = new HashMap<String, String []>() {{
-//            put("SNMPTopDeviceInterface", new String [] {
-//                "SNMPVariables",
-//                "SNMPVariablesChart",
-//            });
         }};
     };
 
