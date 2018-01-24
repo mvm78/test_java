@@ -7,13 +7,6 @@ public class CommonTopHostPairs extends Common {
 
     //**************************************************************************
 
-    public CommonTopHostPairs() {
-
-        this.checkNot = false;
-    }
-
-    //**************************************************************************
-
     @Override
     public String [] getFields(){
 

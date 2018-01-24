@@ -7,13 +7,6 @@ public class CommonNetwork extends Common {
 
     //**************************************************************************
 
-    public CommonNetwork() {
-
-        this.checkNot = false;
-    }
-
-    //**************************************************************************
-
     @Override
     public String [] getFields(){
 

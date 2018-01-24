@@ -7,19 +7,11 @@ import java.lang.reflect.InvocationTargetException;
 
 public abstract class Common {
 
-    protected boolean checkNot = true;
     protected String window;
     protected String prefix;
 
     public abstract String [] getFields();
     public abstract LinkedHashMap<String, HashMap<String, Object>> getFilterColumns();
-
-    //**************************************************************************
-
-    public boolean getCheckNot() {
-
-        return this.checkNot;
-    }
 
     //**************************************************************************
 

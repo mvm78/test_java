@@ -21,7 +21,6 @@ public abstract class Tile {
     protected CommonBy commonBy;
     protected String appPath;
     protected boolean isSingleLine = false;
-    protected boolean checkNot = true;
     protected String title;
     protected String tileType;
     protected String prefix;

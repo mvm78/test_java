@@ -7,13 +7,6 @@ public class CommonTopSources extends Common {
 
     //**************************************************************************
 
-    public CommonTopSources() {
-
-        this.checkNot = false;
-    }
-
-    //**************************************************************************
-
     @Override
     public String [] getFields(){
 

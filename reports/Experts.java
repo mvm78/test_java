@@ -16,7 +16,9 @@ public class Experts extends Report {
         this.tileList = new HashMap<String, ArrayList<String>>() {{
             put("tables", new ArrayList<String>() {{
                 add("Web.WebSessions");
-                add("Experts.TCPSessions");
+                add("Experts.ExpertsTCPSessions");
+                add("Experts.ExpertsTopTCPServersByBytes");
+                add("Web.TopWebServers");
             }});
         }};
     };

@@ -9,7 +9,6 @@ public abstract class Map extends Tile {
     public Map() {
 
         this.tileType = "map";
-        this.checkNot = false;
     }
 
     //**************************************************************************

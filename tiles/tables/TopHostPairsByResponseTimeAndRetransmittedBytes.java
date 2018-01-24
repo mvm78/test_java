@@ -21,7 +21,6 @@ public class TopHostPairsByResponseTimeAndRetransmittedBytes extends Table {
         this.filters = this.common.getFilters();
         this.filterColumns = this.common.getFilterColumns();
         this.columns = this.commonBy.appendCompareColumns(this.filterColumns, 1);
-        this.checkNot = this.common.getCheckNot();
     }
 
     //**************************************************************************

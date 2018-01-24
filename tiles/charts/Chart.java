@@ -12,7 +12,6 @@ public abstract class Chart extends Tile {
 
         this.tileType = "charts";
         this.debug = 2;
-        this.checkNot = false;
     }
 
     //**************************************************************************
