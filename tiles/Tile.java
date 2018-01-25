@@ -325,7 +325,6 @@ public abstract class Tile {
                             // skip as row drill will perform the same action as call drill
                             continue;
                         }
-
                         // have to reset "filter" before passing it to getDrillFilter() method
                         params.put("filter", filter);
                         params.put("operator", operator);
@@ -387,9 +386,7 @@ public abstract class Tile {
 
                 Object index = columnInfo.get("concat");
 
-                if (index != null) {
-                    originalTime += "." + split[(int)index];
-                }
+                originalTime += index == null ? "" : "." + split[(int)index];
             }
 
             String alteration = columnInfo.get(timeField).toString();
@@ -477,34 +474,6 @@ public abstract class Tile {
     //**************************************************************************
 
     private boolean checkLine(Map<String, Object> data) {
-
-        String [] splitLine = (String [])data.get("splitLine");
-        String [] splitParent = (String [])data.get("splitParent");
-        boolean isTileSingleLine = (boolean)data.get("isTileSingleLine");
-
-        if (isTileSingleLine) {
-            // there should be only one line on link drill
-            if (Arrays.equals(splitLine, splitParent)) {
-                return true;
-            } else {
-                // original (parent) and result (after drill) lines do not match
-                boolean isOutput = true;
-
-                this.lineErrors(splitLine, splitParent, isOutput);
-
-                return false;
-            }
-        } else {
-            // there can be many lines on link drill. One of those lines should match
-            boolean isOutput = false;
-
-            return this.lineErrors(splitLine, splitParent, isOutput);
-        }
-    }
-
-    //**************************************************************************
-
-    private boolean checkLines(Map<String, Object> data) {
 
         String [] splitLine = (String [])data.get("splitLine");
         String [] splitParent = (String [])data.get("splitParent");
@@ -761,23 +730,6 @@ public abstract class Tile {
         });
 
         return (boolean)isDrillable.get();
-    }
-
-    //**************************************************************************
-
-    protected final void setCommonData() {
-
-        this.fields = this.common.getFields().clone();
-        String commonByFields = this.commonBy.getFields();
-
-        for (int count=0; count<this.fields.length; count++) {
-            this.fields[count] += " " + commonByFields;
-        }
-
-        this.filters = this.common.getFilters();
-        this.filterColumns = this.common.getFilterColumns();
-        this.columns = this.commonBy.appendCompareColumns(this.filterColumns,
-                this.columnIncrement);
     }
 
     //**************************************************************************
