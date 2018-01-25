@@ -9,22 +9,22 @@ public class Test_java {
         ErrorsLog.removeLogs();
 
         String [] reports = {
-            "PerformanceOverview",
-            "TopApplications",
-            "TopApplicationPorts",
-            "TopServers",
-            "TopConversations",
-            "NetworkPerformance",
-            "Multicast",
-            "DNSPerformance",
-            "WebPerformance",
-            "DatabasePerformance",
-            "SIP_KPIs",
-            "RTP_KPIs",
-            "AnomalousTCPSessions",
-            "SNMP",
-            "MediaFlow",
-            "Experts",
+//            "PerformanceOverview",
+//            "TopApplications",
+//            "TopApplicationPorts",
+//            "TopServers",
+//            "TopConversations",
+//            "NetworkPerformance",
+//            "Multicast",
+//            "DNSPerformance",
+//            "WebPerformance",
+//            "DatabasePerformance",
+//            "SIP_KPIs",
+//            "RTP_KPIs",
+//            "AnomalousTCPSessions",
+//            "SNMP",
+            "FlowBasedRTP_KPIs",
+//            "Experts",
         };
 
         for (String report : reports) {

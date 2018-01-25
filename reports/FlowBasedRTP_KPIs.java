@@ -2,11 +2,11 @@ package test_java.reports;
 
 import java.util.*;
 
-public class MediaFlow extends Report {
+public class FlowBasedRTP_KPIs extends Report {
 
     //**************************************************************************
 
-    public MediaFlow() {
+    public FlowBasedRTP_KPIs() {
 
         this.appPath = "/usr/local/mercury/bin/agg-netflow";
         this.refresh = "refreshTO 5.0";
