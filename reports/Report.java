@@ -2,6 +2,7 @@ package test_java.reports;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import test_java.ErrorsLog;
 
 import test_java.tiles.Tile;
@@ -18,11 +19,11 @@ public abstract class Report implements Cloneable {
     protected Map<String, Boolean> skipTiles = new HashMap<>();
     protected String tilesFolder = "";
 
-    private final String beginTime = "14:00:00 01/23/2018";
-    private final String endTime = "14:00:20 01/23/2018";
+    private final String beginTime = "18:34:36.945967 06/29/2015";
+    private final String endTime = "14:21:00.233799 07/06/2015";
     private final String hashKey = "1";
     private final String appliance = "App5100-30";
-    private final String pcap = "em1";
+    private final String pcap = "testcalls_pure_1_pcap";
 
     protected String appPath;
     protected String refresh;
@@ -212,7 +213,9 @@ public abstract class Report implements Cloneable {
         LinkedHashMap<String, Map<String, Map<String, Object>>> results =
                 this.runTileTests(classNames, drillLevel, filter);
 
-        this.checkTally(results, filter);
+        if (this.tallyCheck != null) {
+            this.checkTally(results, filter);
+        }
     }
 
     //**************************************************************************
@@ -223,93 +226,74 @@ public abstract class Report implements Cloneable {
             String filter
     ) {
 
-        if (this.tallyCheck == null) {
-            return;
-        }
+        this.tallyCheck.keySet().stream()
+                .filter(tile -> results.get(tile) != null)
+                .forEach(tile -> {
 
-        this.tallyCheck.forEach((compareToTile, compareTiles) -> {
-            // loop through parent ("compareTo" tiles)
-            Map<String, Map<String, Object>> compareToData =
-                    results.get(compareToTile);
+                    Map<String, Map<String, Object>> compareToData = results.get(tile);
 
-            if (compareToData == null) {
-                // continue the loop if "results" returned NO DATA
-                return;
-            }
+                    String text = compareToData.get("info").get("title").toString();
 
-            AtomicBoolean isCompareToPrined = new AtomicBoolean(false);
+                    text += filter.isEmpty() ? "" : " with filter \"" + filter + "\"";
 
-            String compareToTitle = compareToData.get("info").get("title").toString();
+                    AtomicReference<String> caption = new AtomicReference<>(text);
+                    AtomicBoolean isCompareToPrined = new AtomicBoolean(false);
 
-            for (byte count=0; count<compareTiles.length; count++) {
-                // loop through child ("compare") tiles
-                Map<String, Map<String, Object>> compareTile =
-                        (HashMap)results.get(compareTiles[count]);
-
-                if (compareTile == null) {
-                    continue;
-                }
-                // compare column tallies
-                this.compareTallies(compareToData, compareTile, isCompareToPrined,
-                        compareToTitle, filter);
-            }
-        });
+                    Arrays.stream(this.tallyCheck.get(tile))
+                            .filter(item -> results.get(item) != null)
+                            .forEach(item -> {
+                                this.compareTallies(compareToData, (Map)results.get(item),
+                                        isCompareToPrined, caption);
+                            });
+                });
     }
 
     //**************************************************************************
 
-    @SuppressWarnings("unchecked")
     private void compareTallies(
-            Map<String, Map<String, Object>> compareToData,
+            Map<String, Map<String, Object>> compareToTile,
             Map<String, Map<String, Object>> compareTile,
             AtomicBoolean isCompareToPrined,
-            String compareToTitle,
-            String filter
+            AtomicReference<String> caption
     ) {
 
         AtomicBoolean isComparePrined = new AtomicBoolean(false);
 
+        Map<String, Object> columns = compareToTile.get("columns");
+        Map<String, Object> compareToTally = compareToTile.get("tally");
+        Map<String, Object> compareTally = compareTile.get("tally");
+
+        String logFile = "tallyErrors.log";
         String compareTitle = compareTile.get("info").get("title").toString();
 
-        compareToData.get("columns").forEach((column, columnInfo) -> {
-            // loop through columns in parent ("compareTo") tile
-            Map<String, String> info = (HashMap)columnInfo;
+        columns.keySet().stream()
+                .filter(column -> ((Map)columns.get(column)).get("compare") != null)
+                .forEach(column -> {
 
-            if (info.get("compare") == null) {
-                // skip missing or not compareble fields
-                return;
-            }
+                    Object toValue = compareToTally.get(column);
+                    Object value = compareTally.get(column);
 
-            Object compareTo = compareToData.get("tally").get(column);
-            Object compare = compareTile.get("tally").get(column);
+                    if (toValue != null && value != null) {
 
-            if (compareTo == null || compare == null) {
-                return;
-            }
+                        String prettyToValue = Util.getPrettyNumber((double)toValue);
+                        String prettyValue = Util.getPrettyNumber((double)value);
 
-            double compareToValue = (double)compareTo;
-            double compareValue = (double)compare;
+                        if (! prettyToValue.equals(prettyValue)) {
+                            if (! isCompareToPrined.getAndSet(true)) {
+                                ErrorsLog.log("\n" + caption + " tally mismatch:",
+                                        logFile);
+                            }
 
-            if (compareValue != compareToValue) {
-                if (! isCompareToPrined.getAndSet(true)) {
+                            if (! isComparePrined.getAndSet(true)) {
+                                ErrorsLog.log("\t" + compareTitle, logFile);
+                            }
 
-                    String filterSuffix = filter.isEmpty() ? "" :
-                            " with filter \"" + filter + "\"";
+                            String error = prettyToValue + " # " + prettyValue;
 
-                    ErrorsLog.log("\n" + compareToTitle + filterSuffix + " tally mismatch:",
-                            "tallyErrors.log");
-                }
-
-                if (! isComparePrined.getAndSet(true)) {
-                    ErrorsLog.log("\t" + compareTitle, "tallyErrors.log");
-                }
-
-                String error = Util.getPrettyNumber(compareToValue) + " # " +
-                        Util.getPrettyNumber(compareValue);
-
-                ErrorsLog.log("\t\t" + column + ": " + error, "tallyErrors.log");
-            }
-        });
+                            ErrorsLog.log("\t\t" + column + ": " + error, logFile);
+                        }
+                    }
+                });
     }
 
     //**************************************************************************
