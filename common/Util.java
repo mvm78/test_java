@@ -132,7 +132,7 @@ public class Util {
             System.err.println(Consts.BRIGHT_RED + "Invalid End Time");
         }
 
-        Long ms = splitTime.length > 0 ? Long.valueOf(splitTime[1]) : 0;
+        Long ms = splitTime.length > 1 ? Long.valueOf(splitTime[1]) : 0;
         Long unixTime = unixValue;
 
         return new HashMap<String, Long>() {
@@ -222,7 +222,7 @@ public class Util {
 
         String dateTime = textFormat.format(date);
 
-        dateTime += splitTime.length > 0 ? "." + splitTime[1].substring(0, 6) : "";
+        dateTime += splitTime.length > 1 ? "." + splitTime[1].substring(0, 6) : "";
 
         String [] splitDateTime = dateTime.split("\\s+");
 
