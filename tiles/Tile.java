@@ -667,11 +667,23 @@ public abstract class Tile {
     private String getLineErrorCaption(String [] split) {
 
         AtomicReference<String> caption = new AtomicReference<>("");
+        AtomicReference<String> timeRange = new AtomicReference<>("");
 
         this.columns.forEach((column, info) -> {
-            if (info.get("filter") != null) {
 
-                int count = (Integer)info.get("order");
+            int count = (Integer)info.get("order");
+
+            if (info.get("filter") == null) {
+                for (String item : new String [] {"startTime", "stopTime"}) {
+                    if (info.get(item) != null) {
+
+                        String output = Util.getFromTimestamp(split[count]);
+
+                        timeRange.set(timeRange.get() + ", " + column + ": " + output);
+                    }
+                }
+            } else {
+
                 String prev = caption.get();
 
                 String comma = prev.isEmpty() ? "" : ", ";
@@ -680,7 +692,7 @@ public abstract class Tile {
             }
         });
 
-        return caption.toString();
+        return caption.toString() + timeRange.toString();
     }
 
     //**************************************************************************

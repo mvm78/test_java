@@ -116,31 +116,23 @@ public class Util {
     private static Map<String, Long> getParsedTime(String dateTime) {
 
         Long unixValue = 0L;
-        String milliseconds = "";
-        int spacePos = dateTime.indexOf(" ");
 
-        String date = dateTime.substring(spacePos + 1);
-        String time = dateTime.substring(0, spacePos);
+        String [] splitDateTime = dateTime.split("\\s+");
 
-        int dotPos = time.indexOf(".");
-
-        if (dotPos > -1) {
-            milliseconds = time.substring(dotPos + 1);
-            time = time.substring(0, dotPos);
-        }
+        String [] splitTime = splitDateTime[0].split("\\.");
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy");
 
         try {
 
-            Date parsedEndDate = dateFormat.parse(time + " " + date);
+            Date parsedEndDate = dateFormat.parse(splitTime[0] + " " + splitDateTime[1]);
 
             unixValue = parsedEndDate.getTime();
         } catch (ParseException e) {
             System.err.println(Consts.BRIGHT_RED + "Invalid End Time");
         }
 
-        Long ms = milliseconds.isEmpty() ? 0 : Long.valueOf(milliseconds);
+        Long ms = splitTime.length == 0 ? 0: Long.valueOf(splitTime[1]);
         Long unixTime = unixValue;
 
         return new HashMap<String, Long>() {
@@ -217,6 +209,25 @@ public class Util {
         byte[] authBytes = value.getBytes(StandardCharsets.UTF_8);
 
         return "BASE6464BASE" + Base64.getEncoder().encodeToString(authBytes);
+    }
+
+    //**************************************************************************
+
+    public static String getFromTimestamp(String value) {
+
+        String [] splitTime = value.split("\\.");
+        String format = "MM/dd/yyyy HH:mm:ss";
+
+        Date date = new Date(Long.valueOf(splitTime[0]) * 1000L);
+        SimpleDateFormat textFormat = new SimpleDateFormat(format);
+
+        String dateTime = textFormat.format(date);
+
+        dateTime += splitTime.length == 0 ? "" : "." + splitTime[1].substring(0, 6);
+
+        String [] splitDateTime = dateTime.split("\\s+");
+
+        return splitDateTime[1] + " " + splitDateTime[0];
 
     }
 
