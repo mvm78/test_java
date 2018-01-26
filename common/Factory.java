@@ -1,25 +1,24 @@
-package test_java.reports;
+package test_java.common;
 
-import test_java.common.Consts;
+public class Factory {
 
-public abstract class ReportFactory {
-
-    public static Report getReport(String className)
+    @SuppressWarnings("unchecked")
+    protected static <T> T getInstance(String clazz)
     {
-        Report report = null;
-
         try {
-            report = (Report)Class.forName(className).newInstance();
+            return (T)Class.forName(clazz).newInstance();
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-            System.err.println(Consts.BRIGHT_RED + "Error creating " + className + " instance");
+
+            System.err.println(
+                    Consts.RESET_COLOR + "\n" +
+                    Consts.BRIGHT_RED + "Error creating " + clazz + " instance:\n" +
+                    Consts.BRIGHT_RED + e + "\n" +
+                    Consts.RESET_COLOR
+            );
             System.exit(1);
         }
 
-        if (report != null) {
-            report.setTiles();
-        }
-
-        return report;
+        return null;
     }
 
     //**************************************************************************

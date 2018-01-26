@@ -1,19 +1,12 @@
 package test_java.reports;
 
-import test_java.common.Consts;
+import test_java.common.Factory;
 
-public abstract class ReportFactory {
+public class ReportFactory extends Factory {
 
     public static Report getReport(String className)
     {
-        Report report = null;
-
-        try {
-            report = (Report)Class.forName(className).newInstance();
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-            System.err.println(Consts.BRIGHT_RED + "Error creating " + className + " instance");
-            System.exit(1);
-        }
+        Report report = Factory.getInstance(className);
 
         if (report != null) {
             report.setTiles();

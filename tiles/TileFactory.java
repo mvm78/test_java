@@ -1,19 +1,12 @@
 package test_java.tiles;
 
-import test_java.common.Consts;
+import test_java.common.Factory;
 
-public abstract class TileFactory {
+public class TileFactory extends Factory {
 
     public static Tile getTile(String className, float timeInterval)
     {
-        Tile tile = null;
-
-        try {
-            tile = (Tile)Class.forName(className).newInstance();
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-            System.err.println(Consts.BRIGHT_RED + "Error creating " + className + " instance");
-            System.exit(1);
-        }
+        Tile tile = Factory.getInstance(className);
 
         if (tile != null) {
             tile.setWindow(timeInterval);
