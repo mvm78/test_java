@@ -500,8 +500,8 @@ public class Tile implements Cloneable {
 
     private boolean checkLine(Map<String, Object> data) {
 
-        String [] splitLine = (String [])data.get("splitLine");
-        String [] splitParent = (String [])data.get("splitParent");
+        String [] splitLine = (String [])((String [])data.get("splitLine")).clone();
+        String [] splitParent = (String [])((String [])data.get("splitParent")).clone();
         boolean isTileSingleLine = (boolean)data.get("isTileSingleLine");
 
         if (isTileSingleLine) {
@@ -839,8 +839,8 @@ public class Tile implements Cloneable {
             boolean isTileSingleLine = this.isSingleLine;
 
             final boolean finalIsLineMatch = this.checkLine(new HashMap<String, Object>() {{
-                put("splitLine", split.clone());
-                put("splitParent", splitParent.clone());
+                put("splitLine", split);
+                put("splitParent", splitParent);
                 put("isTileSingleLine", isTileSingleLine);
             }}) || isLineMatch;
 
