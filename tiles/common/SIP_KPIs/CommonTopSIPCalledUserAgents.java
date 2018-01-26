@@ -3,7 +3,9 @@ package test_java.tiles.common.SIP_KPIs;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-public class CommonTopSIPCalledUserAgents extends CommonSIP {
+import test_java.tiles.common.Common;
+
+public class CommonTopSIPCalledUserAgents extends Common {
 
     //**************************************************************************
 

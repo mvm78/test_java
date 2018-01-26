@@ -16,14 +16,6 @@ public class CommonTCPSessions extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields() {
-
-        return new String [] {""};
-    }
-
-    //**************************************************************************
-
-    @Override
     public LinkedHashMap<String, HashMap<String, Object>> getFilterColumns() {
 
         return new LinkedHashMap<String, HashMap<String, Object>>() {{

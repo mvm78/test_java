@@ -8,7 +8,13 @@ public abstract class CommonBy {
 
     public abstract String getFields();
     public abstract LinkedHashMap<String, String> getCompareColumns();
-    public abstract String [] getNoTallyColumns();
+
+    //**************************************************************************
+
+    public String [] getNoTallyColumns() {
+
+        return new String [] {};
+    }
 
     //**************************************************************************
 

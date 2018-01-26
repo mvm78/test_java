@@ -121,16 +121,16 @@ public abstract class Report implements Cloneable {
     //**************************************************************************
 
     protected LinkedHashMap<String, Map<String, Map<String, Object>>> runTileTests(
-            String [] classNames
+            String [] classes
     ) {
 
-        return this.runTileTests(classNames, 1, "");
+        return this.runTileTests(classes, 1, "");
     }
 
     //**************************************************************************
 
     protected LinkedHashMap<String, Map<String, Map<String, Object>>> runTileTests(
-            String [] classNames,
+            String [] classes,
             int drillLevel,
             String filter
     ) {
@@ -140,9 +140,9 @@ public abstract class Report implements Cloneable {
         LinkedHashMap<String, Map<String, Map<String, Object>>> results =
                 new LinkedHashMap<>();
 
-        for (String className: classNames) {
+        for (String clazz: classes) {
 
-            Tile tile = TileFactory.getTile(className, timeInterval);
+            Tile tile = TileFactory.getTile(clazz, timeInterval);
 
             if (tile != null) {
 
@@ -208,10 +208,10 @@ public abstract class Report implements Cloneable {
             testTiles.add("test_java.tiles." + type + "." + tileFolder + tile);
         });
 
-        String [] classNames = testTiles.toArray(new String[0]);
+        String [] classes = testTiles.toArray(new String[0]);
 
         LinkedHashMap<String, Map<String, Map<String, Object>>> results =
-                this.runTileTests(classNames, drillLevel, filter);
+                this.runTileTests(classes, drillLevel, filter);
 
         if (this.tallyCheck != null) {
             this.checkTally(results, filter);

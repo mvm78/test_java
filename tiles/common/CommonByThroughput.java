@@ -25,12 +25,4 @@ public class CommonByThroughput extends CommonBy {
 
     //**************************************************************************
 
-    @Override
-    public String [] getNoTallyColumns() {
-
-        return new String [] {};
-    }
-
-    //**************************************************************************
-
 }

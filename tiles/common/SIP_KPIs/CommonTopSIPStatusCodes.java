@@ -3,7 +3,11 @@ package test_java.tiles.common.SIP_KPIs;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-public class CommonTopSIPStatusCodes extends CommonSIP {
+import test_java.tiles.common.Common;
+
+public class CommonTopSIPStatusCodes extends Common {
+
+    //**************************************************************************
 
     @Override
     public LinkedHashMap<String, HashMap<String, Object>> getFilterColumns() {

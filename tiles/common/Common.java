@@ -1,6 +1,5 @@
 package test_java.tiles.common;
 
-import java.util.HashMap;
 import java.util.*;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
@@ -10,7 +9,6 @@ public abstract class Common {
     protected String window;
     protected String prefix;
 
-    public abstract String [] getFields();
     public abstract LinkedHashMap<String, HashMap<String, Object>> getFilterColumns();
 
     //**************************************************************************
@@ -25,6 +23,13 @@ public abstract class Common {
     public String getPrefix() {
 
         return this.prefix;
+    }
+
+    //**************************************************************************
+
+    public String [] getFields() {
+
+        return new String [] {""};
     }
 
     //**************************************************************************

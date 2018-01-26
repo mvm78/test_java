@@ -16,14 +16,6 @@ public class CommonDestinationPorts extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFilters() {
-
-        return new String [] {};
-    }
-
-    //**************************************************************************
-
-    @Override
     public LinkedHashMap<String, HashMap<String, Object>> getFilterColumns() {
 
         return new LinkedHashMap<String, HashMap<String, Object>>() {{

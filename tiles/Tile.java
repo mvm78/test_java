@@ -690,11 +690,11 @@ public abstract class Tile {
 
     public String getTrueName() {
 
-        String className = this.getClass().getName();
+        String clazz = this.getClass().getName();
 
-        int start = className.lastIndexOf('.') + 1;
+        int start = clazz.lastIndexOf('.') + 1;
 
-        return className.substring(start);
+        return clazz.substring(start);
     }
 
     //**************************************************************************

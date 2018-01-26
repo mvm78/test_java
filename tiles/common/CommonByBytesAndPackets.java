@@ -25,12 +25,4 @@ public class CommonByBytesAndPackets extends CommonBy {
 
     //**************************************************************************
 
-    @Override
-    public String [] getNoTallyColumns() {
-
-        return new String [] {};
-    }
-
-    //**************************************************************************
-
 }
