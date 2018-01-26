@@ -6,13 +6,14 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
-import test_java.ErrorsLog;
 
+import test_java.ErrorsLog;
+import test_java.common.Consts;
 import test_java.tiles.Tile;
 import test_java.tiles.TileFactory;
 import test_java.common.Util;
 
-public abstract class Report implements Cloneable {
+public class Report implements Cloneable {
 
     private final int maxDrillLevel = 1;
 
@@ -36,18 +37,10 @@ public abstract class Report implements Cloneable {
 
     //**************************************************************************
 
-    protected abstract String getTitle();
-
-    //**************************************************************************
-
     @Override
-    public Report clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
 
-        try {
-            return (Report)super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new InternalError();
-        }
+        return super.clone();
     }
 
     //**************************************************************************
@@ -73,9 +66,38 @@ public abstract class Report implements Cloneable {
 
     //**************************************************************************
 
+    protected String getTitle() {
+
+        return this.title;
+    }
+
+    //**************************************************************************
+
     public String getEndTime() {
 
         return this.endTime;
+    }
+
+    //**************************************************************************
+
+    @SuppressWarnings("unchecked")
+    public Report cloneReport() {
+
+        Report report = null;
+
+        try {
+            report = (Report)this.clone();
+        } catch (CloneNotSupportedException e) {
+            System.err.println(Consts.BRIGHT_RED + "Error cloning report");
+            System.exit(1);
+        }
+
+        if (report == null) {
+            System.err.println(Consts.BRIGHT_RED + "Error cloning report");
+            System.exit(1);
+        }
+
+        return report;
     }
 
     //**************************************************************************
@@ -137,6 +159,7 @@ public abstract class Report implements Cloneable {
             return;
         }
 
+        Report report = this;
         Map<String, Map<String, Map<String, Object>>> results = new HashMap<>();
 
         float timeInterval = Util.getTimeInterval(this.beginTime, this.endTime);
@@ -147,7 +170,6 @@ public abstract class Report implements Cloneable {
             String className = "test_java.tiles." + type + "." + tileFolder + tile;
 
             Tile testTile = TileFactory.getTile(className, timeInterval);
-            Report report = this;
 
             Map<String, Object> params = new HashMap<String, Object>() {{
                 put("report", report);

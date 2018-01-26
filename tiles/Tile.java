@@ -12,7 +12,7 @@ import test_java.common.Consts;
 import test_java.tiles.common.Common;
 import test_java.tiles.common.CommonBy;
 
-public abstract class Tile {
+public class Tile implements Cloneable {
 
     protected byte debug = 2;
 
@@ -38,13 +38,24 @@ public abstract class Tile {
 
     //**************************************************************************
 
-    public abstract void setWindow(float timeInterval);
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+
+        return super.clone();
+    }
 
     //**************************************************************************
 
     protected String getRowFilter(Map<String, Object> data) {
 
         return "";
+    }
+
+    //**************************************************************************
+
+    public void setWindow(float timeInterval) {
+
+        this.window = this.window == null ? "0.0" : this.window;
     }
 
     //**************************************************************************
@@ -105,6 +116,28 @@ public abstract class Tile {
 
     //**************************************************************************
 
+    @SuppressWarnings("unchecked")
+    private Tile cloneTile() {
+
+        Tile tile = null;
+
+        try {
+            tile = (Tile)this.clone();
+        } catch (CloneNotSupportedException e) {
+            System.err.println(Consts.BRIGHT_RED + "Error cloning tile");
+            System.exit(1);
+        }
+
+        if (tile == null) {
+            System.err.println(Consts.BRIGHT_RED + "Error cloning tile");
+            System.exit(1);
+        }
+
+        return tile;
+    }
+
+    //**************************************************************************
+
     public BufferedReader getQueryResults(String finalCmd) {
 
         try (PrintWriter out = new PrintWriter("run_query.sh")) {
@@ -141,7 +174,7 @@ public abstract class Tile {
     @SuppressWarnings("unchecked")
     public Map<String, Map<String, Object>> test(Map<String, Object> data) {
 
-        Report report = (Report)data.get("report");
+        Report report = ((Report)data.get("report")).cloneReport();
         String cmd = data.get("cmd") == null ? report.getCmd(this) :
                 (String)data.get("cmd");
         String filter = (String)data.get("filter");
@@ -173,13 +206,13 @@ public abstract class Tile {
         params.put("splitParent", splitParent.clone());
         params.put("isCellDrill", isCellDrill);
 
-        Tile tile = this;
-
         for (int filterCount=0; filterCount<this.fields.length; filterCount++) {
 
             String finalCmd = cmd + this.getQuerySuffix(filter, filterCount);
 
             List<String []> lines = this.getQueryLines(finalCmd);
+
+            Tile tile = this.cloneTile();
 
             Util.debugOutput(new HashMap<String, Object>() {{
                 put("tile", tile);
@@ -263,7 +296,7 @@ public abstract class Tile {
     @SuppressWarnings("unchecked")
     private void drillTile(Map<String, Object> data) {
 
-        Report report = (Report)data.get("report");
+        Report report = ((Report)data.get("report")).cloneReport();
         String line = (String)data.get("line");
         String [] split = (String [])((String [])data.get("split")).clone();
         String filter = (String)data.get("filter");
@@ -287,18 +320,10 @@ public abstract class Tile {
 
         this.test(params);
 
-        Report drillReport;
+        Report drillReport = report.cloneReport();
 
-        try {
-            drillReport = report.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new InternalError();
-        }
-
-        if (drillReport != null) {
-            drillReport.addSkipTile(this.getTrueName());
-            drillReport.tests(drillLevel + 1, finalFilter);
-        }
+        drillReport.addSkipTile(this.getTrueName());
+        drillReport.tests(drillLevel + 1, finalFilter);
     }
 
     //**************************************************************************
@@ -503,7 +528,7 @@ public abstract class Tile {
 
     private String getDrillFilter(Map<String, Object> data) {
 
-        Report report = (Report)data.get("report");
+        Report report = ((Report)data.get("report")).cloneReport();
         String [] split = (String [])((String [])data.get("split")).clone();
         String filter = (String)data.get("filter");
         int filterCount = (int)data.get("filterCount");
@@ -759,7 +784,7 @@ public abstract class Tile {
                 (Map<String, Object>)((HashMap<String, Object>)data.get("tally")).clone();
         boolean isCellDrill = (boolean)data.get("isCellDrill");
         String [] splitParent = (String [])((String [])data.get("splitParent")).clone();
-        Report report = (Report)data.get("report");
+        Report report = ((Report)data.get("report")).cloneReport();
         int filterCount = (int)data.get("filterCount");
         String filter = (String)data.get("filter");
         int drillLevel = (int)data.get("drillLevel");
