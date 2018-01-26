@@ -1,6 +1,9 @@
 package test_java.reports;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import test_java.ErrorsLog;
@@ -120,72 +123,6 @@ public abstract class Report implements Cloneable {
 
     //**************************************************************************
 
-    protected LinkedHashMap<String, Map<String, Map<String, Object>>> runTileTests(
-            String [] classes
-    ) {
-
-        return this.runTileTests(classes, 1, "");
-    }
-
-    //**************************************************************************
-
-    protected LinkedHashMap<String, Map<String, Map<String, Object>>> runTileTests(
-            String [] classes,
-            int drillLevel,
-            String filter
-    ) {
-
-        float timeInterval = Util.getTimeInterval(this.beginTime, this.endTime);
-
-        LinkedHashMap<String, Map<String, Map<String, Object>>> results =
-                new LinkedHashMap<>();
-
-        for (String clazz: classes) {
-
-            Tile tile = TileFactory.getTile(clazz, timeInterval);
-
-            if (tile != null) {
-
-                String classTrueName = tile.getTrueName();
-                Map<String, Map<String, Object>> tileResults =
-                        this.runTileTest(tile, filter, drillLevel);
-
-                results.put(classTrueName, tileResults);
-            }
-        }
-
-        return results;
-    }
-
-    //**************************************************************************
-
-    @SuppressWarnings("unchecked")
-    private Map<String, Map<String, Object>> runTileTest(
-            Tile tile,
-            String filter,
-            int drillLevel
-    ) {
-
-        Report report = this;
-
-        Map<String, Object> params = new HashMap<String, Object>() {{
-            put("report", report);
-            put("filter", filter);
-            put("drillLevel", drillLevel);
-        }};
-
-        Map<String, Map<String, Object>> result = tile.test(params);
-
-        result.put("columns", (HashMap)tile.getColumns());
-        result.put("info", new HashMap<String, Object>() {{
-            put("title", tile.getTitle());
-        }});
-
-        return result;
-    }
-
-    //**************************************************************************
-
     public void tests() {
 
         this.tests(1, "");
@@ -193,25 +130,40 @@ public abstract class Report implements Cloneable {
 
     //**************************************************************************
 
+    @SuppressWarnings("unchecked")
     public void tests(int drillLevel, String filter) {
 
         if (drillLevel > this.maxDrillLevel) {
             return;
         }
 
-        ArrayList<String> testTiles = new ArrayList<>();
+        Map<String, Map<String, Map<String, Object>>> results = new HashMap<>();
 
-        String tileFolder = this.tilesFolder.isEmpty() ? "" :
-                this.tilesFolder + ".";
+        float timeInterval = Util.getTimeInterval(this.beginTime, this.endTime);
+        String tileFolder = this.tilesFolder.isEmpty() ? "" : this.tilesFolder + ".";
 
         this.tiles.forEach((tile, type) -> {
-            testTiles.add("test_java.tiles." + type + "." + tileFolder + tile);
+
+            String className = "test_java.tiles." + type + "." + tileFolder + tile;
+
+            Tile testTile = TileFactory.getTile(className, timeInterval);
+            Report report = this;
+
+            Map<String, Object> params = new HashMap<String, Object>() {{
+                put("report", report);
+                put("filter", filter);
+                put("drillLevel", drillLevel);
+            }};
+
+            Map<String, Map<String, Object>> result = testTile.test(params);
+
+            result.put("columns", (HashMap)testTile.getColumns());
+            result.put("info", new HashMap<String, Object>() {{
+                put("title", testTile.getTitle());
+            }});
+
+            results.put(testTile.getTrueName(), result);
         });
-
-        String [] classes = testTiles.toArray(new String[0]);
-
-        LinkedHashMap<String, Map<String, Map<String, Object>>> results =
-                this.runTileTests(classes, drillLevel, filter);
 
         if (this.tallyCheck != null) {
             this.checkTally(results, filter);
@@ -222,7 +174,7 @@ public abstract class Report implements Cloneable {
 
     @SuppressWarnings("unchecked")
     private void checkTally(
-            LinkedHashMap<String, Map<String, Map<String, Object>>> results,
+            Map<String, Map<String, Map<String, Object>>> results,
             String filter
     ) {
 
@@ -303,11 +255,11 @@ public abstract class Report implements Cloneable {
         this.tiles = new HashMap<String, String>() {};
 
         this.tileList.forEach((String type, ArrayList<String>typeTiles) -> {
-            typeTiles.stream().forEach(tile -> {
-                if (this.skipTiles.get(tile) == null) {
-                   this.tiles.put(tile, type);
-                }
-            });
+            typeTiles.stream()
+                    .filter(tile -> this.skipTiles.get(tile) == null)
+                    .forEach(tile -> {
+                       this.tiles.put(tile, type);
+                    });
         });
     }
 
