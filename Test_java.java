@@ -1,12 +1,15 @@
 package test_java;
 
+import java.util.Arrays;
+import test_java.common.Util;
 import test_java.reports.*;
 
 public class Test_java {
 
     public static void main(String[] args) {
 
-        ErrorsLog.removeLogs();
+        Util.removeLogs();
+        Util.removeShellFiles();
 
         String [] reports = {
             "PerformanceOverview",
@@ -27,11 +30,15 @@ public class Test_java {
             "Experts",
         };
 
-        for (String report : reports) {
-            ReportFactory.getReport("test_java.reports." + report).tests();
-        }
+        Arrays.stream(reports).parallel()
+                .forEach(report -> {
+                    ReportFactory.getReport("test_java.reports." + report).tests();
+                });
 
         ErrorsLog.outputLog();
+        Util.removeShellFiles();
+
+        System.exit(0);
     }
 
     //**************************************************************************

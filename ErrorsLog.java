@@ -13,24 +13,10 @@ import test_java.common.Consts;
 
 public class ErrorsLog {
 
-    private static final String [] LOG_FILES = {
+    public static final String [] LOG_FILES = {
         "errors.log",
         "tallyErrors.log"
     };
-
-    //**************************************************************************
-
-    public static void removeLogs() {
-
-        for (byte count=0; count<ErrorsLog.LOG_FILES.length; count++) {
-
-            File logFile = new File(ErrorsLog.LOG_FILES[count]);
-
-            if (logFile.exists()) {
-                logFile.delete();
-            }
-        }
-    }
 
     //**************************************************************************
 

@@ -165,27 +165,30 @@ public class Report implements Cloneable {
         float timeInterval = Util.getTimeInterval(this.beginTime, this.endTime);
         String tileFolder = this.tilesFolder.isEmpty() ? "" : this.tilesFolder + ".";
 
-        this.tiles.forEach((tile, type) -> {
+        this.tiles.keySet().parallelStream()
+                .forEach(tile -> {
 
-            String className = "test_java.tiles." + type + "." + tileFolder + tile;
+                    String type = this.tiles.get(tile);
 
-            Tile testTile = TileFactory.getTile(className, timeInterval);
+                    String className = "test_java.tiles." + type + "." + tileFolder + tile;
 
-            Map<String, Object> params = new HashMap<String, Object>() {{
-                put("report", report);
-                put("filter", filter);
-                put("drillLevel", drillLevel);
-            }};
+                    Tile testTile = TileFactory.getTile(className, timeInterval);
 
-            Map<String, Map<String, Object>> result = testTile.test(params);
+                    Map<String, Object> params = new HashMap<String, Object>() {{
+                        put("report", report);
+                        put("filter", filter);
+                        put("drillLevel", drillLevel);
+                    }};
 
-            result.put("columns", (HashMap)testTile.getColumns());
-            result.put("info", new HashMap<String, Object>() {{
-                put("title", testTile.getTitle());
-            }});
+                    Map<String, Map<String, Object>> result = testTile.test(params);
 
-            results.put(testTile.getTrueName(), result);
-        });
+                    result.put("columns", (HashMap)testTile.getColumns());
+                    result.put("info", new HashMap<String, Object>() {{
+                        put("title", testTile.getTitle());
+                    }});
+
+                    results.put(testTile.getTrueName(), result);
+                });
 
         if (this.tallyCheck != null) {
             this.checkTally(results, filter);
@@ -200,7 +203,7 @@ public class Report implements Cloneable {
             String filter
     ) {
 
-        this.tallyCheck.keySet().stream()
+        this.tallyCheck.keySet().parallelStream()
                 .filter(tile -> results.get(tile) != null)
                 .forEach(tile -> {
 
@@ -213,7 +216,7 @@ public class Report implements Cloneable {
                     AtomicReference<String> caption = new AtomicReference<>(text);
                     AtomicBoolean isCompareToPrined = new AtomicBoolean(false);
 
-                    Arrays.stream(this.tallyCheck.get(tile))
+                    Arrays.stream(this.tallyCheck.get(tile)).parallel()
                             .filter(item -> results.get(item) != null)
                             .forEach(item -> {
                                 this.compareTallies(compareToData, (Map)results.get(item),
@@ -240,7 +243,7 @@ public class Report implements Cloneable {
         String logFile = "tallyErrors.log";
         String compareTitle = compareTile.get("info").get("title").toString();
 
-        columns.keySet().stream()
+        columns.keySet().stream().parallel()
                 .filter(column -> ((Map)columns.get(column)).get("compare") != null)
                 .forEach(column -> {
 
@@ -277,7 +280,7 @@ public class Report implements Cloneable {
         this.tiles = new HashMap<String, String>() {};
 
         this.tileList.forEach((String type, ArrayList<String>typeTiles) -> {
-            typeTiles.stream()
+            typeTiles.stream().parallel()
                     .filter(tile -> this.skipTiles.get(tile) == null)
                     .forEach(tile -> {
                        this.tiles.put(tile, type);

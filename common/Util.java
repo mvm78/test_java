@@ -1,10 +1,13 @@
 package test_java.common;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.nio.charset.StandardCharsets;
 
+import test_java.ErrorsLog;
 import test_java.tiles.Tile;
 
 public class Util {
@@ -227,6 +230,39 @@ public class Util {
         String [] splitDateTime = dateTime.split("\\s+");
 
         return splitDateTime[1] + " " + splitDateTime[0];
+    }
+
+    //**************************************************************************
+
+    public static void removeLogs() {
+
+        for (byte count=0; count<ErrorsLog.LOG_FILES.length; count++) {
+
+            File logFile = new File(ErrorsLog.LOG_FILES[count]);
+
+            if (logFile.exists()) {
+                logFile.delete();
+            }
+        }
+    }
+
+    //**************************************************************************
+
+    public static void removeShellFiles() {
+
+        final File folder = new File("/home/vcr/test_java/");
+        final File[] files = folder.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(final File dir, final String name) {
+                return name.startsWith("run_query");
+            }
+        });
+
+        for (final File file : files) {
+            if (! file.delete()) {
+                System.err.println("Can't remove " + file.getAbsolutePath());
+            }
+        }
     }
 
     //**************************************************************************

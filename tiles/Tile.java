@@ -140,10 +140,12 @@ public class Tile implements Cloneable {
 
     public BufferedReader getQueryResults(String finalCmd) {
 
-        try (PrintWriter out = new PrintWriter("run_query.sh")) {
+        String shellFile = "run_query-" + UUID.randomUUID().toString() + ".sh";
+
+        try (PrintWriter out = new PrintWriter(shellFile)) {
             out.println(finalCmd);
         } catch (FileNotFoundException e) {
-            System.err.println(Consts.BRIGHT_RED + "File run_query.sh was not found");
+            System.err.println(Consts.BRIGHT_RED + "File " + shellFile + " was not found");
             System.exit(1);
         }
 
@@ -151,7 +153,7 @@ public class Tile implements Cloneable {
 
         try {
 
-            Process process = runtime.exec("sh run_query.sh");
+            Process process = runtime.exec("sh " + shellFile);
 
             InputStream inputStream = process.getInputStream();
 
@@ -162,7 +164,7 @@ public class Tile implements Cloneable {
             return bufferedReader;
 
         } catch (IOException e) {
-            System.err.println(Consts.BRIGHT_RED + "Error running run_query.sh");
+            System.err.println(Consts.BRIGHT_RED + "Error running " + shellFile);
             System.exit(1);
         }
 
@@ -241,7 +243,7 @@ public class Tile implements Cloneable {
             params.put("filterCount", filterCount);
             params.put("parentLines", lines);
 
-            lines.stream()
+            lines.stream().parallel()
                     .filter(line -> ! isBreak.get() && Util.getBufferLineFilter(line))
                     .forEach(line -> {
 
@@ -336,7 +338,7 @@ public class Tile implements Cloneable {
 
         params.put("isCellDrill", true);
 
-        this.columns.values().stream()
+        this.columns.values().parallelStream()
                 .filter(values -> values.get("cellDrill") != null)
                 .forEach(values -> {
 
@@ -389,42 +391,38 @@ public class Tile implements Cloneable {
             put("stopTime", reportStopTime);
         }};
 
-        this.columns.values().forEach((columnInfo) -> {
+        this.columns.values().parallelStream()
+                .filter(columnInfo -> columnInfo.get("startTime") != null || columnInfo.get("stopTime") != null)
+                .forEach(columnInfo -> {
 
-            Object startTime = columnInfo.get("startTime");
-            Object stopTime = columnInfo.get("stopTime");
+                    int order = (int)columnInfo.get("order");
+                    String timeField = columnInfo.get("startTime") == null ?
+                            "stopTime" : "startTime";
 
-            if (startTime == null && stopTime == null) {
-                return;
-            }
+                    String originalTime = split[order];
 
-            int order = (int)columnInfo.get("order");
-            String timeField = startTime == null ? "stopTime" : "startTime";
+                    if (originalTime.equals("NA") && this.getTitle().equals("Web Sessions")) {
 
-            String originalTime = split[order];
+                        originalTime = Long.toString(System.currentTimeMillis() / 1000L);
 
-            if (originalTime.equals("NA") && this.getTitle().equals("Web Sessions")) {
+                    } else {
 
-                originalTime = Long.toString(System.currentTimeMillis() / 1000L);
+                        Object index = columnInfo.get("concat");
 
-            } else {
+                        originalTime += index == null ? "" : "." + split[(int)index];
+                    }
 
-                Object index = columnInfo.get("concat");
+                    String alteration = columnInfo.get(timeField).toString();
 
-                originalTime += index == null ? "" : "." + split[(int)index];
-            }
+                    if (alteration.isEmpty()) {
+                        reportTime.put(timeField, originalTime);
+                    } else {
 
-            String alteration = columnInfo.get(timeField).toString();
+                        String adjustedTime = this.getAdjustedTime(alteration, originalTime);
 
-            if (alteration.isEmpty()) {
-                reportTime.put(timeField, originalTime);
-            } else {
-
-                String adjustedTime = this.getAdjustedTime(alteration, originalTime);
-
-                reportTime.put(timeField, adjustedTime);
-            }
-        });
+                        reportTime.put(timeField, adjustedTime);
+                    }
+                });
 
         String startTime = reportTime.get("startTime");
         String stopTime = reportTime.get("stopTime");
@@ -485,11 +483,11 @@ public class Tile implements Cloneable {
 
             if (isTally != null && isTally.toString().equals("true")) {
 
-                Object tallied = tally.get(column);
+                    Object tallied = tally.get(column);
 
-                tallied = tallied == null ? 0D : tallied;
+                    tallied = tallied == null ? 0D : tallied;
 
-                tally.put(column, (double)tallied + Double.valueOf(split[count]));
+                    tally.put(column, (double)tallied + Double.valueOf(split[count]));
             }
         });
 
@@ -540,7 +538,7 @@ public class Tile implements Cloneable {
         AtomicReference<List<Map<String, Object>>> filterInfo =
                 new AtomicReference<>(new ArrayList<>());
 
-        this.columns.entrySet().stream()
+        this.columns.entrySet().parallelStream()
                 .filter(info -> {
 
                     int count = (int)info.getValue().get("order");
@@ -612,46 +610,46 @@ public class Tile implements Cloneable {
         AtomicBoolean isTitlePrined = new AtomicBoolean(false);
         AtomicBoolean isError = new AtomicBoolean(false);
 
-        this.columns.forEach((column, info) -> {
+        this.columns.keySet().parallelStream()
+            .forEach(column -> {
 
-            int count = (Integer)info.get("order");
+                HashMap<String, Object> info = this.columns.get(column);
 
-            String parentValue = splitParent[count];
-            String drilledValue = splitLine[count];
+                int count = (Integer)info.get("order");
 
-            Object compare = info.get("compare");
-            Object filter = info.get("filter");
+                String parentValue = splitParent[count];
+                String drilledValue = splitLine[count];
 
-            if ((compare != null || filter != null)
-             && ! drilledValue.equals(parentValue)) {
-                // processing line has mismatch values
-                if (! isOutput) {
-                    // no output neede, just verifying value pairs
-                    isError.set(true);
-                    // exit loop if at least one pair of values mismatch
-                    return;
+                Object compare = info.get("compare");
+                Object filter = info.get("filter");
+
+                if ((compare != null || filter != null) && ! drilledValue.equals(parentValue)) {
+                    // processing line has mismatch values
+                    if (! isOutput) {
+                        // at least one pair of values mismatch
+                        isError.set(true);
+                    } else {
+                        if (compare != null && compare.toString().equals("number")) {
+
+                            double parentDoubleValue = Double.valueOf(parentValue);
+                            double drilledDoubleValue = Double.valueOf(drilledValue);
+
+                            parentValue = parentDoubleValue == 0 ? parentValue :
+                                    Util.getPrettyNumber(parentDoubleValue);
+                            drilledValue = parentDoubleValue == 0 ? drilledValue :
+                                    Util.getPrettyNumber(drilledDoubleValue);
+                        }
+
+                        String error = column + ": " + parentValue + " # " + drilledValue;
+
+                        if (! isTitlePrined.getAndSet(true)) {
+                            this.logError("\t" + lineErrorCaption + ":");
+                        }
+
+                        this.logError("\t\t" + error);
+                    }
                 }
-
-                if (compare != null && compare.toString().equals("number")) {
-
-                    double parentDoubleValue = Double.valueOf(parentValue);
-                    double drilledDoubleValue = Double.valueOf(drilledValue);
-
-                    parentValue = parentDoubleValue == 0 ? parentValue :
-                            Util.getPrettyNumber(parentDoubleValue);
-                    drilledValue = parentDoubleValue == 0 ? drilledValue :
-                            Util.getPrettyNumber(drilledDoubleValue);
-                }
-
-                String error = column + ": " + parentValue + " # " + drilledValue;
-
-                if (! isTitlePrined.getAndSet(true)) {
-                    this.logError("\t" + lineErrorCaption + ":");
-                }
-
-                this.logError("\t\t" + error);
-            }
-        });
+            });
 
         return ! isError.get();
     }
@@ -867,7 +865,7 @@ public class Tile implements Cloneable {
         List<String []> result = new ArrayList<>();
 
         try (BufferedReader results = this.getQueryResults(finalCmd)) {
-            results.lines()
+            results.lines().parallel()
                     .forEach(line -> {
 
                         String [] split = Util.split(line.trim(), this.splitChar);
@@ -913,7 +911,7 @@ public class Tile implements Cloneable {
 
         List<String []> parentLines = (ArrayList<String []>)result.get("parentLines");
 
-        parentLines.stream()
+        parentLines.stream().parallel()
                 .filter(line -> {
                     if (! Util.getBufferLineFilter(line)) {
                         return false;
