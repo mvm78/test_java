@@ -1,6 +1,9 @@
 package test_java.tiles.common;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class CommonBy {
@@ -22,7 +25,9 @@ public abstract class CommonBy {
             int columnIncrement
     ) {
 
-        List noTallyColumns = Arrays.asList(this.getNoTallyColumns());
+        String [] noTallyColumns = this.getNoTallyColumns();
+
+        List noTally = Arrays.asList(noTallyColumns);
 
         int start = _columns.size() + columnIncrement;
 
@@ -34,7 +39,7 @@ public abstract class CommonBy {
                 put("order", count.getAndAdd(1));
                 put("compare", value);
 
-                if (! noTallyColumns.contains(column)) {
+                if (! noTally.contains(column)) {
                     put("tally", "true");
                 }
             }});
