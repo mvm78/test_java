@@ -12,7 +12,6 @@ public class TopTCPConversationsByBytes extends Table {
         this.common = new CommonTopHostPairs();
         this.commonBy = new CommonByTCPBytes();
 
-        this.isSingleLine = true;
         this.title = "Top TCP Conversations by Bytes";
         this.prefix = "TcpAgg flowsegments";
         this.setCommonData();
