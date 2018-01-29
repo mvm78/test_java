@@ -12,7 +12,6 @@ public class TopHostPairsByThroughput extends Table {
         this.common = new CommonTopHostPairs();
         this.commonBy = new CommonByThroughput();
 
-        this.isSingleLine = true;
         this.title = "Top Host Pairs by Throughput";
         this.prefix = "TcpAgg flowsegments";
         this.setCommonData();

@@ -12,7 +12,6 @@ public class TopTCPServersByBytes extends Table {
         this.common = new CommonTopServers();
         this.commonBy = new CommonByTCPBytes();
 
-        this.isSingleLine = true;
         this.title = "Top TCP Servers by Bytes";
         this.prefix = "TcpAgg flowsegments";
         this.setCommonData();

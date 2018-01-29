@@ -12,7 +12,6 @@ public class TCPConnections extends Table {
 
         this.common = new CommonTCPSessions();
 
-        this.isSingleLine = true;
         this.title = "TCP Connections";
         this.window = this.common.getWindow();
         this.prefix = this.common.getPrefix();
