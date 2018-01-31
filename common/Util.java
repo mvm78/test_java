@@ -102,7 +102,7 @@ public class Util {
 
     //**************************************************************************
 
-    public static String getTimeString(String dateTime) {
+    public static String getTimeStamp(String dateTime) {
 
         Map<String, Long> parsedTime = Util.getParsedTime(dateTime);
 

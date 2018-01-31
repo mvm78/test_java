@@ -23,11 +23,11 @@ public class Report implements Cloneable {
     protected Map<String, Boolean> skipTiles = new HashMap<>();
     protected String tilesFolder = "";
 
-    private final String beginTime = "18:34:36.945967 06/29/2015";
-    private final String endTime = "14:21:00.233799 07/06/2015";
+    private final String beginTime = "11:00:00 01/30/2018";
+    private final String endTime = "11:00:10 01/30/2018";
     private final String hashKey = "1";
     private final String appliance = "App5100-30";
-    private final String pcap = "testcalls_pure_1_pcap";
+    private final String pcap = "em1";
 
     protected String appPath;
     protected String refresh;
@@ -113,25 +113,28 @@ public class Report implements Cloneable {
 
     public String getCmdTime() {
 
-        String statTime = Util.getTimeString(this.beginTime);
-        String stopTime = Util.getTimeString(this.endTime);
+        String startTime = Util.getTimeStamp(this.beginTime);
+        String stopTime = Util.getTimeStamp(this.endTime);
 
-        return " B " + statTime + " E " + stopTime;
+        return " B " + startTime + " E " + stopTime;
     }
 
     //**************************************************************************
 
     public String getCmd(Tile tile) {
 
-        String statTime = Util.getTimeString(this.beginTime);
-        String stopTime = Util.getTimeString(this.endTime);
+        String startTime = Util.getTimeStamp(this.beginTime);
+        String stopTime = Util.getTimeStamp(this.endTime);
 
-        return this.getCmd(tile, statTime, stopTime);
+        return this.getCmd(tile, new HashMap<String, String>() {{
+            put("startTime", startTime);
+            put("stopTime", stopTime);
+        }});
     }
 
     //**************************************************************************
 
-    public String getCmd(Tile tile, String beginTime, String endTime) {
+    public String getCmd(Tile tile, Map<String, String> drillTime) {
 
         String tileAppPath = tile.getAppPath();
 
@@ -139,8 +142,8 @@ public class Report implements Cloneable {
 
         return path + this.getCmdAppliance() +
                 " " + this.refresh +
-                " B " + beginTime +
-                " E " + endTime;
+                " B " + drillTime.get("startTime") +
+                " E " + drillTime.get("stopTime");
     }
 
     //**************************************************************************
@@ -165,6 +168,21 @@ public class Report implements Cloneable {
         float timeInterval = Util.getTimeInterval(this.beginTime, this.endTime);
         String tileFolder = this.tilesFolder.isEmpty() ? "" : this.tilesFolder + ".";
 
+        String reportBeginTime = report.getBeginTime();
+        String reportEndTime = report.getEndTime();
+
+        Map<String, Object> params = new HashMap<String, Object>() {{
+            put("report", report);
+            put("filter", filter);
+            put("drillLevel", drillLevel);
+            put("reportTime", new HashMap<String, String>() {{
+                put("beginTime", Util.getTimeStamp(reportBeginTime));
+                put("endTime", Util.getTimeStamp(reportEndTime));
+                put("beginTimeString", reportBeginTime);
+                put("endTimeString", reportEndTime);
+            }});
+        }};
+
         this.tiles.keySet().parallelStream()
                 .forEach(tile -> {
 
@@ -174,15 +192,9 @@ public class Report implements Cloneable {
 
                     Tile testTile = TileFactory.getTile(className, timeInterval);
 
-                    Map<String, Object> params = new HashMap<String, Object>() {{
-                        put("report", report);
-                        put("filter", filter);
-                        put("drillLevel", drillLevel);
-                    }};
-
                     Map<String, Map<String, Object>> result = testTile.test(params);
 
-                    result.put("columns", (HashMap)testTile.getColumns());
+                    result.put("columns", (Map)testTile.getColumns());
                     result.put("info", new HashMap<String, Object>() {{
                         put("title", testTile.getTitle());
                     }});

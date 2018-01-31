@@ -3,6 +3,7 @@ package test_java.tiles;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
+import java.util.concurrent.*;
 import java.lang.reflect.Method;
 
 import test_java.ErrorsLog;
@@ -189,6 +190,10 @@ public class Tile implements Cloneable {
         List<String []> parentLines = data.get("parentLines") == null ? null :
                 (List<String []>)((ArrayList<String []>)data.get("parentLines")).clone();
         String operator = (String)data.get("operator");
+        final Map<String, String> reportTime = (Map<String, String>)data.get("reportTime");
+
+        Map<String, Object> params =
+                (Map<String, Object>)((HashMap<String, Object>)data).clone();
 
         if (splitParent.length == 0 && drillLevel == 1) {
             report.resetSkipTiles();
@@ -202,11 +207,8 @@ public class Tile implements Cloneable {
         AtomicBoolean isLineMatch = new AtomicBoolean(false);
         AtomicReference<Map<String, Object>> tally =
                 new AtomicReference<>(new HashMap<>());
-        Map<String, Object> params =
-                (Map<String, Object>)((HashMap<String, Object>)data).clone();
 
-        params.put("splitParent", splitParent.clone());
-        params.put("isCellDrill", isCellDrill);
+        params.put("splitParent", splitParent);
 
         for (int filterCount=0; filterCount<this.fields.length; filterCount++) {
 
@@ -243,7 +245,7 @@ public class Tile implements Cloneable {
             params.put("filterCount", filterCount);
             params.put("parentLines", lines);
 
-            lines.stream().parallel()
+            lines.stream()
                     .filter(line -> ! isBreak.get() && Util.getBufferLineFilter(line))
                     .forEach(line -> {
 
@@ -252,6 +254,7 @@ public class Tile implements Cloneable {
                         params.put("split", line);
                         params.put("isLineMatch", isLineMatch.get());
                         params.put("tally", tally.get());
+                        params.put("lineCount", lineCount.get());
 
                         Map<String, Object> result = this.handleTestBufferLine(params);
 
@@ -259,6 +262,11 @@ public class Tile implements Cloneable {
                         isLineMatch.set((boolean)result.get("isLineMatch"));
                         tally.set((HashMap<String, Object>)result.get("tally"));
                     });
+
+            if (isBreak.get()) {
+                // no need to check remaining lines as the matching line was found
+                break;
+            }
         }
 
         Map<String, Map<String, Object>> testResults = new HashMap<>();
@@ -279,10 +287,13 @@ public class Tile implements Cloneable {
         }
 
         if (lineCount.get() == 0) {
-
-            boolean isOutput = true;
-
-            this.lineErrors(null, splitParent, isOutput);
+            this.lineErrors(new HashMap<String, Object>() {{
+                put("reportTime", reportTime);
+                put("splitLine", null);
+                put("splitParent", splitParent);
+                put("isOutput", true);
+                put("lineCount", 1);
+            }});
         } else if (! this.isSingleLine && ! isLineMatch.get()) {
 
             String lineErrorCaption = this.getLineErrorCaption(splitParent);
@@ -307,7 +318,7 @@ public class Tile implements Cloneable {
 
         String finalFilter = this.getDrillFilter(new HashMap<String, Object>() {{
             put("report", report);
-            put("split", split.clone());
+            put("split", split);
             put("filterCount", filterCount);
             put("filter", filter);
         }});
@@ -373,30 +384,22 @@ public class Tile implements Cloneable {
 
     //**************************************************************************
 
-    private String getTestCmd(Report report, String [] split, boolean useReportTime) {
+    private Map<String, String> getDrillTime(Map<String, String> reportTime, String [] split) {
 
-        String beginTime = report.getBeginTime();
-        String endTime = report.getEndTime();
+        String beginTime = reportTime.get("beginTime");
+        String endTime = reportTime.get("endTime");
 
-        String reportStartTime = Util.getTimeString(beginTime);
-        String reportStopTime = Util.getTimeString(endTime);
-
-        if (useReportTime) {
-            // using report's original start and stop time
-            return report.getCmd(this, reportStartTime, reportStopTime);
-        }
-
-        HashMap<String, String> reportTime = new HashMap<String, String>() {{
-            put("startTime", reportStartTime);
-            put("stopTime", reportStopTime);
+        Map<String, String> beginEndTime = new HashMap<String, String>() {{
+            put("startTime", beginTime);
+            put("stopTime", endTime);
         }};
+        // do not use parallelStream() as startTime/stopTime columns most likely are at the beginning of the column list
+        this.columns.values().stream()
+                .filter(info -> info.get("startTime") != null || info.get("stopTime") != null)
+                .forEach(info -> {
 
-        this.columns.values().parallelStream()
-                .filter(columnInfo -> columnInfo.get("startTime") != null || columnInfo.get("stopTime") != null)
-                .forEach(columnInfo -> {
-
-                    int order = (int)columnInfo.get("order");
-                    String timeField = columnInfo.get("startTime") == null ?
+                    int order = (int)info.get("order");
+                    String timeField = info.get("startTime") == null ?
                             "stopTime" : "startTime";
 
                     String originalTime = split[order];
@@ -407,27 +410,24 @@ public class Tile implements Cloneable {
 
                     } else {
 
-                        Object index = columnInfo.get("concat");
+                        Object index = info.get("concat");
 
                         originalTime += index == null ? "" : "." + split[(int)index];
                     }
 
-                    String alteration = columnInfo.get(timeField).toString();
+                    String alteration = info.get(timeField).toString();
 
                     if (alteration.isEmpty()) {
-                        reportTime.put(timeField, originalTime);
+                        beginEndTime.put(timeField, originalTime);
                     } else {
 
                         String adjustedTime = this.getAdjustedTime(alteration, originalTime);
 
-                        reportTime.put(timeField, adjustedTime);
+                        beginEndTime.put(timeField, adjustedTime);
                     }
                 });
 
-        String startTime = reportTime.get("startTime");
-        String stopTime = reportTime.get("stopTime");
-
-        return report.getCmd(this, startTime, stopTime);
+        return beginEndTime;
     }
 
     //**************************************************************************
@@ -502,23 +502,26 @@ public class Tile implements Cloneable {
         String [] splitParent = (String [])((String [])data.get("splitParent")).clone();
         boolean isTileSingleLine = (boolean)data.get("isTileSingleLine");
 
+        Map<String, Object> params =
+                (Map<String, Object>)((HashMap<String, Object>)data).clone();
+
         if (isTileSingleLine) {
             // there should be only one line on link drill
             if (Arrays.equals(splitLine, splitParent)) {
                 return true;
             } else {
                 // original (parent) and result (after drill) lines do not match
-                boolean isOutput = true;
+                params.put("isOutput", true);
 
-                this.lineErrors(splitLine, splitParent, isOutput);
+                this.lineErrors(params);
 
                 return false;
             }
         } else {
             // there can be many lines on link drill. One of those lines should match
-            boolean isOutput = false;
+            params.put("isOutput", false);
 
-            return this.lineErrors(splitLine, splitParent, isOutput);
+            return this.lineErrors(params);
         }
     }
 
@@ -541,10 +544,10 @@ public class Tile implements Cloneable {
         this.columns.entrySet().parallelStream()
                 .filter(info -> {
 
-                    int count = (int)info.getValue().get("order");
+                    Map<String, Object> value = (Map<String, Object>)info.getValue();
 
-                    return cellDrill == 0 && info.getValue().get("filter") != null
-                        || cellDrill == count && info.getValue().get("cellDrill") != null;
+                    return cellDrill == 0 && value.get("filter") != null
+                        || cellDrill == (int)value.get("order") && value.get("cellDrill") != null;
                 })
                 .forEach(info -> {
 
@@ -556,7 +559,7 @@ public class Tile implements Cloneable {
                         put("value", split[count]);
                         put("filterCount", filterCount);
                         put("cellDrill", cellDrill);
-                        put("split", split.clone());
+                        put("split", split);
                     }};
 
                     String filterField = this.checkIfCustomRowFilter() ?
@@ -569,7 +572,7 @@ public class Tile implements Cloneable {
 
                         infoValues.add(new HashMap<String, Object>() {{
                             put("column", info.getKey());
-                            put("order", info.getValue().get("order"));
+                            put("order", count);
                             put("value", split[count]);
                         }});
 
@@ -591,67 +594,159 @@ public class Tile implements Cloneable {
 
     //**************************************************************************
 
-    private boolean lineErrors(
-            String [] splitLine,
-            String [] splitParent,
-            boolean isOutput
-    ) {
+    private boolean lineErrors(Map<String, Object> data) {
+
+        String [] splitLine = data.get("splitLine") == null ? null :
+                (String [])((String [])data.get("splitLine")).clone();
+        String [] splitParent = (String [])((String [])data.get("splitParent")).clone();
+        boolean isOutput = (boolean)data.get("isOutput");
+        int lineCount = (int)data.get("lineCount");
+        final Map<String, String> reportTime = (Map<String, String>)data.get("reportTime");
 
         String lineErrorCaption = this.getLineErrorCaption(splitParent);
 
+        AtomicBoolean isCaptionPrined = new AtomicBoolean(false);
+        AtomicBoolean isError = new AtomicBoolean(false);
+
+        if (lineCount == 1) {
+            // check if drilled row Start/Stop Time data do not contradict report's Begin/End Time
+            boolean captionPrined = this.timeError(reportTime, splitParent);
+
+            isCaptionPrined.set(captionPrined);
+        }
+
         if (splitLine == null || splitLine.length == 0) {
             if (isOutput) {
-                this.logError("\t" + lineErrorCaption + ":\n\t\tNO DATA");
+                if (! isCaptionPrined.getAndSet(true)) {
+                    this.logError("\t" + lineErrorCaption + ":");
+                }
+
+                this.logError("\t\tNO DATA");
+            }
+            // exit as drilled row has no data
+            return true;
+        }
+        // drilled row has some data so have to compare it with parent's row data
+        this.columns.forEach((column, info) -> {
+
+            int count = (Integer)info.get("order");
+
+            String parent = splitParent[count];
+            String drilled = splitLine[count];
+
+            Object compare = info.get("compare");
+            Object filter = info.get("filter");
+
+            if (compare == null && filter == null || drilled.equals(parent)) {
+                // break as either no need to compare ot parent and drilled data match
+                return;
+            }
+            // at least one pair of values subject to compareson do not match
+            if (! isOutput) {
+
+                isError.set(true);
+                // break as there is no need to output errors
+                return;
+            }
+
+            if (compare != null && compare.toString().equals("number")) {
+
+                double parentDoublValue = Double.valueOf(parent);
+                double drilledDoublValue = Double.valueOf(drilled);
+
+                parent = parentDoublValue == 0 ? parent :
+                        Util.getPrettyNumber(parentDoublValue);
+                drilled = parentDoublValue == 0 ? drilled :
+                        Util.getPrettyNumber(drilledDoublValue);
+            }
+
+            if (! isCaptionPrined.getAndSet(true)) {
+                this.logError("\t" + lineErrorCaption + ":");
+            }
+
+            this.logError("\t\t" + column + ": " + parent + " # " + drilled);
+        });
+
+        return ! isError.get();
+    }
+
+    //**************************************************************************
+
+    private boolean timeError(Map<String, String> reportTime, String [] splitParent) {
+
+        String lineErrorCaption = this.getLineErrorCaption(splitParent);
+
+        ConcurrentMap<String, String> timeInfo = new ConcurrentHashMap<>();
+
+        this.columns.values().stream()
+                .filter(info -> timeInfo.size() < 2)
+                .forEach(info -> {
+
+                    int count = (int)info.get("order");
+
+                    for (String field : new String [] {"startTime", "stopTime"}) {
+                        if (info.get(field) != null) {
+                            timeInfo.put(field, splitParent[count]);
+                        }
+                    }
+                });
+
+        if (timeInfo.size() == 2) {
+
+            String lineStartTime = timeInfo.get("startTime");
+            String lineStopTime = timeInfo.get("stopTime");
+            String beginTime = reportTime.get("beginTime");
+            String endTime = reportTime.get("endTime");
+            String reportStartTime = reportTime.get("beginTimeString");
+            String reportStopTime = reportTime.get("endTimeString");
+
+            double lineDblStartTime = lineStartTime.isEmpty() ? 0 :
+                    Double.valueOf(lineStartTime);
+            double lineDblStopTime = lineStopTime.isEmpty() ? 0 :
+                    Double.valueOf(lineStopTime);
+            double reportDblStartTime = Double.valueOf(reportStartTime);
+            double reportDblStopTime = Double.valueOf(reportStopTime);
+
+            if (lineDblStopTime < reportDblStartTime
+             || lineDblStartTime > reportDblStopTime
+             || lineDblStartTime > lineDblStopTime
+             || lineDblStartTime == 0 || lineDblStopTime == 0) {
+
+                this.logError("\t" + lineErrorCaption + ":");
+
+                String startTime = "Start Time \"" +
+                        Util.getFromTimestamp(lineStartTime) + "\"";
+                String stopTime = "Stop Time \"" +
+                        Util.getFromTimestamp(lineStopTime) + "\"";
+
+                if (lineDblStopTime < reportDblStartTime) {
+                    this.logError("\t\tLine " + stopTime + " is less " +
+                            "than report Start Time \"" + beginTime + "\"");
+                }
+
+                if (lineDblStartTime > reportDblStopTime) {
+                    this.logError("\t\tLine " + startTime + " is greater " +
+                            "than report Stop Time \"" + endTime + "\"");
+                }
+
+                if (lineDblStartTime > lineDblStopTime) {
+                    this.logError("\t\tLine " + startTime + " is greater " +
+                            "than line " + stopTime);
+                }
+
+                if (lineDblStartTime == 0) {
+                    this.logError("\t\tLine Start Time equals to 0");
+                }
+
+                if (lineDblStopTime == 0) {
+                    this.logError("\t\tLine Stop Time equals to 0");
+                }
             }
 
             return true;
         }
 
-        AtomicBoolean isTitlePrined = new AtomicBoolean(false);
-        AtomicBoolean isError = new AtomicBoolean(false);
-
-        this.columns.keySet().parallelStream()
-            .forEach(column -> {
-
-                HashMap<String, Object> info = this.columns.get(column);
-
-                int count = (Integer)info.get("order");
-
-                String parentValue = splitParent[count];
-                String drilledValue = splitLine[count];
-
-                Object compare = info.get("compare");
-                Object filter = info.get("filter");
-
-                if ((compare != null || filter != null) && ! drilledValue.equals(parentValue)) {
-                    // processing line has mismatch values
-                    if (! isOutput) {
-                        // at least one pair of values mismatch
-                        isError.set(true);
-                    } else {
-                        if (compare != null && compare.toString().equals("number")) {
-
-                            double parentDoubleValue = Double.valueOf(parentValue);
-                            double drilledDoubleValue = Double.valueOf(drilledValue);
-
-                            parentValue = parentDoubleValue == 0 ? parentValue :
-                                    Util.getPrettyNumber(parentDoubleValue);
-                            drilledValue = parentDoubleValue == 0 ? drilledValue :
-                                    Util.getPrettyNumber(drilledDoubleValue);
-                        }
-
-                        String error = column + ": " + parentValue + " # " + drilledValue;
-
-                        if (! isTitlePrined.getAndSet(true)) {
-                            this.logError("\t" + lineErrorCaption + ":");
-                        }
-
-                        this.logError("\t\t" + error);
-                    }
-                }
-            });
-
-        return ! isError.get();
+        return false;
     }
 
     //**************************************************************************
@@ -780,14 +875,17 @@ public class Tile implements Cloneable {
         boolean isLineMatch = (boolean)data.get("isLineMatch");
         Map<String, Object> tally =
                 (Map<String, Object>)((HashMap<String, Object>)data.get("tally")).clone();
-        boolean isCellDrill = (boolean)data.get("isCellDrill");
+        boolean isCellDrill = data.get("isCellDrill") == null ? false :
+                (boolean)data.get("isCellDrill");
         String [] splitParent = (String [])((String [])data.get("splitParent")).clone();
         Report report = ((Report)data.get("report")).cloneReport();
         int filterCount = (int)data.get("filterCount");
         String filter = (String)data.get("filter");
         int drillLevel = (int)data.get("drillLevel");
+        int lineCount = (int)data.get("lineCount");
         List<String []> parentLines =
                 (List<String []>)((ArrayList<String []>)data.get("parentLines")).clone();
+        final Map<String, String> reportTime = (Map<String, String>)data.get("reportTime");
 
         if (! isCellDrill) {
 
@@ -800,7 +898,7 @@ public class Tile implements Cloneable {
                 (Map<String, Object>)((HashMap<String, Object>)tally).clone();
         final boolean updatedIsLineMatch = isLineMatch;
 
-        if (! this.checkIsDrillable()) {
+        if (isCellDrill || ! this.checkIsDrillable()) {
             // some tiles like charts or maps may not be subject to drilling
             return new HashMap<String, Object>() {{
                 put("tally", updatedTally);
@@ -809,18 +907,19 @@ public class Tile implements Cloneable {
             }};
         }
 
-        if (isCellDrill) {
+        if (splitParent.length == 0) {
 
-        } else if (splitParent.length == 0) {
+            Map<String, String> drillTime = this.getDrillTime(reportTime, split);
 
-            String drillFieldCmd = this.getTestCmd(report, split, true);
-            String drillTileCmd = this.getTestCmd(report, split, false);
+            String drillTileCmd = report.getCmd(this, drillTime);
+            String drillCellCmd = report.getCmd(this);
             int paramFilterCount = filterCount;
 
             Map<String, Object> params = new HashMap<String, Object>() {{
                 put("report", report);
-                put("cmd", drillFieldCmd);
-                put("split", split.clone());
+                put("reportTime", reportTime);
+                put("cmd", drillCellCmd);
+                put("split", split);
                 put("filter", filter);
                 put("filterCount", paramFilterCount);
                 put("drillLevel", drillLevel);
@@ -837,9 +936,11 @@ public class Tile implements Cloneable {
             boolean isTileSingleLine = this.isSingleLine;
 
             final boolean finalIsLineMatch = this.checkLine(new HashMap<String, Object>() {{
+                put("reportTime", reportTime);
                 put("splitLine", split);
                 put("splitParent", splitParent);
                 put("isTileSingleLine", isTileSingleLine);
+                put("lineCount", lineCount);
             }}) || isLineMatch;
 
             if (! isTileSingleLine && finalIsLineMatch) {
@@ -902,8 +1003,7 @@ public class Tile implements Cloneable {
         String [] splitParent = (String [])((String [])data.get("splitParent")).clone();
         int cellDrill = (int)data.get("cellDrill");
         String filter = (String)data.get("filter");
-        String operator = data.get("operator") == null ? "" :
-                (String)data.get("operator");
+        String operator = data.get("operator") == null ? "" : (String)data.get("operator");
 
         String parentValue = splitParent[cellDrill];
 
@@ -912,14 +1012,8 @@ public class Tile implements Cloneable {
         List<String []> parentLines = (ArrayList<String []>)result.get("parentLines");
 
         parentLines.stream().parallel()
-                .filter(line -> {
-                    if (! Util.getBufferLineFilter(line)) {
-                        return false;
-                    } else {
-                        // either both (empty and equal) TRUE or both FALSE
-                        return operator.isEmpty() == line[cellDrill].equals(parentValue);
-                    }
-                })
+                .filter(line -> Util.getBufferLineFilter(line))
+                .filter(line -> operator.isEmpty() == line[cellDrill].equals(parentValue)) // either both (empty and equal) TRUE or both FALSE
                 .forEach(line -> {
                     this.logDrilledColumnError(new HashMap<String, Object>() {{
                         put("message", "is missing");
