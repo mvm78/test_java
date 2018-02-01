@@ -483,11 +483,11 @@ public class Tile implements Cloneable {
 
             if (isTally != null && isTally.toString().equals("true")) {
 
-                    Object tallied = tally.get(column);
+                Object tallied = tally.get(column);
 
-                    tallied = tallied == null ? 0D : tallied;
+                tallied = tallied == null ? 0D : tallied;
 
-                    tally.put(column, (double)tallied + Double.valueOf(split[count]));
+                tally.put(column, (double)tallied + Double.valueOf(split[count]));
             }
         });
 
@@ -584,7 +584,7 @@ public class Tile implements Cloneable {
 
                         rowFilter.set(value + filterField);
                     }
-        });
+                });
 
         String drillFilter = operator == null ? rowFilter.toString() :
                 operator + " (" + rowFilter.toString() + ")";
@@ -695,10 +695,8 @@ public class Tile implements Cloneable {
 
             String lineStartTime = timeInfo.get("startTime");
             String lineStopTime = timeInfo.get("stopTime");
-            String beginTime = reportTime.get("beginTime");
-            String endTime = reportTime.get("endTime");
-            String reportStartTime = reportTime.get("beginTimeString");
-            String reportStopTime = reportTime.get("endTimeString");
+            String reportStartTime = reportTime.get("beginTime");
+            String reportStopTime = reportTime.get("endTime");
 
             double lineDblStartTime = lineStartTime.isEmpty() ? 0 :
                     Double.valueOf(lineStartTime);
@@ -712,26 +710,30 @@ public class Tile implements Cloneable {
              || lineDblStartTime > lineDblStopTime
              || lineDblStartTime == 0 || lineDblStopTime == 0) {
 
-                this.logError("\t" + lineErrorCaption + ":");
-
+                String beginTime = "Start Time \"" +
+                        reportTime.get("beginTimeString") + "\"";
+                String endTime = "Stop Time \"" +
+                        reportTime.get("endTimeString") + "\"";
                 String startTime = "Start Time \"" +
                         Util.getFromTimestamp(lineStartTime) + "\"";
                 String stopTime = "Stop Time \"" +
                         Util.getFromTimestamp(lineStopTime) + "\"";
 
+                this.logError("\t" + lineErrorCaption + ":");
+
                 if (lineDblStopTime < reportDblStartTime) {
-                    this.logError("\t\tLine " + stopTime + " is less " +
-                            "than report Start Time \"" + beginTime + "\"");
+                    this.logError("\t\tLine " + stopTime +
+                            " is less than report " + beginTime);
                 }
 
                 if (lineDblStartTime > reportDblStopTime) {
-                    this.logError("\t\tLine " + startTime + " is greater " +
-                            "than report Stop Time \"" + endTime + "\"");
+                    this.logError("\t\tLine " + startTime +
+                            " is greater than report " + endTime);
                 }
 
                 if (lineDblStartTime > lineDblStopTime) {
-                    this.logError("\t\tLine " + startTime + " is greater " +
-                            "than line " + stopTime);
+                    this.logError("\t\tLine " + startTime +
+                            " is greater than line " + stopTime);
                 }
 
                 if (lineDblStartTime == 0) {
@@ -834,20 +836,8 @@ public class Tile implements Cloneable {
             return true;
         }
 
-        AtomicBoolean isDrillable = new AtomicBoolean(false);
-
-        this.columns.values().forEach((columnInfo) -> {
-            if (isDrillable.get()) {
-                // continue the loop if is already drillable
-                return;
-            }
-
-            if (columnInfo.get("filter") != null) {
-                isDrillable.getAndSet(true);
-            }
-        });
-
-        return (boolean)isDrillable.get();
+        return this.columns.values().parallelStream()
+                .anyMatch(info -> info.get("filter") != null);
     }
 
     //**************************************************************************
