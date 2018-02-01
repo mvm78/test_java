@@ -23,8 +23,8 @@ public class Report implements Cloneable {
     protected Map<String, Boolean> skipTiles = new HashMap<>();
     protected String tilesFolder = "";
 
-    private final String beginTime = "11:00:00 01/30/2018";
-    private final String endTime = "11:00:10 01/30/2018";
+    private final String beginTime = "09:00:00 02/01/2018";
+    private final String endTime = "09:00:05 02/01/2018";
     private final String hashKey = "1";
     private final String appliance = "App5100-30";
     private final String pcap = "em1";
@@ -257,30 +257,25 @@ public class Report implements Cloneable {
 
         columns.keySet().stream().parallel()
                 .filter(column -> ((Map)columns.get(column)).get("compare") != null)
+                .filter(column -> compareToTally.get(column) != null)
+                .filter(column -> compareTally.get(column) != null)
                 .forEach(column -> {
 
-                    Object toValue = compareToTally.get(column);
-                    Object value = compareTally.get(column);
+                    String prettyToValue = Util.getPrettyNumber(compareToTally.get(column));
+                    String prettyValue = Util.getPrettyNumber(compareTally.get(column));
 
-                    if (toValue != null && value != null) {
-
-                        String prettyToValue = Util.getPrettyNumber((double)toValue);
-                        String prettyValue = Util.getPrettyNumber((double)value);
-
-                        if (! prettyToValue.equals(prettyValue)) {
-                            if (! isCompareToPrined.getAndSet(true)) {
-                                ErrorsLog.log("\n" + caption + " tally mismatch:",
-                                        logFile);
-                            }
-
-                            if (! isComparePrined.getAndSet(true)) {
-                                ErrorsLog.log("\t" + compareTitle, logFile);
-                            }
-
-                            String error = prettyToValue + " # " + prettyValue;
-
-                            ErrorsLog.log("\t\t" + column + ": " + error, logFile);
+                    if (! prettyToValue.equals(prettyValue)) {
+                        if (! isCompareToPrined.getAndSet(true)) {
+                            ErrorsLog.log("\n" + caption + " tally mismatch:", logFile);
                         }
+
+                        if (! isComparePrined.getAndSet(true)) {
+                            ErrorsLog.log("\t" + compareTitle, logFile);
+                        }
+
+                        String error = prettyToValue + " # " + prettyValue;
+
+                        ErrorsLog.log("\t\t" + column + ": " + error, logFile);
                     }
                 });
     }

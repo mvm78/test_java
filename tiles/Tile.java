@@ -650,14 +650,8 @@ public class Tile implements Cloneable {
             }
 
             if (compare != null && compare.toString().equals("number")) {
-
-                double parentDoublValue = Double.valueOf(parent);
-                double drilledDoublValue = Double.valueOf(drilled);
-
-                parent = parentDoublValue == 0 ? parent :
-                        Util.getPrettyNumber(parentDoublValue);
-                drilled = parentDoublValue == 0 ? drilled :
-                        Util.getPrettyNumber(drilledDoublValue);
+                parent = Util.getPrettyNumber(parent);
+                drilled = Util.getPrettyNumber(drilled);
             }
 
             if (! isCaptionPrined.getAndSet(true)) {

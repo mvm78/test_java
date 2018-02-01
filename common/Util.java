@@ -87,9 +87,18 @@ public class Util {
 
     //**************************************************************************
 
-    public static String getPrettyNumber(double number) {
+    public static <T> String getPrettyNumber(T value) {
+
+        String stringValue = String.valueOf(value);
+
+        if (! Util.isNumeric(stringValue)) {
+            return "0";
+        }
+
+        double number = Double.valueOf(stringValue);
 
         long intPart = (long)number;
+
         String fracPart = String.valueOf(number - intPart);
 
         float decimals = Math.round(Float.valueOf(fracPart) * 1000F) / 1000F;
@@ -98,6 +107,13 @@ public class Util {
                 String.valueOf(decimals).substring(1);
 
         return String.format("%,d", intPart) + decPart;
+    }
+
+    //**************************************************************************
+
+    public static boolean isNumeric(String value) {
+
+        return value != null && value.matches("[-+]?\\d*\\.?\\d+");
     }
 
     //**************************************************************************
