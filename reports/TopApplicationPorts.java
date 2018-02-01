@@ -13,18 +13,18 @@ public class TopApplicationPorts extends Report {
 
         this.title = "Top Application Ports";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("charts", new ArrayList<String>() {{
-                add("BitRateAndPacketRate");
-                add("ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes");
-                add("ThroughputVsGoodput");
-            }});
-            put("tables", new ArrayList<String>() {{
-                add("TopApplicationPortsByBytesAndPackets");
-                add("TopTCPApplicationPortsByBytes");
-                add("TopApplicationPortsByResponseTimeAndRetransmittedBytes");
-                add("TopApplicationPortsByThroughput");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("charts", new String [] {
+                "BitRateAndPacketRate",
+                "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
+                "ThroughputVsGoodput",
+            });
+            put("tables", new String [] {
+                "TopApplicationPortsByBytesAndPackets",
+                "TopTCPApplicationPortsByBytes",
+                "TopApplicationPortsByResponseTimeAndRetransmittedBytes",
+                "TopApplicationPortsByThroughput",
+            });
         }};
 
         this.tallyCheck = new HashMap<String, String []>() {{

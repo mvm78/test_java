@@ -14,17 +14,17 @@ public class RTP_KPIs extends Report {
         this.title = "RTP KPIs";
         this.tilesFolder = "RTP_KPIs";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("charts", new ArrayList<String>() {{
-                add("RTPPacketsSessionsAndLoss");
-            }});
-            put("tables", new ArrayList<String>() {{
-                add("TopRTPCodec");
-                add("TopRTPSources");
-                add("TopRTPDestinations");
-                add("TopRTPVLAN");
-                add("RTPSessions");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("charts", new String [] {
+                "RTPPacketsSessionsAndLoss",
+            });
+            put("tables", new String [] {
+                "TopRTPCodec",
+                "TopRTPSources",
+                "TopRTPDestinations",
+                "TopRTPVLAN",
+                "RTPSessions",
+            });
         }};
 
         this.tallyCheck = new HashMap<String, String []>() {{

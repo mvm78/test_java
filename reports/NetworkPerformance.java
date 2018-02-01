@@ -13,23 +13,23 @@ public class NetworkPerformance extends Report {
 
         this.title = "Network Performance";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("charts", new ArrayList<String>() {{
-                add("BitRateAndPacketRate");
-                add("ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes");
-                add("ThroughputVsGoodput");
-            }});
-            put("maps", new ArrayList<String>() {{
-                add("ConnectionsNetworkTimeResponseTimeAndRetransmittedBytesMap");
-            }});
-            put("tables", new ArrayList<String>() {{
-                add("TopProtocolsByBytesAndPackets");
-                add("TopLinkProtocolsByBytesAndPackets");
-                add("TopTCPLinkProtocolsByBytes");
-                add("TopTOSByBytesAndPackets");
-                add("TopVLAN");
-                add("TopVLANByBytesAndPackets");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("charts", new String [] {
+                "BitRateAndPacketRate",
+                "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
+                "ThroughputVsGoodput",
+            });
+            put("maps", new String [] {
+                "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytesMap",
+            });
+            put("tables", new String [] {
+                "TopProtocolsByBytesAndPackets",
+                "TopLinkProtocolsByBytesAndPackets",
+                "TopTCPLinkProtocolsByBytes",
+                "TopTOSByBytesAndPackets",
+                "TopVLAN",
+                "TopVLANByBytesAndPackets",
+            });
         }};
 
         this.tallyCheck = new HashMap<String, String []>() {{

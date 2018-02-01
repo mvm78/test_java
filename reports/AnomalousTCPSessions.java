@@ -14,27 +14,27 @@ public class AnomalousTCPSessions extends Report {
         this.title = "Anomalous TCP Sessions";
         this.tilesFolder = "AnomalousTCPSessions";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("charts", new ArrayList<String>() {{
-                add("UnacknowledgedTCPSessionsTrend");
-                add("ServerResetNoBytesTCPSessionsTrend");
-                add("ClientResetTCPSessionsTrend");
-                add("ShortTCPSessionsTrend");
-                add("LongTCPSessionsTrend");
-                add("HighRetransmissionTCPSessionsTrend");
-                add("PossibleNetworkIssueTCPSessionsTrend");
-                add("PossibleServerOrApplicationIssueTCPSessionsTrend");
-            }});
-            put("tables", new ArrayList<String>() {{
-                add("UnacknowledgedTCPSessions");
-                add("ServerResetNoBytesTCPSessions");
-                add("ClientResetTCPSessions");
-                add("ShortTCPSessions");
-                add("LongTCPSessions");
-                add("HighRetransmissionTCPSessions");
-                add("PossibleNetworkIssueTCPSessions");
-                add("PossibleServerOrApplicationIssueTCPSessions");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("charts", new String [] {
+                "UnacknowledgedTCPSessionsTrend",
+                "ServerResetNoBytesTCPSessionsTrend",
+                "ClientResetTCPSessionsTrend",
+                "ShortTCPSessionsTrend",
+                "LongTCPSessionsTrend",
+                "HighRetransmissionTCPSessionsTrend",
+                "PossibleNetworkIssueTCPSessionsTrend",
+                "PossibleServerOrApplicationIssueTCPSessionsTrend",
+            });
+            put("tables", new String [] {
+                "UnacknowledgedTCPSessions",
+                "ServerResetNoBytesTCPSessions",
+                "ClientResetTCPSessions",
+                "ShortTCPSessions",
+                "LongTCPSessions",
+                "HighRetransmissionTCPSessions",
+                "PossibleNetworkIssueTCPSessions",
+                "PossibleServerOrApplicationIssueTCPSessions",
+            });
         }};
 
         this.tallyCheck = new HashMap<String, String []>() {{

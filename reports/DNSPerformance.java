@@ -14,17 +14,17 @@ public class DNSPerformance extends Report {
         this.title = "DNS Performance";
         this.tilesFolder = "DNS";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("charts", new ArrayList<String>() {{
-                add("DNSRateAndLatency");
-            }});
-            put("tables", new ArrayList<String>() {{
-                add("TopDNSRequestTypes");
-                add("TopDNSResponses");
-                add("TopDNSServers");
-                add("TopDNSRequests");
-                add("DNSSessions");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("charts", new String [] {
+                "DNSRateAndLatency",
+            });
+            put("tables", new String [] {
+                "TopDNSRequestTypes",
+                "TopDNSResponses",
+                "TopDNSServers",
+                "TopDNSRequests",
+                "DNSSessions",
+            });
         }};
 
         this.tallyCheck = new HashMap<String, String []>() {{

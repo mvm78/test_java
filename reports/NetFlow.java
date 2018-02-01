@@ -13,19 +13,19 @@ public class NetFlow extends Report {
 
         this.title = "NetFlow";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("tables", new ArrayList<String>() {{
-                add("NetFlow.NetFlowDevicesByBytesAndPackets");
-                add("NetFlow.NetFlowInputInterfacesByBytesAndPackets");
-                add("NetFlow.NetFlowOutputInterfacesByBytesAndPackets");
-                add("NetFlow.NetFlowInterfacePairsByBytesAndPackets");
-                add("IPConversations");
-                add("NetFlow.NetFlowTopProtocolAndEtherTypesByBytesAndPackets");
-                add("TopSourcesByBytesAndPackets");
-                add("TopApplicationPortsByBytesAndPackets");
-                add("TopCountryPairsByBytesAndPackets");
-                add("NetFlow.NetFlowSummaryByBytesAndPackets");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("tables", new String [] {
+                "NetFlow.NetFlowDevicesByBytesAndPackets",
+                "NetFlow.NetFlowInputInterfacesByBytesAndPackets",
+                "NetFlow.NetFlowOutputInterfacesByBytesAndPackets",
+                "NetFlow.NetFlowInterfacePairsByBytesAndPackets",
+                "IPConversations",
+                "NetFlow.NetFlowTopProtocolAndEtherTypesByBytesAndPackets",
+                "TopSourcesByBytesAndPackets",
+                "TopApplicationPortsByBytesAndPackets",
+                "TopCountryPairsByBytesAndPackets",
+                "NetFlow.NetFlowSummaryByBytesAndPackets",
+            });
         }};
 
         this.tallyCheck = new HashMap<String, String []>() {{

@@ -13,24 +13,24 @@ public class PerformanceOverview extends Report {
 
         this.title = "Performance Overview";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("charts", new ArrayList<String>() {{
-                add("BitRateAndPacketRate");
-                add("ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes");
-            }});
-            put("tables", new ArrayList<String>() {{
-//                add("Flows");        missing on 10.30.165.20
-                add("TopApplicationsByBytesAndPackets");
-                add("TopApplicationPortsByBytesAndPackets");
-                add("TopSourcesByBytesAndPackets");
-                add("IPConversations");
-                add("TopApplicationsByResponseTimeAndRetransmittedBytes");
-                add("TopApplicationPortsByResponseTimeAndRetransmittedBytes");
-                add("TopServersByResponseTimeAndRetransmittedBytes");
-                add("TopHostPairsByResponseTimeAndRetransmittedBytes");
-                add("NetworkSessions");
-                add("TCPConnections");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("charts", new String [] {
+                "BitRateAndPacketRate",
+                "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
+            });
+            put("tables", new String [] {
+//                "Flows",        missing on 10.30.165.20
+                "TopApplicationsByBytesAndPackets",
+                "TopApplicationPortsByBytesAndPackets",
+                "TopSourcesByBytesAndPackets",
+                "IPConversations",
+                "TopApplicationsByResponseTimeAndRetransmittedBytes",
+                "TopApplicationPortsByResponseTimeAndRetransmittedBytes",
+                "TopServersByResponseTimeAndRetransmittedBytes",
+                "TopHostPairsByResponseTimeAndRetransmittedBytes",
+                "NetworkSessions",
+                "TCPConnections",
+            });
         }};
 
         this.tallyCheck = new HashMap<String, String []>() {{

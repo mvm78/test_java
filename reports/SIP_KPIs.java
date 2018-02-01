@@ -14,20 +14,20 @@ public class SIP_KPIs extends Report {
         this.title = "SIP KPIs";
         this.tilesFolder = "SIP_KPIs";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("tables", new ArrayList<String>() {{
-                add("TopSIPStatusCodes");
-                add("TopSIPCallingNumbers");
-                add("TopSIPCallingIP");
-                add("TopSIPCalledNumbers");
-                add("TopSIPCalledIP");
-                add("TopSIPVLAN");
-                add("TopSIPConnectionTypes");
-                add("TopSIPCallingUserAgents");
-                add("TopSIPCalledUserAgents");
-                add("TopSIPCodec");
-                add("SIPSessions");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("tables", new String [] {
+                "TopSIPStatusCodes",
+                "TopSIPCallingNumbers",
+                "TopSIPCallingIP",
+                "TopSIPCalledNumbers",
+                "TopSIPCalledIP",
+                "TopSIPVLAN",
+                "TopSIPConnectionTypes",
+                "TopSIPCallingUserAgents",
+                "TopSIPCalledUserAgents",
+                "TopSIPCodec",
+                "SIPSessions",
+            });
         }};
     };
 

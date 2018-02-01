@@ -13,16 +13,16 @@ public class TopApplications extends Report {
 
         this.title = "Top Applications";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("charts", new ArrayList<String>() {{
-                add("ThroughputVsGoodput");
-            }});
-            put("tables", new ArrayList<String>() {{
-                add("TopApplicationsByBytesAndPackets");
-                add("TopTCPApplicationsByBytes");
-                add("TopApplicationsByResponseTimeAndRetransmittedBytes");
-                add("TopApplicationsByThroughput");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("charts", new String [] {
+                "ThroughputVsGoodput",
+            });
+            put("tables", new String [] {
+                "TopApplicationsByBytesAndPackets",
+                "TopTCPApplicationsByBytes",
+                "TopApplicationsByResponseTimeAndRetransmittedBytes",
+                "TopApplicationsByThroughput",
+            });
         }};
 
         this.tallyCheck = new HashMap<String, String []>() {{

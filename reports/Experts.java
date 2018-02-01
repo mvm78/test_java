@@ -13,13 +13,13 @@ public class Experts extends Report {
 
         this.title = "Experts - Network vs Web Application Weight";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("tables", new ArrayList<String>() {{
-                add("Web.WebSessions");
-                add("Experts.ExpertsTCPSessions");
-                add("Experts.ExpertsTopTCPServersByBytes");
-                add("Web.TopWebServers");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("tables", new String [] {
+                "Web.WebSessions",
+                "Experts.ExpertsTCPSessions",
+                "Experts.ExpertsTopTCPServersByBytes",
+                "Web.TopWebServers",
+            });
         }};
     };
 

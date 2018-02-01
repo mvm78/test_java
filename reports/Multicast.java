@@ -14,12 +14,12 @@ public class Multicast extends Report {
         this.title = "Multicast";
         this.tilesFolder = "Multicast";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("tables", new ArrayList<String>() {{
-                add("TopSourcesByBytesAndPackets");
-                add("TopGroupsByBytesAndPackets");
-                add("TopTalkerPairsByBytesAndPackets");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("tables", new String [] {
+                "TopSourcesByBytesAndPackets",
+                "TopGroupsByBytesAndPackets",
+                "TopTalkerPairsByBytesAndPackets",
+            });
         }};
 
         this.tallyCheck = new HashMap<String, String []>() {{

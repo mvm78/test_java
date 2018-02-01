@@ -14,10 +14,10 @@ public class FlowBasedRTP_KPIs extends Report {
         this.title = "Media Flow";
         this.tilesFolder = "MediaFlow";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("tables", new ArrayList<String>() {{
-                add("MediaFlow");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("tables", new String [] {
+                "MediaFlow",
+            });
         }};
     };
 

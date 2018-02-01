@@ -993,7 +993,7 @@ public class Tile implements Cloneable {
 
         Map<String, List<String []>> result = this.getArrayListIntersection(data);
 
-        List<String []> parentLines = (ArrayList<String []>)result.get("parentLines");
+        List<String []> parentLines = (List<String []>)result.get("parentLines");
 
         parentLines.stream().parallel()
                 .filter(line -> Util.getBufferLineFilter(line))

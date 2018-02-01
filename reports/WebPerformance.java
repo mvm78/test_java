@@ -14,13 +14,13 @@ public class WebPerformance extends Report {
         this.title = "Web Performance";
         this.tilesFolder = "Web";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("tables", new ArrayList<String>() {{
-                add("TopWebServers");
-                add("TopWebResponsePhrases");
-                add("TopWebUserAgents");
-                add("WebSessions");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("tables", new String [] {
+                "TopWebServers",
+                "TopWebResponsePhrases",
+                "TopWebUserAgents",
+                "WebSessions",
+            });
         }};
 
         this.tallyCheck = new HashMap<String, String []>() {{

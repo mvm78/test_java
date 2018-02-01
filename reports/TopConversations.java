@@ -13,21 +13,21 @@ public class TopConversations extends Report {
 
         this.title = "Top Conversations";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("charts", new ArrayList<String>() {{
-                add("ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes");
-                add("ThroughputVsGoodput");
-            }});
-            put("tables", new ArrayList<String>() {{
-                add("IPConversations");
-                add("TopMACAddressPairsByBytesAndPackets");
-                add("TopTCPConversationsByBytes");
-                add("TCPConnections");
-                add("TopHostPairsByResponseTimeAndRetransmittedBytes");
-                add("TopHostPairsByThroughput");
-                add("TopCountryPairsByBytesAndPackets");
-                add("TopCountryPairsTCPPerformance");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("charts", new String [] {
+                "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
+                "ThroughputVsGoodput",
+            });
+            put("tables", new String [] {
+                "IPConversations",
+                "TopMACAddressPairsByBytesAndPackets",
+                "TopTCPConversationsByBytes",
+                "TCPConnections",
+                "TopHostPairsByResponseTimeAndRetransmittedBytes",
+                "TopHostPairsByThroughput",
+                "TopCountryPairsByBytesAndPackets",
+                "TopCountryPairsTCPPerformance",
+            });
         }};
 
         this.tallyCheck = new HashMap<String, String []>() {{

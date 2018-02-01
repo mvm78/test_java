@@ -14,14 +14,14 @@ public class SNMP extends Report {
         this.title = "SNMP";
         this.tilesFolder = "SNMP";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("charts", new ArrayList<String>() {{
-                add("SNMPVariablesChart");
-            }});
-            put("tables", new ArrayList<String>() {{
-                add("SNMPTopDeviceInterface");
-                add("SNMPVariables");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("charts", new String [] {
+                "SNMPVariablesChart",
+            });
+            put("tables", new String [] {
+                "SNMPTopDeviceInterface",
+                "SNMPVariables",
+            });
         }};
 
         this.tallyCheck = new HashMap<String, String []>() {{

@@ -14,19 +14,19 @@ public class DatabasePerformance extends Report {
         this.title = "Database Performance";
         this.tilesFolder = "Database";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("charts", new ArrayList<String>() {{
-                add("DatabaseLatencyAndRecordsOverTime");
-            }});
-            put("tables", new ArrayList<String>() {{
-                add("DatabaseTopQueryTypes");
-                add("DatabaseTopQueryStatus");
-                add("DatabaseTopServers");
-                add("DatabaseTopHostPairs");
-                add("DatabaseTypes");
-                add("DatabaseTopVLAN");
-                add("DatabaseSessions");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("charts", new String [] {
+                "DatabaseLatencyAndRecordsOverTime",
+            });
+            put("tables", new String [] {
+                "DatabaseTopQueryTypes",
+                "DatabaseTopQueryStatus",
+                "DatabaseTopServers",
+                "DatabaseTopHostPairs",
+                "DatabaseTypes",
+                "DatabaseTopVLAN",
+                "DatabaseSessions",
+            });
         }};
 
         this.tallyCheck = new HashMap<String, String []>() {{

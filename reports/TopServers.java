@@ -13,18 +13,18 @@ public class TopServers extends Report {
 
         this.title = "Top Servers";
 
-        this.tileList = new HashMap<String, ArrayList<String>>() {{
-            put("charts", new ArrayList<String>() {{
-                add("BitRateAndPacketRate");
-                add("ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes");
-                add("ThroughputVsGoodput");
-            }});
-            put("tables", new ArrayList<String>() {{
-                add("TopSourcesByBytesAndPackets");
-                add("TopTCPServersByBytes");
-                add("TopServersByResponseTimeAndRetransmittedBytes");
-                add("TopServersByThroughput");
-            }});
+        this.tileList = new HashMap<String, String []>() {{
+            put("charts", new String [] {
+                "BitRateAndPacketRate",
+                "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
+                "ThroughputVsGoodput",
+            });
+            put("tables", new String [] {
+                "TopSourcesByBytesAndPackets",
+                "TopTCPServersByBytes",
+                "TopServersByResponseTimeAndRetransmittedBytes",
+                "TopServersByThroughput",
+            });
         }};
 
         this.tallyCheck = new HashMap<String, String []>() {{

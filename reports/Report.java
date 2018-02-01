@@ -19,15 +19,15 @@ public class Report implements Cloneable {
 
     protected String title;
 
-    protected HashMap<String, ArrayList<String>> tileList;
+    protected HashMap<String, String []> tileList;
     protected Map<String, Boolean> skipTiles = new HashMap<>();
     protected String tilesFolder = "";
 
-    private final String beginTime = "09:00:00 02/01/2018";
-    private final String endTime = "09:00:05 02/01/2018";
+    private final String beginTime = "14:25:00 02/01/2018";
+    private final String endTime = "14:25:01 02/01/2018";
     private final String hashKey = "1";
-    private final String appliance = "App5100-30";
-    private final String pcap = "em1";
+    private final String appliance = "Appliance-PM_Perf";
+    private final String pcap = "nf0";
 
     protected String appPath;
     protected String refresh;
@@ -168,8 +168,8 @@ public class Report implements Cloneable {
         float timeInterval = Util.getTimeInterval(this.beginTime, this.endTime);
         String tileFolder = this.tilesFolder.isEmpty() ? "" : this.tilesFolder + ".";
 
-        String reportBeginTime = report.getBeginTime();
-        String reportEndTime = report.getEndTime();
+        String reportBeginTime = this.getBeginTime();
+        String reportEndTime = this.getEndTime();
 
         Map<String, Object> params = new HashMap<String, Object>() {{
             put("report", report);
@@ -286,13 +286,17 @@ public class Report implements Cloneable {
 
         this.tiles = new HashMap<String, String>() {};
 
-        this.tileList.forEach((String type, ArrayList<String>typeTiles) -> {
-            typeTiles.stream().parallel()
-                    .filter(tile -> this.skipTiles.get(tile) == null)
-                    .forEach(tile -> {
-                       this.tiles.put(tile, type);
-                    });
-        });
+        this.tileList.keySet().parallelStream()
+                .forEach(type -> {
+
+                    String [] typeTiles = this.tileList.get(type);
+
+                    Arrays.stream(typeTiles).parallel()
+                            .filter(tile -> this.skipTiles.get(tile) == null)
+                            .forEach(tile -> {
+                                this.tiles.put(tile, type);
+                            });
+                });
     }
 
     //**************************************************************************
