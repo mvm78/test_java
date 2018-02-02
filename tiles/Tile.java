@@ -17,6 +17,8 @@ public class Tile implements Cloneable {
 
     protected byte debug = 2;
 
+    private Report report;
+    private Map<String, String> reportTime;
     private String errorTitle = "";
     protected Common common;
     protected CommonBy commonBy;
@@ -177,8 +179,7 @@ public class Tile implements Cloneable {
     @SuppressWarnings("unchecked")
     public Map<String, Map<String, Object>> test(Map<String, Object> data) {
 
-        Report report = ((Report)data.get("report")).cloneReport();
-        String cmd = data.get("cmd") == null ? report.getCmd(this) :
+        String cmd = data.get("cmd") == null ? this.report.getCmd(this) :
                 (String)data.get("cmd");
         String filter = (String)data.get("filter");
         int drillLevel = (int)data.get("drillLevel");
@@ -190,13 +191,12 @@ public class Tile implements Cloneable {
         List<String []> parentLines = data.get("parentLines") == null ? null :
                 (List<String []>)((ArrayList<String []>)data.get("parentLines")).clone();
         String operator = (String)data.get("operator");
-        final Map<String, String> reportTime = (Map<String, String>)data.get("reportTime");
 
         Map<String, Object> params =
                 (Map<String, Object>)((HashMap<String, Object>)data).clone();
 
         if (splitParent.length == 0 && drillLevel == 1) {
-            report.resetSkipTiles();
+            this.report.resetSkipTiles();
         }
 
         this.errorTitle = filter.isEmpty() || drillLevel == 1 ?
@@ -288,7 +288,6 @@ public class Tile implements Cloneable {
 
         if (lineCount.get() == 0) {
             this.lineErrors(new HashMap<String, Object>() {{
-                put("reportTime", reportTime);
                 put("splitLine", null);
                 put("splitParent", splitParent);
                 put("isOutput", true);
@@ -309,7 +308,6 @@ public class Tile implements Cloneable {
     @SuppressWarnings("unchecked")
     private void drillTile(Map<String, Object> data) {
 
-        Report report = ((Report)data.get("report")).cloneReport();
         String line = (String)data.get("line");
         String [] split = (String [])((String [])data.get("split")).clone();
         String filter = (String)data.get("filter");
@@ -317,7 +315,6 @@ public class Tile implements Cloneable {
         int drillLevel = (int)data.get("drillLevel");
 
         String finalFilter = this.getDrillFilter(new HashMap<String, Object>() {{
-            put("report", report);
             put("split", split);
             put("filterCount", filterCount);
             put("filter", filter);
@@ -333,7 +330,7 @@ public class Tile implements Cloneable {
 
         this.test(params);
 
-        Report drillReport = report.cloneReport();
+        Report drillReport = this.report.cloneReport();
 
         drillReport.addSkipTile(this.getTrueName());
         drillReport.tests(drillLevel + 1, finalFilter);
@@ -384,10 +381,10 @@ public class Tile implements Cloneable {
 
     //**************************************************************************
 
-    private Map<String, String> getDrillTime(Map<String, String> reportTime, String [] split) {
+    private Map<String, String> getDrillTime(String [] split) {
 
-        String beginTime = reportTime.get("beginTime");
-        String endTime = reportTime.get("endTime");
+        String beginTime = this.reportTime.get("beginTime");
+        String endTime = this.reportTime.get("endTime");
 
         Map<String, String> beginEndTime = new HashMap<String, String>() {{
             put("startTime", beginTime);
@@ -529,7 +526,6 @@ public class Tile implements Cloneable {
 
     private String getDrillFilter(Map<String, Object> data) {
 
-        Report report = ((Report)data.get("report")).cloneReport();
         String [] split = (String [])((String [])data.get("split")).clone();
         String filter = (String)data.get("filter");
         int filterCount = (int)data.get("filterCount");
@@ -554,7 +550,6 @@ public class Tile implements Cloneable {
                     int count = (int)info.getValue().get("order");
 
                     Map<String, Object> params = new HashMap<String, Object>() {{
-                        put("report", report);
                         put("filterColumn", info.getKey());
                         put("value", split[count]);
                         put("filterCount", filterCount);
@@ -601,7 +596,6 @@ public class Tile implements Cloneable {
         String [] splitParent = (String [])((String [])data.get("splitParent")).clone();
         boolean isOutput = (boolean)data.get("isOutput");
         int lineCount = (int)data.get("lineCount");
-        final Map<String, String> reportTime = (Map<String, String>)data.get("reportTime");
 
         String lineErrorCaption = this.getLineErrorCaption(splitParent);
 
@@ -610,7 +604,7 @@ public class Tile implements Cloneable {
 
         if (lineCount == 1) {
             // check if drilled row Start/Stop Time data do not contradict report's Begin/End Time
-            boolean captionPrined = this.timeError(reportTime, splitParent);
+            boolean captionPrined = this.timeError(splitParent);
 
             isCaptionPrined.set(captionPrined);
         }
@@ -666,14 +660,14 @@ public class Tile implements Cloneable {
 
     //**************************************************************************
 
-    private boolean timeError(Map<String, String> reportTime, String [] splitParent) {
+    private boolean timeError(String [] splitParent) {
 
         String lineErrorCaption = this.getLineErrorCaption(splitParent);
 
         ConcurrentMap<String, String> timeInfo = new ConcurrentHashMap<>();
 
         this.columns.values().stream()
-                .filter(info -> timeInfo.size() < 2)
+                .filter(dontNeed -> timeInfo.size() < 2)
                 .forEach(info -> {
 
                     int count = (int)info.get("order");
@@ -689,8 +683,8 @@ public class Tile implements Cloneable {
 
             String lineStartTime = timeInfo.get("startTime");
             String lineStopTime = timeInfo.get("stopTime");
-            String reportStartTime = reportTime.get("beginTime");
-            String reportStopTime = reportTime.get("endTime");
+            String reportStartTime = this.reportTime.get("beginTime");
+            String reportStopTime = this.reportTime.get("endTime");
 
             double lineDblStartTime = lineStartTime.isEmpty() ? 0 :
                     Double.valueOf(lineStartTime);
@@ -705,9 +699,9 @@ public class Tile implements Cloneable {
              || lineDblStartTime == 0 || lineDblStopTime == 0) {
 
                 String beginTime = "Start Time \"" +
-                        reportTime.get("beginTimeString") + "\"";
+                        this.reportTime.get("beginTimeString") + "\"";
                 String endTime = "Stop Time \"" +
-                        reportTime.get("endTimeString") + "\"";
+                        this.reportTime.get("endTimeString") + "\"";
                 String startTime = "Start Time \"" +
                         Util.getFromTimestamp(lineStartTime) + "\"";
                 String stopTime = "Stop Time \"" +
@@ -757,14 +751,14 @@ public class Tile implements Cloneable {
             int count = (Integer)info.get("order");
 
             if (info.get("filter") == null) {
-                for (String item : new String [] {"startTime", "stopTime"}) {
-                    if (info.get(item) != null) {
+                Arrays.stream(new String [] {"startTime", "stopTime"}).parallel()
+                        .filter(item -> info.get(item) != null)
+                        .forEach(dontNeed -> {
 
-                        String output = Util.getFromTimestamp(split[count]);
+                            String output = Util.getFromTimestamp(split[count]);
 
-                        timeRange.set(timeRange.get() + ", " + column + ": " + output);
-                    }
-                }
+                            timeRange.set(timeRange.get() + ", " + column + ": " + output);
+                        });
             } else {
 
                 String prev = caption.get();
@@ -862,14 +856,12 @@ public class Tile implements Cloneable {
         boolean isCellDrill = data.get("isCellDrill") == null ? false :
                 (boolean)data.get("isCellDrill");
         String [] splitParent = (String [])((String [])data.get("splitParent")).clone();
-        Report report = ((Report)data.get("report")).cloneReport();
         int filterCount = (int)data.get("filterCount");
         String filter = (String)data.get("filter");
         int drillLevel = (int)data.get("drillLevel");
         int lineCount = (int)data.get("lineCount");
         List<String []> parentLines =
                 (List<String []>)((ArrayList<String []>)data.get("parentLines")).clone();
-        final Map<String, String> reportTime = (Map<String, String>)data.get("reportTime");
 
         if (! isCellDrill) {
 
@@ -893,15 +885,13 @@ public class Tile implements Cloneable {
 
         if (splitParent.length == 0) {
 
-            Map<String, String> drillTime = this.getDrillTime(reportTime, split);
+            Map<String, String> drillTime = this.getDrillTime(split);
 
-            String drillTileCmd = report.getCmd(this, drillTime);
-            String drillCellCmd = report.getCmd(this);
+            String drillTileCmd = this.report.getCmd(this, drillTime);
+            String drillCellCmd = this.report.getCmd(this);
             int paramFilterCount = filterCount;
 
             Map<String, Object> params = new HashMap<String, Object>() {{
-                put("report", report);
-                put("reportTime", reportTime);
                 put("cmd", drillCellCmd);
                 put("split", split);
                 put("filter", filter);
@@ -920,7 +910,6 @@ public class Tile implements Cloneable {
             boolean isTileSingleLine = this.isSingleLine;
 
             final boolean finalIsLineMatch = this.checkLine(new HashMap<String, Object>() {{
-                put("reportTime", reportTime);
                 put("splitLine", split);
                 put("splitParent", splitParent);
                 put("isTileSingleLine", isTileSingleLine);

@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.nio.charset.StandardCharsets;
+import java.lang.reflect.Field;
 
 import test_java.ErrorsLog;
 import test_java.tiles.Tile;
@@ -274,6 +275,32 @@ public class Util {
                 System.err.println("Can't remove " + file.getAbsolutePath());
             }
         }
+    }
+
+    //**************************************************************************
+
+    public static boolean setPoperty(Object object, String property, Object value) {
+
+        Class<?> clazz = object.getClass();
+
+        while (clazz != null) {
+            try {
+
+                Field field = clazz.getDeclaredField(property);
+
+                field.setAccessible(true);
+                field.set(object, value);
+
+                return true;
+
+            } catch (NoSuchFieldException e) {
+                clazz = clazz.getSuperclass();
+            } catch (Exception e) {
+                throw new IllegalStateException(e);
+            }
+        }
+
+        return false;
     }
 
     //**************************************************************************

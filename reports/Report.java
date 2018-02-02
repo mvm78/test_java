@@ -22,10 +22,10 @@ public class Report implements Cloneable {
     protected Map<String, Boolean> skipTiles = new HashMap<>();
     protected String tilesFolder = "";
 
-    private final String beginTime = "14:25:00 02/01/2018";
-    private final String endTime = "14:25:01 02/01/2018";
+    private final String beginTime = "08:40:00 02/02/2018";
+    private final String endTime = "08:40:01 02/02/2018";
     private final String hashKey = "1";
-    private final String appliance = "Appliance-PM_Perf";
+    private final String appliance = "App5100-30";
     private final String pcap = "nf0";
 
     protected String appPath;
@@ -75,6 +75,13 @@ public class Report implements Cloneable {
     public String getEndTime() {
 
         return this.endTime;
+    }
+
+    //**************************************************************************
+
+    public Map<String, String> getTiles() {
+
+        return this.tiles;
     }
 
     //**************************************************************************
@@ -170,16 +177,17 @@ public class Report implements Cloneable {
         String reportBeginTime = this.getBeginTime();
         String reportEndTime = this.getEndTime();
 
+        Map<String, String> reportTime = new HashMap<String, String>() {{
+            put("beginTime", Util.getTimeStamp(reportBeginTime));
+            put("endTime", Util.getTimeStamp(reportEndTime));
+            put("beginTimeString", reportBeginTime);
+            put("endTimeString", reportEndTime);
+        }};
+
         Map<String, Object> params = new HashMap<String, Object>() {{
             put("report", report);
             put("filter", filter);
             put("drillLevel", drillLevel);
-            put("reportTime", new HashMap<String, String>() {{
-                put("beginTime", Util.getTimeStamp(reportBeginTime));
-                put("endTime", Util.getTimeStamp(reportEndTime));
-                put("beginTimeString", reportBeginTime);
-                put("endTimeString", reportEndTime);
-            }});
         }};
 
         this.tiles.keySet().parallelStream()
@@ -190,6 +198,9 @@ public class Report implements Cloneable {
                     String className = "test_java.tiles." + type + "." + tileFolder + tile;
 
                     Tile testTile = TileFactory.getTile(className, timeInterval);
+
+                    Util.setPoperty(testTile, "report", this);
+                    Util.setPoperty(testTile, "reportTime", reportTime);
 
                     Map<String, Map<String, Object>> result = testTile.test(params);
 
