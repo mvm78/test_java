@@ -154,12 +154,10 @@ public class Util {
         Long ms = splitTime.length > 1 ? Long.valueOf(splitTime[1]) : 0;
         Long unixTime = unixValue;
 
-        return new HashMap<String, Long>() {
-            {
-                put("unixTime", unixTime);
-                put("ms", ms);
-            }
-        };
+        return new HashMap<String, Long>() {{
+            put("unixTime", unixTime);
+            put("ms", ms);
+        }};
     }
 
     //**************************************************************************
@@ -212,13 +210,10 @@ public class Util {
 
     public static boolean getBufferLineFilter(String [] line) {
 
-        for (String item : new String [] {"#I;", "window", "t=Refresh;"}) {
-            if (item.equals(line[0])) {
-                return false;
-            }
-        }
+        String [] ignore = new String [] {"#I;", "window", "t=Refresh;"};
 
-        return true;
+        return ! Arrays.stream(ignore).parallel()
+                .anyMatch(item -> item.equals(line[0]));
     }
 
     //**************************************************************************
