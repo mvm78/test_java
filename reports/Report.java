@@ -3,7 +3,6 @@ package test_java.reports;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -228,7 +227,7 @@ public class Report implements Cloneable {
                     AtomicReference<String> caption = new AtomicReference<>(text);
                     AtomicBoolean isCompareToPrined = new AtomicBoolean(false);
 
-                    Arrays.stream(this.tallyCheck.get(tile)).parallel()
+                    Arrays.stream(this.tallyCheck.get(tile))
                             .filter(item -> results.get(item) != null)
                             .forEach(item -> {
                                 this.compareTallies(compareToData, (Map)results.get(item),
