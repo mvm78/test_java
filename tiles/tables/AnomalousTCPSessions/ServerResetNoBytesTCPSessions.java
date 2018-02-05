@@ -7,7 +7,7 @@ public class ServerResetNoBytesTCPSessions extends AnomalousTCPSessions {
     public ServerResetNoBytesTCPSessions() {
 
         this.setTitle("Server Reset (No Bytes) TCP Sessions");
-        this.suffix = "pq 'client.byte==0 and server.flags==rst'";
+        this.setSuffix("pq 'client.byte==0 and server.flags==rst'");
     }
 
     //**************************************************************************

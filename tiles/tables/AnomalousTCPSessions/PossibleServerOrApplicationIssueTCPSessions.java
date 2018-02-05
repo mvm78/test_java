@@ -7,7 +7,7 @@ public class PossibleServerOrApplicationIssueTCPSessions extends AnomalousTCPSes
     public PossibleServerOrApplicationIssueTCPSessions() {
 
         this.setTitle("Possible Server or Application Issue TCP Sessions");
-        this.suffix = "pq 'rtt < .5 and response > 3'";
+        this.setSuffix("pq 'rtt < .5 and response > 3'");
     }
 
     //**************************************************************************

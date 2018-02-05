@@ -7,7 +7,7 @@ public class ClientResetTCPSessionsTrend extends AnomalousTCPSessionsTrend {
     public ClientResetTCPSessionsTrend() {
 
         this.setTitle("Client Reset TCP Sessions Trend");
-        this.suffix = "pq 'client.flags==rst' w 0 '|' TcpAgg count conn";
+        this.setSuffix("pq 'client.flags==rst' w 0 '|' TcpAgg count conn");
     }
 
     //**************************************************************************

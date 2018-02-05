@@ -7,7 +7,7 @@ public class LongTCPSessions extends AnomalousTCPSessions {
     public LongTCPSessions() {
 
         this.setTitle("Long TCP Sessions");
-        this.suffix = "pq 'dur > 60'";
+        this.setSuffix("pq 'dur > 60'");
     }
 
     //**************************************************************************

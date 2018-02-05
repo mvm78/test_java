@@ -196,6 +196,20 @@ public class Tile implements Cloneable {
 
     //**************************************************************************
 
+    final public String getSuffix() {
+
+        return this.suffix;
+    }
+
+    //**************************************************************************
+
+    final public void setSuffix(String suffix) {
+
+        this.suffix = suffix;
+    }
+
+    //**************************************************************************
+
     @Override
     final public Object clone() throws CloneNotSupportedException {
 
@@ -942,7 +956,7 @@ public class Tile implements Cloneable {
         String filter = finalFilter.isEmpty() ? "" : " q '" + finalFilter + "'";
 
         return " " + this.getPrefix() + " " + this.fields[filterCount] +
-                    filter + " " + this.suffix + " w " + this.window;
+                    filter + " " + this.getSuffix() + " w " + this.window;
     }
 
     //**************************************************************************

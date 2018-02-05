@@ -7,7 +7,7 @@ public class ShortTCPSessions extends AnomalousTCPSessions {
     public ShortTCPSessions() {
 
         this.setTitle("Short TCP Sessions");
-        this.suffix = "pq 'dur < 1'";
+        this.setSuffix("pq 'dur < 1'");
     }
 
     //**************************************************************************
