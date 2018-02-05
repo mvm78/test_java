@@ -10,14 +10,14 @@ public class TopDNSRequestTypes extends Table {
 
     public TopDNSRequestTypes() {
 
-        CommonTopRequestTypes CommonInstance = new CommonTopRequestTypes();
-        CommonByNumberOfRecordsAndLatency CommonByInstance =
+        final CommonTopRequestTypes CommonInstance = new CommonTopRequestTypes();
+        final CommonByNumberOfRecordsAndLatency CommonByInstance =
                 new CommonByNumberOfRecordsAndLatency();
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setTitle("Top DNS Request Types");
-        this.prefix = "DnsAgg";
+        this.setPrefix("DnsAgg");
         this.setCommonData();
     }
 

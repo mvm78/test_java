@@ -9,12 +9,12 @@ public class DNSRateAndLatency extends Chart {
 
     public DNSRateAndLatency() {
 
-        CommonByNumberOfRecordsAndLatency CommonByInstance =
+        final CommonByNumberOfRecordsAndLatency CommonByInstance =
                 new CommonByNumberOfRecordsAndLatency();
 
         this.setCommonBy(CommonByInstance);
         this.setTitle("DNS Rate and Latency");
-        this.prefix = "DnsAgg";
+        this.setPrefix("DnsAgg");
         this.setCommonByData();
     }
 

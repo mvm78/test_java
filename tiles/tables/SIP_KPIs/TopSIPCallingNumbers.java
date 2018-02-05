@@ -10,13 +10,13 @@ public class TopSIPCallingNumbers extends Table {
 
     public TopSIPCallingNumbers() {
 
-        CommonTopSIPCallingNumbers CommonInstance = new CommonTopSIPCallingNumbers();
-        CommonByCalls CommonByInstance = new CommonByCalls();
+        final CommonTopSIPCallingNumbers CommonInstance = new CommonTopSIPCallingNumbers();
+        final CommonByCalls CommonByInstance = new CommonByCalls();
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setTitle("SIP - Top Calling Numbers");
-        this.prefix = "top 0 desc on srcnum";
+        this.setPrefix("top 0 desc on srcnum");
         this.splitChar = ",";
         this.columnIncrement = 0;
         this.setCommonData();

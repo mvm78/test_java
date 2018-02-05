@@ -11,12 +11,15 @@ public class AnomalousTCPSessions extends Table {
 
     public AnomalousTCPSessions() {
 
-        CommonTCPSessions CommonInstance = new CommonTCPSessions();
+        final CommonTCPSessions CommonInstance = new CommonTCPSessions();
 
         this.setCommon(CommonInstance);
         this.setIsSingleLine(true);
         this.window = this.getCommon().getWindow();
-        this.prefix = this.getCommon().getPrefix();
+
+        final String instancePrefix = this.getCommon().getPrefix();
+
+        this.setPrefix(instancePrefix);
         this.fields = this.getCommon().getFields();
         this.filters = this.getCommon().getFilters();
         this.columns = this.getCommon().getFilterColumns();

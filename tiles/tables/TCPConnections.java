@@ -11,12 +11,15 @@ public class TCPConnections extends Table {
 
     public TCPConnections() {
 
-        CommonTCPSessions CommonInstance = new CommonTCPSessions();
+        final CommonTCPSessions CommonInstance = new CommonTCPSessions();
 
         this.setCommon(CommonInstance);
         this.setTitle("TCP Connections");
         this.window = this.getCommon().getWindow();
-        this.prefix = this.getCommon().getPrefix();
+
+        final String instancePrefix = this.getCommon().getPrefix();
+
+        this.setPrefix(instancePrefix);
         this.fields = new String [] {
             "tcpflags pcid"
         };

@@ -10,14 +10,14 @@ public class TopDNSRequests extends Table {
 
     public TopDNSRequests() {
 
-        CommonTopRequests CommonInstance = new CommonTopRequests();
-        CommonByNumberOfRecordsAndLatency CommonByInstance =
+        final CommonTopRequests CommonInstance = new CommonTopRequests();
+        final CommonByNumberOfRecordsAndLatency CommonByInstance =
                 new CommonByNumberOfRecordsAndLatency();
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setTitle("Top DNS Reqests");
-        this.prefix = "DnsAgg";
+        this.setPrefix("DnsAgg");
         this.setCommonData();
     }
 

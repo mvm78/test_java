@@ -10,13 +10,13 @@ public class SNMPTopDeviceInterface extends Table {
 
     public SNMPTopDeviceInterface() {
 
-        CommonDeviceInterface CommonInstance = new CommonDeviceInterface();
-        CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
+        final CommonDeviceInterface CommonInstance = new CommonDeviceInterface();
+        final CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setTitle("SNMP - Top Device Interface");
-        this.prefix = "NetDist";
+        this.setPrefix("NetDist");
         this.setCommonData();
     }
 

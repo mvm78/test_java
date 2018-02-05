@@ -11,7 +11,7 @@ public class CommonMediaFlow extends Common {
     public CommonMediaFlow() {
 
         this.window = "0.0";
-        this.prefix = "MediaFlow";
+        this.setPrefix("MediaFlow");
     }
 
     //**************************************************************************

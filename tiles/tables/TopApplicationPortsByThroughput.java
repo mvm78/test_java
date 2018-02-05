@@ -9,14 +9,14 @@ public class TopApplicationPortsByThroughput extends Table {
 
     public TopApplicationPortsByThroughput() {
 
-        CommonTopApplicationPorts CommonInstance = new CommonTopApplicationPorts();
-        CommonByThroughput CommonByInstance = new CommonByThroughput();
+        final CommonTopApplicationPorts CommonInstance = new CommonTopApplicationPorts();
+        final CommonByThroughput CommonByInstance = new CommonByThroughput();
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
         this.setTitle("Top Application Ports by Throughput");
-        this.prefix = "TcpAgg flowsegments";
+        this.setPrefix("TcpAgg flowsegments");
         this.fields = new String [] {
             "dport " + this.commonBy.getFields(),
         };

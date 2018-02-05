@@ -15,7 +15,7 @@ public class SIPSessions extends Table {
         this.setIsSingleLine(true);
         this.setTitle("Web Sessions");
         this.window = "0.0";
-        this.prefix = "list 999";
+        this.setPrefix("list 999");
         this.fields = new String [] {""};
         this.filters = new String [] {};
         this.splitChar = ",";

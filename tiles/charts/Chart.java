@@ -12,7 +12,7 @@ public abstract class Chart extends Tile {
 
     public Chart() {
 
-        this.tileType = "charts";
+        this.setTileType("charts");
         this.debug = 2;
     }
 

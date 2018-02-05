@@ -168,6 +168,34 @@ public class Tile implements Cloneable {
 
     //**************************************************************************
 
+    final public String getTileType() {
+
+        return this.tileType;
+    }
+
+    //**************************************************************************
+
+    final public void setTileType(String tileType) {
+
+        this.tileType = tileType;
+    }
+
+    //**************************************************************************
+
+    final public String getPrefix() {
+
+        return this.prefix;
+    }
+
+    //**************************************************************************
+
+    final public void setPrefix(String prefix) {
+
+        this.prefix = prefix;
+    }
+
+    //**************************************************************************
+
     @Override
     final public Object clone() throws CloneNotSupportedException {
 
@@ -186,13 +214,6 @@ public class Tile implements Cloneable {
     public void setWindow(float timeInterval) {
 
         this.window = this.window == null ? "0.0" : this.window;
-    }
-
-    //**************************************************************************
-
-    final public String getTileType() {
-
-        return this.tileType;
     }
 
     //**************************************************************************
@@ -920,7 +941,7 @@ public class Tile implements Cloneable {
 
         String filter = finalFilter.isEmpty() ? "" : " q '" + finalFilter + "'";
 
-        return " " + this.prefix + " " + this.fields[filterCount] +
+        return " " + this.getPrefix() + " " + this.fields[filterCount] +
                     filter + " " + this.suffix + " w " + this.window;
     }
 

@@ -20,9 +20,16 @@ public abstract class Common {
 
     //**************************************************************************
 
-    public String getPrefix() {
+    final public String getPrefix() {
 
         return this.prefix;
+    }
+
+    //**************************************************************************
+
+    final public void setPrefix(String prefix) {
+
+        this.prefix = prefix;
     }
 
     //**************************************************************************

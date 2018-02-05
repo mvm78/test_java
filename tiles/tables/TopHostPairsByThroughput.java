@@ -9,13 +9,13 @@ public class TopHostPairsByThroughput extends Table {
 
     public TopHostPairsByThroughput() {
 
-        CommonTopHostPairs CommonInstance = new CommonTopHostPairs();
-        CommonByThroughput CommonByInstance = new CommonByThroughput();
+        final CommonTopHostPairs CommonInstance = new CommonTopHostPairs();
+        final CommonByThroughput CommonByInstance = new CommonByThroughput();
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setTitle("Top Host Pairs by Throughput");
-        this.prefix = "TcpAgg flowsegments";
+        this.setPrefix("TcpAgg flowsegments");
         this.setCommonData();
     }
 

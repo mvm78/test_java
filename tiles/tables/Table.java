@@ -8,7 +8,7 @@ public abstract class Table extends Tile {
 
     public Table() {
 
-        this.tileType = "table";
+        this.setTileType("table");
     }
 
     //**************************************************************************

@@ -15,7 +15,7 @@ public class DatabaseSessions extends Table {
         this.setIsSingleLine(true);
         this.setTitle("Database Sessions");
         this.window = "0.0";
-        this.prefix = "DbFlow";
+        this.setPrefix("DbFlow");
         this.fields = new String [] {""};
         this.filters = new String [] {};
         this.columns = new LinkedHashMap<String, HashMap<String, Object>>() {{

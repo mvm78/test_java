@@ -10,14 +10,14 @@ public class TopDNSResponses extends Table {
 
     public TopDNSResponses() {
 
-        CommonTopResponseCodes CommonInstance = new CommonTopResponseCodes();
-        CommonByNumberOfRecordsAndLatency CommonByInstance =
+        final CommonTopResponseCodes CommonInstance = new CommonTopResponseCodes();
+        final CommonByNumberOfRecordsAndLatency CommonByInstance =
                 new CommonByNumberOfRecordsAndLatency();
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setTitle("Top DNS Responses");
-        this.prefix = "DnsAgg";
+        this.setPrefix("DnsAgg");
         this.setCommonData();
     }
 

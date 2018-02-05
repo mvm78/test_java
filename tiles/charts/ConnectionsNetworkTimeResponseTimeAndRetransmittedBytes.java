@@ -8,12 +8,12 @@ public class ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes extends Cha
 
     public ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes() {
 
-        CommonByResponseTimeAndRetransmittedBytes CommonByInstance =
+        final CommonByResponseTimeAndRetransmittedBytes CommonByInstance =
                 new CommonByResponseTimeAndRetransmittedBytes();
 
         this.setCommonBy(CommonByInstance);
         this.setTitle("Connections, Network Time, Response Time, and Retransmitted Bytes");
-        this.prefix = "TcpAgg flowsegments";
+        this.setPrefix("TcpAgg flowsegments");
         this.setCommonByData();
         this.minWindow = 1;
     }

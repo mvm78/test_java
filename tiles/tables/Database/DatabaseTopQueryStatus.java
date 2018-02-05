@@ -10,14 +10,14 @@ public class DatabaseTopQueryStatus extends Table {
 
     public DatabaseTopQueryStatus() {
 
-        CommonTopQueryStatus CommonInstance = new CommonTopQueryStatus();
-        CommonByDatabaseLatencyAndSessions CommonByInstance =
+        final CommonTopQueryStatus CommonInstance = new CommonTopQueryStatus();
+        final CommonByDatabaseLatencyAndSessions CommonByInstance =
                 new CommonByDatabaseLatencyAndSessions();
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setTitle("Database - Top Query Status");
-        this.prefix = "DbAgg";
+        this.setPrefix("DbAgg");
         this.setCommonData();
     }
 

@@ -9,14 +9,14 @@ public class TopProtocolsByBytesAndPackets extends Table {
 
     public TopProtocolsByBytesAndPackets() {
 
-        CommonTopProtocols CommonInstance = new CommonTopProtocols();
-        CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
+        final CommonTopProtocols CommonInstance = new CommonTopProtocols();
+        final CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
         this.setTitle("Top Protocols by Bytes and Packets");
-        this.prefix = "NetDist";
+        this.setPrefix("NetDist");
         this.setCommonData();
     }
 

@@ -10,7 +10,7 @@ public class CommonTCPSessions extends Common {
     public CommonTCPSessions() {
 
         this.window = "0.0 | /usr/local/niksun/apps/bin/extURL -b";
-        this.prefix = "TcpFlow pcname FirstNBytes 256 tcpflags";
+        this.setPrefix("TcpFlow pcname FirstNBytes 256 tcpflags");
     }
 
     //**************************************************************************

@@ -9,13 +9,13 @@ public class TopTCPConversationsByBytes extends Table {
 
     public TopTCPConversationsByBytes() {
 
-        CommonTopHostPairs CommonInstance = new CommonTopHostPairs();
-        CommonByTCPBytes CommonByInstance = new CommonByTCPBytes();
+        final CommonTopHostPairs CommonInstance = new CommonTopHostPairs();
+        final CommonByTCPBytes CommonByInstance = new CommonByTCPBytes();
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setTitle("Top TCP Conversations by Bytes");
-        this.prefix = "TcpAgg flowsegments";
+        this.setPrefix("TcpAgg flowsegments");
         this.setCommonData();
     }
 

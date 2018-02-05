@@ -10,14 +10,14 @@ public class TopWebResponsePhrases extends Table {
 
     public TopWebResponsePhrases() {
 
-        CommonTopWebResponsePhrases CommonInstance = new CommonTopWebResponsePhrases();
-        CommonByNumberOfTransactionsBytesAndTransactionLatency CommonByInstance =
+        final CommonTopWebResponsePhrases CommonInstance = new CommonTopWebResponsePhrases();
+        final CommonByNumberOfTransactionsBytesAndTransactionLatency CommonByInstance =
                 new CommonByNumberOfTransactionsBytesAndTransactionLatency();
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setTitle("Top Response Phrases");
-        this.prefix = "HttpAgg";
+        this.setPrefix("HttpAgg");
         this.setCommonData();
     }
 

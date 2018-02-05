@@ -9,14 +9,14 @@ public class TopTCPApplicationPortsByBytes extends Table {
 
     public TopTCPApplicationPortsByBytes() {
 
-        CommonTopApplicationPorts CommonInstance = new CommonTopApplicationPorts();
-        CommonByTCPBytes CommonByInstance = new CommonByTCPBytes();
+        final CommonTopApplicationPorts CommonInstance = new CommonTopApplicationPorts();
+        final CommonByTCPBytes CommonByInstance = new CommonByTCPBytes();
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
         this.setTitle("Top TCP Application Ports by Bytes");
-        this.prefix = "TcpAgg flowsegments";
+        this.setPrefix("TcpAgg flowsegments");
         this.fields = new String [] {
             "dport " + this.commonBy.getFields(),
         };

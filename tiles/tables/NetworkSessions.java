@@ -9,13 +9,13 @@ public class NetworkSessions extends Table {
 
     public NetworkSessions() {
 
-        CommonNetwork CommonInstance = new CommonNetwork();
-        CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
+        final CommonNetwork CommonInstance = new CommonNetwork();
+        final CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setTitle("Network - Sessions");
-        this.prefix = "NetDist";
+        this.setPrefix("NetDist");
         this.setCommonData();
     }
 

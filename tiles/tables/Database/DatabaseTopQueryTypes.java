@@ -10,14 +10,14 @@ public class DatabaseTopQueryTypes extends Table {
 
     public DatabaseTopQueryTypes() {
 
-        CommonTopQueryTypes CommonInstance = new CommonTopQueryTypes();
-        CommonByDatabaseLatencyAndSessions CommonByInstance =
+        final CommonTopQueryTypes CommonInstance = new CommonTopQueryTypes();
+        final CommonByDatabaseLatencyAndSessions CommonByInstance =
                 new CommonByDatabaseLatencyAndSessions();
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setTitle("Database - Top Query Types");
-        this.prefix = "DbAgg";
+        this.setPrefix("DbAgg");
         this.setCommonData();
     }
 

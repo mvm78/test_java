@@ -10,13 +10,13 @@ public class TopRTPCodec extends Table {
 
     public TopRTPCodec() {
 
-        CommonTopRTPCodec CommonInstance = new CommonTopRTPCodec();
-        CommonByRTP_KPIs CommonByInstance = new CommonByRTP_KPIs();
+        final CommonTopRTPCodec CommonInstance = new CommonTopRTPCodec();
+        final CommonByRTP_KPIs CommonByInstance = new CommonByRTP_KPIs();
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setTitle("RTP - Top Codec");
-        this.prefix = "RtpAgg flowsegments";
+        this.setPrefix("RtpAgg flowsegments");
         this.setCommonData();
     }
 
