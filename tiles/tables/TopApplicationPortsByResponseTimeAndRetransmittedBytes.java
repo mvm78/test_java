@@ -1,5 +1,8 @@
 package test_java.tiles.tables;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 import test_java.tiles.common.CommonTopApplicationPorts;
 import test_java.tiles.common.CommonByResponseTimeAndRetransmittedBytes;
 
@@ -17,6 +20,8 @@ public class TopApplicationPortsByResponseTimeAndRetransmittedBytes extends Tabl
         this.setCommonBy(CommonByInstance);
 
         final String [] instanceFilters = this.getCommon().getFilters();
+        final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =
+                this.getCommon().getFilterColumns();
 
         this.setIsSingleLine(true);
         this.setTitle("Top Application Ports by ResponseTime (Retransmitted Bytes)");
@@ -25,8 +30,8 @@ public class TopApplicationPortsByResponseTimeAndRetransmittedBytes extends Tabl
             "dport " + this.getCommonBy().getFields(),
         });
         this.setFilters(instanceFilters);
-        this.filterColumns = this.getCommon().getFilterColumns();
-        this.columns = this.getCommonBy().appendCompareColumns(this.filterColumns, 1);
+        this.setFilterColumns(instanceFilterColumns);
+        this.columns = this.getCommonBy().appendCompareColumns(instanceFilterColumns, 1);
     }
 
     //**************************************************************************

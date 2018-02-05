@@ -1,5 +1,7 @@
 package test_java.tiles.tables.MediaFlow;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import test_java.tiles.tables.Table;
 import test_java.tiles.common.MediaFlow.CommonMediaFlow;
 import test_java.tiles.common.MediaFlow.CommonByTransportJitterAndEvents;
@@ -18,6 +20,8 @@ public class MediaFlow extends Table {
         this.setCommonBy(CommonByInstance);
 
         final String [] instanceFilters = this.getCommon().getFilters();
+        final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =
+                this.getCommon().getFilterColumns();
 
         this.setTitle("Media Flow");
         this.setPrefix("MediaFlow");
@@ -25,8 +29,8 @@ public class MediaFlow extends Table {
             this.getCommon().getFields()[0] + " " + this.getCommonBy().getFields(),
         });
         this.setFilters(instanceFilters);
-        this.filterColumns = this.getCommon().getFilterColumns();
-        this.columns = this.getCommonBy().appendCompareColumns(this.filterColumns, 2);
+        this.setFilterColumns(instanceFilterColumns);
+        this.columns = this.getCommonBy().appendCompareColumns(instanceFilterColumns, 2);
     }
 
     //**************************************************************************

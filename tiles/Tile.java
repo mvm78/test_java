@@ -31,8 +31,8 @@ public class Tile implements Cloneable {
     private String suffix = "";
     private String window = "0.0";
     private String [] fields;
-    protected String [] filters;
-    protected LinkedHashMap<String, HashMap<String, Object>> filterColumns;
+    private String [] filters;
+    private LinkedHashMap<String, HashMap<String, Object>> filterColumns;
     protected LinkedHashMap<String, HashMap<String, Object>> columns;
     protected List<String> cellDrillFilters = new LinkedList<>();
     protected String splitChar = " ";
@@ -297,6 +297,20 @@ public class Tile implements Cloneable {
     final public void setFilter(int index, String filter) {
 
         this.filters[index] = filter;
+    }
+
+    //**************************************************************************
+
+    final public LinkedHashMap<String, HashMap<String, Object>> getFilterColumns() {
+
+        return this.filterColumns;
+    }
+
+    //**************************************************************************
+
+    final public void setFilterColumns(LinkedHashMap<String, HashMap<String, Object>> filterColumns) {
+
+        this.filterColumns = filterColumns;
     }
 
     //**************************************************************************

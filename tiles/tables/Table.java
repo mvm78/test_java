@@ -1,5 +1,7 @@
 package test_java.tiles.tables;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import test_java.tiles.Tile;
 
 public abstract class Table extends Tile {
@@ -18,14 +20,16 @@ public abstract class Table extends Tile {
         final String [] instanceFields = this.getCommon().getFields().clone();
         final String commonByFields = this.getCommonBy().getFields();
         final String [] instanceFilters = this.getCommon().getFilters();
+        final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =
+                this.getCommon().getFilterColumns();
 
         this.setFields(instanceFields);
         for (int count=0; count<this.getFields().length; count++) {
             this.setField(count, this.getField(count) + " " + commonByFields);
         }
         this.setFilters(instanceFilters);
-        this.filterColumns = this.getCommon().getFilterColumns();
-        this.columns = this.getCommonBy().appendCompareColumns(this.filterColumns,
+        this.setFilterColumns(instanceFilterColumns);
+        this.columns = this.getCommonBy().appendCompareColumns(instanceFilterColumns,
                 this.columnIncrement);
     }
 
