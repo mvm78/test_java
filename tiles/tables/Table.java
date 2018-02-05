@@ -15,16 +15,15 @@ public abstract class Table extends Tile {
 
     protected final void setCommonData() {
 
-        String [] instanceFields = this.getCommon().getFields().clone();
-        String commonByFields = this.getCommonBy().getFields();
+        final String [] instanceFields = this.getCommon().getFields().clone();
+        final String commonByFields = this.getCommonBy().getFields();
+        final String [] instanceFilters = this.getCommon().getFilters();
 
         this.setFields(instanceFields);
-
         for (int count=0; count<this.getFields().length; count++) {
             this.setField(count, this.getField(count) + " " + commonByFields);
         }
-
-        this.filters = this.getCommon().getFilters();
+        this.setFilters(instanceFilters);
         this.filterColumns = this.getCommon().getFilterColumns();
         this.columns = this.getCommonBy().appendCompareColumns(this.filterColumns,
                 this.columnIncrement);

@@ -17,7 +17,7 @@ public class RTPSessions extends Table {
         this.setFields(new String [] {
             "plink ptun pmin pmax"
         });
-        this.filters = new String [] {};
+        this.setFilters();
         this.columns = new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("First Timestamp", new HashMap<String, Object>() {{
                 put("order", 0);

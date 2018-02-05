@@ -14,13 +14,16 @@ public class TopTCPApplicationPortsByBytes extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
+
+        final String [] instanceFilters = this.getCommon().getFilters();
+
         this.setIsSingleLine(true);
         this.setTitle("Top TCP Application Ports by Bytes");
         this.setPrefix("TcpAgg flowsegments");
         this.setFields(new String [] {
             "dport " + this.getCommonBy().getFields(),
         });
-        this.filters = this.getCommon().getFilters();
+        this.setFilters(instanceFilters);
         this.filterColumns = this.getCommon().getFilterColumns();
         this.columns = this.getCommonBy().appendCompareColumns(this.filterColumns, 1);
     }

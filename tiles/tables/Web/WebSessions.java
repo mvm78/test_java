@@ -17,7 +17,7 @@ public class WebSessions extends Table {
         this.setTitle("Web Sessions");
         this.setPrefix("HttpFlow");
         this.setFields();
-        this.filters = new String [] {};
+        this.setFilters();
         this.columns = new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Start Time", new HashMap<String, Object>() {{
                 put("order", 0);

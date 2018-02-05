@@ -16,7 +16,7 @@ public class DNSSessions extends Table {
         this.setTitle("DNS Sessions");
         this.setPrefix("DnsFlow");
         this.setFields();
-        this.filters = new String [] {};
+        this.setFilters();
         this.columns = new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Start Time", new HashMap<String, Object>() {{
                 put("order", 0);

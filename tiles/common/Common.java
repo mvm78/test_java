@@ -85,7 +85,17 @@ public abstract class Common {
 
         String escaped;
 
-        if (column.get("valueFunction") != null) {
+        if (column.get("valueFunction") == null) {
+
+            escaped = column.get("escapeDoubleQuote") != null
+                  && (boolean)column.get("escapeDoubleQuote") ?
+                    value.replace("\"", "\\\"") : value;
+
+            escaped = column.get("escapeSingleQuote") != null
+                  && (boolean)column.get("escapeSingleQuote") ?
+                    escaped.replace("\'", "\\\'") : escaped;
+
+        } else {
 
             String valueFunction = (String)column.get("valueFunction");
 
@@ -99,15 +109,6 @@ public abstract class Common {
             } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                 return null;
             }
-        } else {
-
-            escaped = column.get("escapeDoubleQuote") != null
-                          && (boolean)column.get("escapeDoubleQuote") ?
-                    value.replace("\"", "\\\"") : value;
-
-            escaped = column.get("escapeSingleQuote") != null
-                          && (boolean)column.get("escapeSingleQuote") ?
-                    escaped.replace("\'", "\\\'") : escaped;
         }
 
         String type = cellDrill > 0 && ((String [])column.get("cellDrill")).length > 0 ?

@@ -16,14 +16,16 @@ public class MediaFlow extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
+
+        final String [] instanceFilters = this.getCommon().getFilters();
+
         this.setTitle("Media Flow");
         this.setPrefix("MediaFlow");
         this.setFields(new String [] {
             this.getCommon().getFields()[0] + " " + this.getCommonBy().getFields(),
         });
-        this.filters = this.getCommon().getFilters();
+        this.setFilters(instanceFilters);
         this.filterColumns = this.getCommon().getFilterColumns();
-
         this.columns = this.getCommonBy().appendCompareColumns(this.filterColumns, 2);
     }
 

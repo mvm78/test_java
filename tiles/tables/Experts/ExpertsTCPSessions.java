@@ -9,7 +9,7 @@ public class ExpertsTCPSessions extends TCPConnections {
     public ExpertsTCPSessions() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-        this.filters = new String [] {"apptype http or port 80 or port 8080"};
+        this.setFilters(new String [] {"apptype http or port 80 or port 8080"});
     }
 
     //**************************************************************************

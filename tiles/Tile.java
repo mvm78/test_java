@@ -30,7 +30,7 @@ public class Tile implements Cloneable {
     private String prefix;
     private String suffix = "";
     private String window = "0.0";
-    protected String [] fields;
+    private String [] fields;
     protected String [] filters;
     protected LinkedHashMap<String, HashMap<String, Object>> filterColumns;
     protected LinkedHashMap<String, HashMap<String, Object>> columns;
@@ -262,6 +262,41 @@ public class Tile implements Cloneable {
     final public void setField(int index, String field) {
 
         this.fields[index] = field;
+    }
+
+    //**************************************************************************
+
+    final public String [] getFilters() {
+
+        return this.filters;
+    }
+
+    //**************************************************************************
+
+    final public String getFilter(int index) {
+
+        return this.getFilters()[index];
+    }
+
+    //**************************************************************************
+
+    final public void setFilters() {
+
+        this.setFilters(new String [] {""});
+    }
+
+    //**************************************************************************
+
+    final public void setFilters(String [] filters) {
+
+        this.filters = filters;
+    }
+
+    //**************************************************************************
+
+    final public void setFilter(int index, String filter) {
+
+        this.filters[index] = filter;
     }
 
     //**************************************************************************
@@ -991,8 +1026,8 @@ public class Tile implements Cloneable {
     private String getQuerySuffix(String customFilter, int filterCount) {
 
         String finalFilter;
-        String commonFilter = this.filters.length > 0 ?
-                this.filters[filterCount] : "";
+        String commonFilter = this.getFilters().length > 0 ?
+                this.getFilter(filterCount) : "";
 
         if (customFilter == null || customFilter.isEmpty()) {
             finalFilter = commonFilter;

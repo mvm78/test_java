@@ -51,7 +51,7 @@ public abstract class Chart extends Tile {
         this.setFields(new String [] {
             this.getCommonBy().getFields(),
         });
-        this.filters = new String [] {};
+        this.setFilters();
         this.columns = this.getCommonBy().appendCompareColumns(
                 new LinkedHashMap<String, HashMap<String, Object>>() {}, 1
         );

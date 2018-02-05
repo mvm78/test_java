@@ -21,7 +21,10 @@ public class ConnectionsNetworkTimeResponseTimeAndRetransmittedBytesMap extends 
         this.setFields(new String [] {
             this.getCommon().getField(0) + " " + this.getCommonBy().getFields(),
         });
-        this.filters = this.getCommon().getFilters();
+
+        final String [] instanceFilters = this.getCommon().getFilters();
+
+        this.setFilters(instanceFilters);
         this.filterColumns = this.getCommon().getFilterColumns();
         this.columns = this.getCommonBy().appendCompareColumns(this.filterColumns, 1);
     }
