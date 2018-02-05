@@ -15,7 +15,6 @@ public class WebSessions extends Table {
         this.setAppPath("/usr/local/mercury/bin/agg-http");
         this.setIsSingleLine(true);
         this.setTitle("Web Sessions");
-        this.window = "0.0";
         this.setPrefix("HttpFlow");
         this.fields = new String [] {""};
         this.filters = new String [] {};

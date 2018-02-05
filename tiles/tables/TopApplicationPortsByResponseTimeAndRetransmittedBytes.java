@@ -19,11 +19,11 @@ public class TopApplicationPortsByResponseTimeAndRetransmittedBytes extends Tabl
         this.setTitle("Top Application Ports by ResponseTime (Retransmitted Bytes)");
         this.setPrefix("TcpAgg flowsegments");
         this.fields = new String [] {
-            "dport " + this.commonBy.getFields(),
+            "dport " + this.getCommonBy().getFields(),
         };
         this.filters = this.getCommon().getFilters();
         this.filterColumns = this.getCommon().getFilterColumns();
-        this.columns = this.commonBy.appendCompareColumns(this.filterColumns, 1);
+        this.columns = this.getCommonBy().appendCompareColumns(this.filterColumns, 1);
     }
 
     //**************************************************************************

@@ -19,11 +19,11 @@ public class ConnectionsNetworkTimeResponseTimeAndRetransmittedBytesMap extends 
         this.setTitle("Connections, Network Time, Response Time, and Retransmitted Bytes Map");
         this.setPrefix("TcpAgg flowsegments");
         this.fields = new String [] {
-            this.common.getFields()[0] + " " + this.commonBy.getFields(),
+            this.getCommon().getFields()[0] + " " + this.getCommonBy().getFields(),
         };
         this.filters = this.getCommon().getFilters();
         this.filterColumns = this.getCommon().getFilterColumns();
-        this.columns = this.commonBy.appendCompareColumns(this.filterColumns, 1);
+        this.columns = this.getCommonBy().appendCompareColumns(this.filterColumns, 1);
     }
 
     //**************************************************************************

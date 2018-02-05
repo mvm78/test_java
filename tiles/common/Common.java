@@ -6,16 +6,23 @@ import java.lang.reflect.InvocationTargetException;
 
 public abstract class Common {
 
-    protected String window;
+    protected String window = "0.0";
     protected String prefix;
 
     public abstract LinkedHashMap<String, HashMap<String, Object>> getFilterColumns();
 
     //**************************************************************************
 
-    public String getWindow() {
+    final public String getWindow() {
 
         return this.window;
+    }
+
+    //**************************************************************************
+
+    final public void setWindow(String window) {
+
+        this.window = window;
     }
 
     //**************************************************************************

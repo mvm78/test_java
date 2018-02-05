@@ -21,15 +21,15 @@ public class Tile implements Cloneable {
     private Map<String, String> reportTime;
     private boolean noDrill = false;
     private String errorTitle = "";
-    protected Common common;
-    protected CommonBy commonBy;
-    protected String appPath;
-    protected boolean isSingleLine = false;
-    protected String title;
-    protected String tileType;
-    protected String prefix;
-    protected String suffix = "";
-    protected String window;
+    private Common common;
+    private CommonBy commonBy;
+    private String appPath;
+    private boolean isSingleLine = false;
+    private String title;
+    private String tileType;
+    private String prefix;
+    private String suffix = "";
+    private String window = "0.0";
     protected String [] fields;
     protected String [] filters;
     protected LinkedHashMap<String, HashMap<String, Object>> filterColumns;
@@ -210,6 +210,27 @@ public class Tile implements Cloneable {
 
     //**************************************************************************
 
+    final public String getWindow() {
+
+        return this.window;
+    }
+
+    //**************************************************************************
+
+    final public void setWindow(String window) {
+
+        this.window = window;
+    }
+
+    //**************************************************************************
+
+    public void setWindow(float window) {
+
+        this.window = String.valueOf(window);
+    }
+
+    //**************************************************************************
+
     @Override
     final public Object clone() throws CloneNotSupportedException {
 
@@ -221,13 +242,6 @@ public class Tile implements Cloneable {
     protected String getRowFilter(Map<String, Object> data) {
 
         return "";
-    }
-
-    //**************************************************************************
-
-    public void setWindow(float timeInterval) {
-
-        this.window = this.window == null ? "0.0" : this.window;
     }
 
     //**************************************************************************
@@ -956,7 +970,7 @@ public class Tile implements Cloneable {
         String filter = finalFilter.isEmpty() ? "" : " q '" + finalFilter + "'";
 
         return " " + this.getPrefix() + " " + this.fields[filterCount] +
-                    filter + " " + this.getSuffix() + " w " + this.window;
+                    filter + " " + this.getSuffix() + " w " + this.getWindow();
     }
 
     //**************************************************************************

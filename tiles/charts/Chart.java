@@ -6,7 +6,7 @@ import test_java.tiles.Tile;
 
 public abstract class Chart extends Tile {
 
-    protected float minWindow = 1;
+    private float minWindow = 1;
 
     //**************************************************************************
 
@@ -18,6 +18,20 @@ public abstract class Chart extends Tile {
 
     //**************************************************************************
 
+    final public float getMinWindow() {
+
+        return this.minWindow;
+    }
+
+    //**************************************************************************
+
+    final public void setMinWindow(float minWindow) {
+
+        this.minWindow = minWindow;
+    }
+
+    //**************************************************************************
+
     @Override
     public void setWindow(float timeInterval) {
 
@@ -25,9 +39,9 @@ public abstract class Chart extends Tile {
 
         float rounded = Math.round(tileWindow * 1000F) / 1000F;
 
-        float windowValue = Math.max(this.minWindow, Math.max(0.001F, rounded));
+        float windowValue = Math.max(this.getMinWindow(), Math.max(0.001F, rounded));
 
-        this.window = String.valueOf(windowValue);
+        this.setWindow(String.valueOf(windowValue));
     }
 
     //**************************************************************************
@@ -35,10 +49,10 @@ public abstract class Chart extends Tile {
     protected final void setCommonByData() {
 
         this.fields = new String [] {
-            this.commonBy.getFields(),
+            this.getCommonBy().getFields(),
         };
         this.filters = new String [] {};
-        this.columns = this.commonBy.appendCompareColumns(
+        this.columns = this.getCommonBy().appendCompareColumns(
                 new LinkedHashMap<String, HashMap<String, Object>>() {}, 1
         );
     }

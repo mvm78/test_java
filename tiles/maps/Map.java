@@ -13,12 +13,4 @@ public abstract class Map extends Tile {
 
     //**************************************************************************
 
-    @Override
-    public void setWindow(float timeInterval) {
-
-        this.window = this.window == null ? "0.0" : this.window;
-    }
-
-    //**************************************************************************
-
 }

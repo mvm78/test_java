@@ -14,7 +14,6 @@ public class DNSSessions extends Table {
 
         this.setIsSingleLine(true);
         this.setTitle("DNS Sessions");
-        this.window = "0.0";
         this.setPrefix("DnsFlow");
         this.fields = new String [] {""};
         this.filters = new String [] {};

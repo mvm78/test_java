@@ -15,7 +15,7 @@ public class ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes extends Cha
         this.setTitle("Connections, Network Time, Response Time, and Retransmitted Bytes");
         this.setPrefix("TcpAgg flowsegments");
         this.setCommonByData();
-        this.minWindow = 1;
+        this.setMinWindow(1);
     }
 
     //**************************************************************************
