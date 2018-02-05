@@ -10,8 +10,10 @@ public class TopApplicationsByThroughput extends Table {
     public TopApplicationsByThroughput() {
 
         this.common = new CommonTopTCPApplications();
-        this.commonBy = new CommonByThroughput();
 
+        CommonByThroughput CommonByInstance = new CommonByThroughput();
+
+        this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
         this.title = "Top Applications by Throughput";
         this.prefix = "TcpAgg flowsegments";

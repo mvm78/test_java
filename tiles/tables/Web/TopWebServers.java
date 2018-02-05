@@ -11,8 +11,11 @@ public class TopWebServers extends Table {
     public TopWebServers() {
 
         this.common = new CommonTopWebServers();
-        this.commonBy = new CommonByNumberOfTransactionsBytesAndTransactionLatency();
 
+        CommonByNumberOfTransactionsBytesAndTransactionLatency CommonByInstance =
+                new CommonByNumberOfTransactionsBytesAndTransactionLatency();
+
+        this.setCommonBy(CommonByInstance);
         this.title = "Top Web Servers";
         this.appPath = "/usr/local/mercury/bin/agg-http";
         this.prefix = "HttpAgg";

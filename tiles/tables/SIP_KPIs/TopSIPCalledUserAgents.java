@@ -11,8 +11,10 @@ public class TopSIPCalledUserAgents extends Table {
     public TopSIPCalledUserAgents() {
 
         this.common = new CommonTopSIPCalledUserAgents();
-        this.commonBy = new CommonByCalls();
 
+        CommonByCalls CommonByInstance = new CommonByCalls();
+
+        this.setCommonBy(CommonByInstance);
         this.title = "SIP - Top Called User Agents";
         this.prefix = "top 0 desc on dstuseragent";
         this.splitChar = ",";

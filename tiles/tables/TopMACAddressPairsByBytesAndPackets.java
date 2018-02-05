@@ -10,8 +10,10 @@ public class TopMACAddressPairsByBytesAndPackets extends Table {
     public TopMACAddressPairsByBytesAndPackets() {
 
         this.common = new CommonTopMACAddressPairs();
-        this.commonBy = new CommonByBytesAndPackets();
 
+        CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
+
+        this.setCommonBy(CommonByInstance);
         this.title = "Top MAC Address Pairs by Packets and Bytes";
         this.prefix = "NetDist";
         this.setCommonData();

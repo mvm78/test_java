@@ -10,8 +10,11 @@ public class TopServersByResponseTimeAndRetransmittedBytes extends Table {
     public TopServersByResponseTimeAndRetransmittedBytes() {
 
         this.common = new CommonTopServers();
-        this.commonBy = new CommonByResponseTimeAndRetransmittedBytes();
 
+        CommonByResponseTimeAndRetransmittedBytes CommonByInstance =
+                new CommonByResponseTimeAndRetransmittedBytes();
+
+        this.setCommonBy(CommonByInstance);
         this.title = "Top Servers by ResponseTime (Retransmitted Bytes)";
         this.prefix = "TcpAgg flowsegments";
         this.setCommonData();

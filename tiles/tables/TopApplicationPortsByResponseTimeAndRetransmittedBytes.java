@@ -10,8 +10,11 @@ public class TopApplicationPortsByResponseTimeAndRetransmittedBytes extends Tabl
     public TopApplicationPortsByResponseTimeAndRetransmittedBytes() {
 
         this.common = new CommonTopApplicationPorts();
-        this.commonBy = new CommonByResponseTimeAndRetransmittedBytes();
 
+        CommonByResponseTimeAndRetransmittedBytes CommonByInstance =
+                new CommonByResponseTimeAndRetransmittedBytes();
+
+        this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
         this.title = "Top Application Ports by ResponseTime (Retransmitted Bytes)";
         this.prefix = "TcpAgg flowsegments";

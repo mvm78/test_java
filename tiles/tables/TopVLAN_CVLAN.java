@@ -10,8 +10,10 @@ public class TopVLAN_CVLAN extends Table {
     public TopVLAN_CVLAN() {
 
         this.common = new CommonVLAN_CVLAN();
-        this.commonBy = new CommonByTCPBytes();
 
+        CommonByTCPBytes CommonByInstance = new CommonByTCPBytes();
+
+        this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
         this.title = "Top VLAN";
         this.prefix = "TcpAgg flowsegments";

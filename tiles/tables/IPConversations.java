@@ -10,8 +10,10 @@ public class IPConversations extends Table {
     public IPConversations() {
 
         this.common = new CommonTopHostPairs();
-        this.commonBy = new CommonByBytesAndPackets();
 
+        CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
+
+        this.setCommonBy(CommonByInstance);
         this.title = "IP Conversations";
         this.prefix = "NetDist";
         this.setCommonData();

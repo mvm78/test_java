@@ -42,6 +42,90 @@ public class Tile implements Cloneable {
 
     //**************************************************************************
 
+    final public Report getReport() {
+
+        return this.report;
+    }
+
+    //**************************************************************************
+
+    final public void setReport(Report report) {
+
+        this.report = report;
+    }
+
+    //**************************************************************************
+
+    final public Map<String, String> getReportTime() {
+
+        return this.reportTime;
+    }
+
+    //**************************************************************************
+
+    final public void setReportTime(Map<String, String> reportTime) {
+
+        this.reportTime = reportTime;
+    }
+
+    //**************************************************************************
+
+    final public boolean getNoDrill() {
+
+        return this.noDrill;
+    }
+
+    //**************************************************************************
+
+    final public void setNoDrill(boolean noDrill) {
+
+        this.noDrill = noDrill;
+    }
+
+    //**************************************************************************
+
+    final public String getErrorTitle() {
+
+        return this.errorTitle;
+    }
+
+    //**************************************************************************
+
+    final public void setErrorTitle(String errorTitle) {
+
+        this.errorTitle = errorTitle;
+    }
+
+    //**************************************************************************
+
+    final public Common getCommon() {
+
+        return this.common;
+    }
+
+    //**************************************************************************
+
+    final public void setCommon(Common common) {
+
+        this.common = common;
+    }
+
+    //**************************************************************************
+
+    final public CommonBy getCommonBy() {
+
+        return this.commonBy;
+    }
+
+    //**************************************************************************
+
+    final public void setCommonBy(CommonBy commonBy) {
+
+        this.commonBy = commonBy;
+    }
+
+    //**************************************************************************
+
     @Override
     final public Object clone() throws CloneNotSupportedException {
 
@@ -122,49 +206,8 @@ public class Tile implements Cloneable {
 
     final public String getCommonByClassName() {
 
-        return this.commonBy == null ? "" : this.commonBy.getClass().getName();
-    }
-
-    //**************************************************************************
-
-    final public Report getReport() {
-
-        return this.report;
-    }
-
-    //**************************************************************************
-
-    final public Map<String, String> getReportTime() {
-
-        return this.reportTime;
-    }
-
-    //**************************************************************************
-
-    final public void setReport(Report report) {
-
-        this.report = report;
-    }
-
-    //**************************************************************************
-
-    final public void setReportTime(Map<String, String> reportTime) {
-
-        this.reportTime = reportTime;
-    }
-
-    //**************************************************************************
-
-    final public boolean getNoDrill() {
-
-        return this.noDrill;
-    }
-
-    //**************************************************************************
-
-    final public void setNoDrill(boolean noDrill) {
-
-        this.noDrill = noDrill;
+        return this.getCommonBy() == null ? "" :
+                this.getCommonBy().getClass().getName();
     }
 
     //**************************************************************************
@@ -179,34 +222,6 @@ public class Tile implements Cloneable {
     final public void setIsSingleLine(boolean isSingleLine) {
 
         this.isSingleLine = isSingleLine;
-    }
-
-    //**************************************************************************
-
-    final public String getErrorTitle() {
-
-        return this.errorTitle;
-    }
-
-    //**************************************************************************
-
-    final public void setErrorTitle(String errorTitle) {
-
-        this.errorTitle = errorTitle;
-    }
-
-    //**************************************************************************
-
-    final public Common getCommon() {
-
-        return this.common;
-    }
-
-    //**************************************************************************
-
-    final public void setCommon(Common common) {
-
-        this.common = common;
     }
 
     //**************************************************************************

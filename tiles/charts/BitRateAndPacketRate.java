@@ -8,8 +8,9 @@ public class BitRateAndPacketRate extends Chart {
 
     public BitRateAndPacketRate() {
 
-        this.commonBy = new CommonByBytesAndPackets();
+        CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
 
+        this.setCommonBy(CommonByInstance);
         this.title = "Bit Rate and Packet Rate";
         this.prefix = "NetDist";
         this.setCommonByData();

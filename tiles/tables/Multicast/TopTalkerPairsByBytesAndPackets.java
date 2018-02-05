@@ -11,8 +11,10 @@ public class TopTalkerPairsByBytesAndPackets extends Table {
     public TopTalkerPairsByBytesAndPackets() {
 
         this.common = new CommonTopTalkerPairs();
-        this.commonBy = new CommonByBytesAndPackets();
 
+        CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
+
+        this.setCommonBy(CommonByInstance);
         this.title = "Multicast - Talker Pairs";
         this.prefix = "NetDist";
         this.setCommonData();
