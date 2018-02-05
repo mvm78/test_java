@@ -163,7 +163,7 @@ public class Util {
 
     //**************************************************************************
 
-    public static float getTimeInterval(String beginTime, String endTime) {
+    public static String getTimeInterval(String beginTime, String endTime) {
 
         Map<String, Long> begin = Util.getParsedTime(beginTime);
         Map<String, Long> end = Util.getParsedTime(endTime);
@@ -173,7 +173,7 @@ public class Util {
 
         Long timeInterval = endUnixTime - beginUnixTime;
 
-        return timeInterval.floatValue() / 1000;
+        return String.valueOf(timeInterval.floatValue() / 1000);
     }
 
     //**************************************************************************
@@ -275,32 +275,6 @@ public class Util {
                 System.err.println("Can't remove " + file.getAbsolutePath());
             }
         }
-    }
-
-    //**************************************************************************
-
-    public static boolean setPoperty(Object object, String property, Object value) {
-
-        Class<?> clazz = object.getClass();
-
-        while (clazz != null) {
-            try {
-
-                Field field = clazz.getDeclaredField(property);
-
-                field.setAccessible(true);
-                field.set(object, value);
-
-                return true;
-
-            } catch (NoSuchFieldException e) {
-                clazz = clazz.getSuperclass();
-            } catch (Exception e) {
-                throw new IllegalStateException(e);
-            }
-        }
-
-        return false;
     }
 
     //**************************************************************************

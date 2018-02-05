@@ -19,6 +19,7 @@ public class Tile implements Cloneable {
 
     private Report report;
     private Map<String, String> reportTime;
+    private boolean noDrill = false;
     private String errorTitle = "";
     protected Common common;
     protected CommonBy commonBy;
@@ -119,6 +120,55 @@ public class Tile implements Cloneable {
 
     //**************************************************************************
 
+    public Map<String, String> getReportTime() {
+
+        return this.reportTime;
+    }
+
+    //**************************************************************************
+
+    public String getCommonByClassName() {
+
+        return this.commonBy == null ? "" : this.commonBy.getClass().getName();
+    }
+
+    //**************************************************************************
+
+    public Report getReport() {
+
+        return this.report;
+    }
+
+    //**************************************************************************
+
+    public void setReport(Report report) {
+
+        this.report = report;
+    }
+
+    //**************************************************************************
+
+    public void setReportTime(Map<String, String> reportTime) {
+
+        this.reportTime = reportTime;
+    }
+
+    //**************************************************************************
+
+    public boolean getNoDrill() {
+
+        return this.noDrill;
+    }
+
+    //**************************************************************************
+
+    public void setNoDrill(boolean noDrill) {
+
+        this.noDrill = noDrill;
+    }
+
+    //**************************************************************************
+
     @SuppressWarnings("unchecked")
     private Tile cloneTile() {
 
@@ -179,7 +229,7 @@ public class Tile implements Cloneable {
     @SuppressWarnings("unchecked")
     public Map<String, Map<String, Object>> test(Map<String, Object> data) {
 
-        String cmd = data.get("cmd") == null ? this.report.getCmd(this) :
+        String cmd = data.get("cmd") == null ? this.getReport().getCmd(this) :
                 (String)data.get("cmd");
         String filter = (String)data.get("filter");
         int drillLevel = (int)data.get("drillLevel");
@@ -196,7 +246,7 @@ public class Tile implements Cloneable {
                 (Map<String, Object>)((HashMap<String, Object>)data).clone();
 
         if (splitParent.length == 0 && drillLevel == 1) {
-            this.report.resetSkipTiles();
+            this.getReport().resetSkipTiles();
         }
 
         this.errorTitle = filter.isEmpty() || drillLevel == 1 ?
@@ -218,13 +268,15 @@ public class Tile implements Cloneable {
 
             Tile tile = this.cloneTile();
 
-            Util.debugOutput(new HashMap<String, Object>() {{
-                put("tile", tile);
-                put("finalCmd", finalCmd);
-                put("lines", lines);
-                put("parentLine", String.join(tile.getSplitChar(), splitParent));
-                put("skipCompare", isCellDrill);
-            }});
+            if (! this.getNoDrill()) {
+                Util.debugOutput(new HashMap<String, Object>() {{
+                    put("tile", tile);
+                    put("finalCmd", finalCmd);
+                    put("lines", lines);
+                    put("parentLine", String.join(tile.getSplitChar(), splitParent));
+                    put("skipCompare", isCellDrill);
+                }});
+            }
 
             if (isCellDrill) {
 
@@ -282,6 +334,11 @@ public class Tile implements Cloneable {
             testResults.put("tally", drillTally);
         }
 
+
+        if (! filter.isEmpty() && ! this.getNoDrill()) {
+            this.checkTallies(filter, testResults.get("tally"));
+        }
+
         if (isCellDrill || splitParent.length == 0) {
             return testResults;
         }
@@ -330,7 +387,7 @@ public class Tile implements Cloneable {
 
         this.test(params);
 
-        Report drillReport = this.report.cloneReport();
+        Report drillReport = this.getReport().cloneReport();
 
         drillReport.addSkipTile(this.getTrueName());
         drillReport.tests(drillLevel + 1, finalFilter);
@@ -383,8 +440,8 @@ public class Tile implements Cloneable {
 
     private Map<String, String> getDrillTime(String [] split) {
 
-        String beginTime = this.reportTime.get("beginTime");
-        String endTime = this.reportTime.get("endTime");
+        String beginTime = this.getReportTime().get("beginTime");
+        String endTime = this.getReportTime().get("endTime");
 
         Map<String, String> beginEndTime = new HashMap<String, String>() {{
             put("startTime", beginTime);
@@ -683,8 +740,8 @@ public class Tile implements Cloneable {
 
             String lineStartTime = timeInfo.get("startTime");
             String lineStopTime = timeInfo.get("stopTime");
-            String reportStartTime = this.reportTime.get("beginTime");
-            String reportStopTime = this.reportTime.get("endTime");
+            String reportStartTime = this.getReportTime().get("beginTime");
+            String reportStopTime = this.getReportTime().get("endTime");
 
             double lineDblStartTime = lineStartTime.isEmpty() ? 0 :
                     Double.valueOf(lineStartTime);
@@ -699,9 +756,9 @@ public class Tile implements Cloneable {
              || lineDblStartTime == 0 || lineDblStopTime == 0) {
 
                 String beginTime = "Start Time \"" +
-                        this.reportTime.get("beginTimeString") + "\"";
+                        this.getReportTime().get("beginTimeString") + "\"";
                 String endTime = "Stop Time \"" +
-                        this.reportTime.get("endTimeString") + "\"";
+                        this.getReportTime().get("endTimeString") + "\"";
                 String startTime = "Start Time \"" +
                         Util.getFromTimestamp(lineStartTime) + "\"";
                 String stopTime = "Stop Time \"" +
@@ -820,6 +877,10 @@ public class Tile implements Cloneable {
 
     private boolean checkIsDrillable() {
 
+        if (this.getNoDrill()) {
+            return false;
+        }
+
         if (this.checkIfCustomRowFilter()) {
             return true;
         }
@@ -874,7 +935,7 @@ public class Tile implements Cloneable {
                 (Map<String, Object>)((HashMap<String, Object>)tally).clone();
         final boolean updatedIsLineMatch = isLineMatch;
 
-        if (isCellDrill || ! this.checkIsDrillable()) {
+        if (this.getNoDrill() || isCellDrill || ! this.checkIsDrillable()) {
             // some tiles like charts or maps may not be subject to drilling
             return new HashMap<String, Object>() {{
                 put("tally", updatedTally);
@@ -887,8 +948,8 @@ public class Tile implements Cloneable {
 
             Map<String, String> drillTime = this.getDrillTime(split);
 
-            String drillTileCmd = this.report.getCmd(this, drillTime);
-            String drillCellCmd = this.report.getCmd(this);
+            String drillTileCmd = this.getReport().getCmd(this, drillTime);
+            String drillCellCmd = this.getReport().getCmd(this);
             int paramFilterCount = filterCount;
 
             Map<String, Object> params = new HashMap<String, Object>() {{
@@ -1008,8 +1069,7 @@ public class Tile implements Cloneable {
         String [] splitParent = (String [])((String [])data.get("splitParent")).clone();
         int cellDrill = (int)data.get("cellDrill");
         String filter = (String)data.get("filter");
-        String operator = data.get("operator") == null ? "" :
-                (String)data.get("operator");
+        String operator = data.get("operator") == null ? "" : (String)data.get("operator");
 
         Iterator<String []> filteredIterator = filteredLines.iterator();
 
@@ -1083,6 +1143,67 @@ public class Tile implements Cloneable {
                 "\"" + line[columnOrder] + "\":");
 
         this.logError("\t\t" + String.join(this.getSplitChar(), line));
+    }
+
+    //**************************************************************************
+
+    private void checkTallies(String filter, Map<String, Object> masterTally) {
+
+        if (masterTally == null) {
+            return;
+        }
+
+        Map<String, Map<String, Object>> results = this.getTilesTallies(filter);
+
+        results.keySet().parallelStream()
+                .filter(tile -> this.checkIfTallyDiffter(results.get(tile), masterTally))
+                .forEach(tile -> {
+                    ErrorsLog.log("Tile " + tile + " with filter \"" + filter + "\" has NO DATA");
+                });
+    }
+
+    //**************************************************************************
+
+    private boolean checkIfTallyDiffter(Map<String, Object> tally, Map<String, Object> masterTally) {
+
+        return masterTally.keySet().parallelStream()
+                .filter(key -> tally.get(key) == null && (Double)masterTally.get(key) > 0)
+                .findAny()
+                .isPresent();
+    }
+
+    //**************************************************************************
+
+    private Map<String, Map<String, Object>> getTilesTallies(String filter) {
+
+        Map<String, String> tiles = this.getReport().getTiles();
+        String commonByClassName = this.getCommonByClassName();
+        String masterTitle = this.getTitle();
+
+        Map<String, Map<String, Object>> results = new HashMap<>();
+
+        Map<String, Object> params = new HashMap<String, Object>() {{
+            put("filter", filter);
+            put("drillLevel", 1);
+        }};
+
+        tiles.keySet().parallelStream()
+                .forEach(tile -> {
+
+                    Tile testTile = this.getReport().getTileInstance(tile);
+
+                    if (! testTile.getTitle().equals(masterTitle)
+                     && testTile.getCommonByClassName().equals(commonByClassName)) {
+
+                        testTile.setNoDrill(true);
+
+                        Map<String, Map<String, Object>> result = testTile.test(params);
+
+                        results.put(testTile.getTrueName(), result.get("tally"));
+                    }
+                });
+
+        return results;
     }
 
     //**************************************************************************

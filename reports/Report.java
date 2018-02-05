@@ -22,14 +22,16 @@ public class Report implements Cloneable {
     protected Map<String, Boolean> skipTiles = new HashMap<>();
     protected String tilesFolder = "";
 
-    private final String beginTime = "08:40:00 02/02/2018";
-    private final String endTime = "08:40:01 02/02/2018";
+    private final String beginTime = "15:40:00 02/02/2018";
+    private final String endTime = "15:40:01 02/02/2018";
     private final String hashKey = "1";
-    private final String appliance = "App5100-30";
+    private final String appliance = "Appliance-PM_Perf";
     private final String pcap = "nf0";
 
     protected String appPath;
     protected String refresh;
+
+    protected String interval;
 
     protected Map<String, String> tiles;
     protected HashMap<String, String []> tallyCheck;
@@ -154,6 +156,20 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
+    public final void setInterval() {
+
+        this.interval = Util.getTimeInterval(this.getBeginTime(), this.getEndTime());
+    }
+
+    //**************************************************************************
+
+    public final String getInterval() {
+
+        return this.interval;
+    }
+
+    //**************************************************************************
+
     public void tests() {
 
         this.tests(1, "");
@@ -168,39 +184,19 @@ public class Report implements Cloneable {
             return;
         }
 
-        Report report = this;
         Map<String, Map<String, Map<String, Object>>> results = new HashMap<>();
 
-        float timeInterval = Util.getTimeInterval(this.beginTime, this.endTime);
-        String tileFolder = this.tilesFolder.isEmpty() ? "" : this.tilesFolder + ".";
-
-        String reportBeginTime = this.getBeginTime();
-        String reportEndTime = this.getEndTime();
-
-        Map<String, String> reportTime = new HashMap<String, String>() {{
-            put("beginTime", Util.getTimeStamp(reportBeginTime));
-            put("endTime", Util.getTimeStamp(reportEndTime));
-            put("beginTimeString", reportBeginTime);
-            put("endTimeString", reportEndTime);
-        }};
-
         Map<String, Object> params = new HashMap<String, Object>() {{
-            put("report", report);
             put("filter", filter);
             put("drillLevel", drillLevel);
         }};
 
+        this.setInterval();
+
         this.tiles.keySet().parallelStream()
                 .forEach(tile -> {
 
-                    String type = this.tiles.get(tile);
-
-                    String className = "test_java.tiles." + type + "." + tileFolder + tile;
-
-                    Tile testTile = TileFactory.getTile(className, timeInterval);
-
-                    Util.setPoperty(testTile, "report", this);
-                    Util.setPoperty(testTile, "reportTime", reportTime);
+                    Tile testTile = this.getTileInstance(tile);
 
                     Map<String, Map<String, Object>> result = testTile.test(params);
 
@@ -307,6 +303,42 @@ public class Report implements Cloneable {
                                 this.tiles.put(tile, type);
                             });
                 });
+    }
+
+    //**************************************************************************
+
+    public final String setTileClassFullName(String tile) {
+
+        String tileFolder = this.tilesFolder.isEmpty() ? "" : this.tilesFolder + ".";
+        String type = this.tiles.get(tile);
+
+        return "test_java.tiles." + type + "." + tileFolder + tile;
+    }
+
+    //**************************************************************************
+
+    public final Tile getTileInstance(String tileName) {
+
+        float timeInterval = Float.valueOf(this.getInterval());
+        String className = this.setTileClassFullName(tileName);
+
+        String startTime = this.getBeginTime();
+        String stopTime = this.getEndTime();
+
+        Map<String, String> reportTime = new HashMap<String, String>() {{
+            put("interval", Util.getTimeInterval(startTime, stopTime));
+            put("beginTime", Util.getTimeStamp(startTime));
+            put("endTime", Util.getTimeStamp(stopTime));
+            put("beginTimeString", startTime);
+            put("endTimeString", stopTime);
+        }};
+
+        Tile tile = TileFactory.getTile(className, timeInterval);
+
+        tile.setReport(this);
+        tile.setReportTime(reportTime);
+
+        return tile;
     }
 
     //**************************************************************************

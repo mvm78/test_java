@@ -15,16 +15,16 @@ public class NetFlow extends Report {
 
         this.tileList = new HashMap<String, String []>() {{
             put("tables", new String [] {
-                "NetFlow.NetFlowDevicesByBytesAndPackets",
-                "NetFlow.NetFlowInputInterfacesByBytesAndPackets",
-                "NetFlow.NetFlowOutputInterfacesByBytesAndPackets",
-                "NetFlow.NetFlowInterfacePairsByBytesAndPackets",
-                "IPConversations",
+//                "NetFlow.NetFlowDevicesByBytesAndPackets",
+//                "NetFlow.NetFlowInputInterfacesByBytesAndPackets",
+//                "NetFlow.NetFlowOutputInterfacesByBytesAndPackets",
+//                "NetFlow.NetFlowInterfacePairsByBytesAndPackets",
+//                "IPConversations",
                 "NetFlow.NetFlowTopProtocolAndEtherTypesByBytesAndPackets",
                 "TopSourcesByBytesAndPackets",
                 "TopApplicationPortsByBytesAndPackets",
                 "TopCountryPairsByBytesAndPackets",
-                "NetFlow.NetFlowSummaryByBytesAndPackets",
+//                "NetFlow.NetFlowSummaryByBytesAndPackets",
             });
         }};
 
