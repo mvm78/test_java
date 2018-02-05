@@ -18,9 +18,9 @@ public class MediaFlow extends Table {
         this.setCommonBy(CommonByInstance);
         this.setTitle("Media Flow");
         this.setPrefix("MediaFlow");
-        this.fields = new String [] {
+        this.setFields(new String [] {
             this.getCommon().getFields()[0] + " " + this.getCommonBy().getFields(),
-        };
+        });
         this.filters = this.getCommon().getFilters();
         this.filterColumns = this.getCommon().getFilterColumns();
 

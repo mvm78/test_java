@@ -18,10 +18,11 @@ public class AnomalousTCPSessions extends Table {
 
         final String instancePrefix = this.getCommon().getPrefix();
         final String instanceWindow = this.getCommon().getWindow();
+        final String [] instanceFields = this.getCommon().getFields();
 
         this.setPrefix(instancePrefix);
         this.setWindow(instanceWindow);
-        this.fields = this.getCommon().getFields();
+        this.setFields(instanceFields);
         this.filters = this.getCommon().getFilters();
         this.columns = this.getCommon().getFilterColumns();
         this.lineTally = "Connections";

@@ -48,6 +48,13 @@ public abstract class Common {
 
     //**************************************************************************
 
+    final public String getField(int index) {
+
+        return this.getFields()[index];
+    }
+
+    //**************************************************************************
+
     public String [] getFilters() {
 
         return new String [] {};

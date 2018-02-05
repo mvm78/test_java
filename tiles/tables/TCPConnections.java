@@ -21,9 +21,9 @@ public class TCPConnections extends Table {
 
         this.setPrefix(instancePrefix);
         this.setWindow(instanceWindow);
-        this.fields = new String [] {
+        this.setFields(new String [] {
             "tcpflags pcid"
-        };
+        });
         this.filters = new String [] {};
         this.columns = this.getCommon().getFilterColumns();
         this.removeFirstItem = true;

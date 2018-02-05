@@ -15,7 +15,7 @@ public class SIPSessions extends Table {
         this.setIsSingleLine(true);
         this.setTitle("Web Sessions");
         this.setPrefix("list 999");
-        this.fields = new String [] {""};
+        this.setFields();
         this.filters = new String [] {};
         this.splitChar = ",";
         this.columns = new LinkedHashMap<String, HashMap<String, Object>>() {{

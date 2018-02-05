@@ -17,9 +17,9 @@ public class TopApplicationPortsByThroughput extends Table {
         this.setIsSingleLine(true);
         this.setTitle("Top Application Ports by Throughput");
         this.setPrefix("TcpAgg flowsegments");
-        this.fields = new String [] {
+        this.setFields(new String [] {
             "dport " + this.getCommonBy().getFields(),
-        };
+        });
         this.filters = this.getCommon().getFilters();
         this.filterColumns = this.getCommon().getFilterColumns();
         this.columns = this.getCommonBy().appendCompareColumns(this.filterColumns, 1);

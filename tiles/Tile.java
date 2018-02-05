@@ -231,6 +231,41 @@ public class Tile implements Cloneable {
 
     //**************************************************************************
 
+    final public String [] getFields() {
+
+        return this.fields;
+    }
+
+    //**************************************************************************
+
+    final public String getField(int index) {
+
+        return this.getFields()[index];
+    }
+
+    //**************************************************************************
+
+    final public void setFields() {
+
+        this.setFields(new String [] {""});
+    }
+
+    //**************************************************************************
+
+    final public void setFields(String [] fields) {
+
+        this.fields = fields;
+    }
+
+    //**************************************************************************
+
+    final public void setField(int index, String field) {
+
+        this.fields[index] = field;
+    }
+
+    //**************************************************************************
+
     @Override
     final public Object clone() throws CloneNotSupportedException {
 
@@ -382,7 +417,7 @@ public class Tile implements Cloneable {
 
         params.put("splitParent", splitParent);
 
-        for (int filterCount=0; filterCount<this.fields.length; filterCount++) {
+        for (int filterCount=0; filterCount<this.getFields().length; filterCount++) {
 
             String finalCmd = cmd + this.getQuerySuffix(filter, filterCount);
 
@@ -969,7 +1004,7 @@ public class Tile implements Cloneable {
 
         String filter = finalFilter.isEmpty() ? "" : " q '" + finalFilter + "'";
 
-        return " " + this.getPrefix() + " " + this.fields[filterCount] +
+        return " " + this.getPrefix() + " " + this.getField(filterCount) +
                     filter + " " + this.getSuffix() + " w " + this.getWindow();
     }
 

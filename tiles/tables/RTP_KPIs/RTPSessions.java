@@ -14,7 +14,9 @@ public class RTPSessions extends Table {
 
         this.setTitle("RTP Sessions");
         this.setPrefix("RtpFlow");
-        this.fields = new String [] {"plink ptun pmin pmax"};
+        this.setFields(new String [] {
+            "plink ptun pmin pmax"
+        });
         this.filters = new String [] {};
         this.columns = new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("First Timestamp", new HashMap<String, Object>() {{
