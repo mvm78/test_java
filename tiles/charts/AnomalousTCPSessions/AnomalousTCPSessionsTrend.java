@@ -13,10 +13,10 @@ public class AnomalousTCPSessionsTrend extends Chart {
 
         this.common = new CommonTCPSessions();
 
-        this.isSingleLine = true;
-        this.prefix = this.common.getPrefix();
+        this.setIsSingleLine(true);
+        this.prefix = this.getCommon().getPrefix();
         this.fields = new String [] {""};
-        this.filters = this.common.getFilters();
+        this.filters = this.getCommon().getFilters();
         this.columns = new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Connections", new HashMap<String, Object>() {{
                 put("order", 1);

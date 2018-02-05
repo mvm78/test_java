@@ -13,7 +13,7 @@ public class NetFlowSummaryByBytesAndPackets extends Table {
         this.common = new CommonNetFlowSummary();
         this.commonBy = new CommonByBytesAndPackets();
 
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "Netflow - Summary";
         this.prefix = "NetDist";
         this.setCommonData();

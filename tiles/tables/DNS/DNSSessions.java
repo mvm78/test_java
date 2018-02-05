@@ -12,7 +12,7 @@ public class DNSSessions extends Table {
 
     public DNSSessions() {
 
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "DNS Sessions";
         this.window = "0.0";
         this.prefix = "DnsFlow";

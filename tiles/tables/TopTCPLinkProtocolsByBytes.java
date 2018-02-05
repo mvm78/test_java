@@ -12,7 +12,7 @@ public class TopTCPLinkProtocolsByBytes extends Table {
         this.common = new CommonLinkTopProtocols();
         this.commonBy = new CommonByTCPBytes();
 
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "Top TCP Link Protocols";
         this.prefix = "TcpAgg flowsegments";
         this.setCommonData();

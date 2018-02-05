@@ -13,7 +13,7 @@ public class NetFlowTopProtocolAndEtherTypesByBytesAndPackets extends Table {
         this.common = new CommonTopProtocolAndEtherTypes();
         this.commonBy = new CommonByBytesAndPackets();
 
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "Network - Top Protocol and EtherType by Packets and Bytes";
         this.prefix = "NetDist";
         this.setCommonData();

@@ -45,12 +45,4 @@ public class TopConversations extends Report {
 
     //**************************************************************************
 
-    @Override
-    protected String getTitle() {
-
-        return this.title;
-    }
-
-    //**************************************************************************
-
 }

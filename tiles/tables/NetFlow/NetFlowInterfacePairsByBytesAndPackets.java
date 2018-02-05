@@ -13,7 +13,7 @@ public class NetFlowInterfacePairsByBytesAndPackets extends Table {
         this.common = new CommonTopInterfacePairs();
         this.commonBy = new CommonByBytesAndPackets();
 
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "Netflow - Ifaces Pair";
         this.prefix = "NetDist";
         this.setCommonData();

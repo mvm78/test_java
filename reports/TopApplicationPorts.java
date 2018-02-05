@@ -43,12 +43,4 @@ public class TopApplicationPorts extends Report {
 
     //**************************************************************************
 
-    @Override
-    protected String getTitle() {
-
-        return this.title;
-    }
-
-    //**************************************************************************
-
 }

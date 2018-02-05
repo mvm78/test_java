@@ -12,7 +12,7 @@ public class TopCountryPairsTCPPerformance extends Table {
         this.common = new CommonTopCountryPairs();
         this.commonBy = new CommonByTCPBytes();
 
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "Top Country Pair TCP Performance";
         this.prefix = "TcpAgg flowsegments";
         this.setCommonData();

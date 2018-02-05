@@ -26,7 +26,7 @@ public class Report implements Cloneable {
     private final String endTime = "15:40:01 02/02/2018";
     private final String hashKey = "1";
     private final String appliance = "Appliance-PM_Perf";
-    private final String pcap = "nf0";
+    private final String pcap = "em1";
 
     protected String appPath;
     protected String refresh;
@@ -46,42 +46,42 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    public void addSkipTile(String skipTile) {
+    final public void addSkipTile(String skipTile) {
 
         this.skipTiles.put(skipTile, true);
     }
 
     //**************************************************************************
 
-    public void resetSkipTiles() {
+    final public void resetSkipTiles() {
 
         this.skipTiles = new HashMap<>();
     }
 
     //**************************************************************************
 
-    public String getBeginTime() {
+    final public String getBeginTime() {
 
         return this.beginTime;
     }
 
     //**************************************************************************
 
-    protected String getTitle() {
+    final protected String getTitle() {
 
         return this.title;
     }
 
     //**************************************************************************
 
-    public String getEndTime() {
+    final public String getEndTime() {
 
         return this.endTime;
     }
 
     //**************************************************************************
 
-    public Map<String, String> getTiles() {
+    final public Map<String, String> getTiles() {
 
         return this.tiles;
     }

@@ -12,7 +12,7 @@ public class TopVLAN extends Table {
         this.common = new CommonVLAN_CVLAN();
         this.commonBy = new CommonByTCPBytes();
 
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "Top VLAN";
         this.prefix = "TcpAgg flowsegments";
         this.setCommonData();

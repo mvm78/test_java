@@ -13,7 +13,7 @@ public class WebSessions extends Table {
     public WebSessions() {
 
         this.appPath = "/usr/local/mercury/bin/agg-http";
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "Web Sessions";
         this.window = "0.0";
         this.prefix = "HttpFlow";

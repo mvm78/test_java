@@ -23,12 +23,4 @@ public class FlowBasedRTP_KPIs extends Report {
 
     //**************************************************************************
 
-    @Override
-    protected String getTitle() {
-
-        return this.title;
-    }
-
-    //**************************************************************************
-
 }

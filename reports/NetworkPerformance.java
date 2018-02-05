@@ -50,12 +50,4 @@ public class NetworkPerformance extends Report {
 
     //**************************************************************************
 
-    @Override
-    protected String getTitle() {
-
-        return this.title;
-    }
-
-    //**************************************************************************
-
 }

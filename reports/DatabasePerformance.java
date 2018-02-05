@@ -43,12 +43,4 @@ public class DatabasePerformance extends Report {
 
     //**************************************************************************
 
-    @Override
-    protected String getTitle() {
-
-        return this.title;
-    }
-
-    //**************************************************************************
-
 }

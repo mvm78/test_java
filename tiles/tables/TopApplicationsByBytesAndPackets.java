@@ -12,7 +12,7 @@ public class TopApplicationsByBytesAndPackets extends Table {
         this.common = new CommonTopApplications();
         this.commonBy = new CommonByBytesAndPackets();
 
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "Top Applications by Bytes and Packets";
         this.prefix = "NetDist";
         this.setCommonData();

@@ -12,14 +12,14 @@ public class TopApplicationPortsByThroughput extends Table {
         this.common = new CommonTopApplicationPorts();
         this.commonBy = new CommonByThroughput();
 
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "Top Application Ports by Throughput";
         this.prefix = "TcpAgg flowsegments";
         this.fields = new String [] {
             "dport " + this.commonBy.getFields(),
         };
-        this.filters = this.common.getFilters();
-        this.filterColumns = this.common.getFilterColumns();
+        this.filters = this.getCommon().getFilters();
+        this.filterColumns = this.getCommon().getFilterColumns();
         this.columns = this.commonBy.appendCompareColumns(this.filterColumns, 1);
     }
 

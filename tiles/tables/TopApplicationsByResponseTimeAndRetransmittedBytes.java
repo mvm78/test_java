@@ -12,7 +12,7 @@ public class TopApplicationsByResponseTimeAndRetransmittedBytes extends Table {
         this.common = new CommonTopTCPApplications();
         this.commonBy = new CommonByResponseTimeAndRetransmittedBytes();
 
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "Top Applications by ResponseTime (Retransmitted Bytes)";
         this.prefix = "TcpAgg flowsegments";
         this.setCommonData();

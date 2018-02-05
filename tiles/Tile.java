@@ -43,7 +43,7 @@ public class Tile implements Cloneable {
     //**************************************************************************
 
     @Override
-    public Object clone() throws CloneNotSupportedException {
+    final public Object clone() throws CloneNotSupportedException {
 
         return super.clone();
     }
@@ -64,107 +64,149 @@ public class Tile implements Cloneable {
 
     //**************************************************************************
 
-    public String getTitle() {
+    final public String getTitle() {
 
         return this.title;
     }
 
     //**************************************************************************
 
-    public String getTileType() {
+    final public String getTileType() {
 
         return this.tileType;
     }
 
     //**************************************************************************
 
-    public LinkedHashMap<String, HashMap<String, Object>> getColumns() {
+    final public LinkedHashMap<String, HashMap<String, Object>> getColumns() {
 
         return this.columns;
     }
 
     //**************************************************************************
 
-    public byte getDebug() {
+    final public byte getDebug() {
 
         return this.debug;
     }
 
     //**************************************************************************
 
-    public String getSplitChar() {
+    final public String getSplitChar() {
 
         return this.splitChar;
     }
 
     //**************************************************************************
 
-    public String getLineTally() {
+    final public String getLineTally() {
 
         return this.lineTally;
     }
 
     //**************************************************************************
 
-    public boolean getRemoveFirstItem() {
+    final public boolean getRemoveFirstItem() {
 
         return this.removeFirstItem;
     }
 
     //**************************************************************************
 
-    public String getAppPath() {
+    final public String getAppPath() {
 
         return this.appPath;
     }
 
     //**************************************************************************
 
-    public Map<String, String> getReportTime() {
-
-        return this.reportTime;
-    }
-
-    //**************************************************************************
-
-    public String getCommonByClassName() {
+    final public String getCommonByClassName() {
 
         return this.commonBy == null ? "" : this.commonBy.getClass().getName();
     }
 
     //**************************************************************************
 
-    public Report getReport() {
+    final public Report getReport() {
 
         return this.report;
     }
 
     //**************************************************************************
 
-    public void setReport(Report report) {
+    final public Map<String, String> getReportTime() {
+
+        return this.reportTime;
+    }
+
+    //**************************************************************************
+
+    final public void setReport(Report report) {
 
         this.report = report;
     }
 
     //**************************************************************************
 
-    public void setReportTime(Map<String, String> reportTime) {
+    final public void setReportTime(Map<String, String> reportTime) {
 
         this.reportTime = reportTime;
     }
 
     //**************************************************************************
 
-    public boolean getNoDrill() {
+    final public boolean getNoDrill() {
 
         return this.noDrill;
     }
 
     //**************************************************************************
 
-    public void setNoDrill(boolean noDrill) {
+    final public void setNoDrill(boolean noDrill) {
 
         this.noDrill = noDrill;
+    }
+
+    //**************************************************************************
+
+    final public boolean getIsSingleLine() {
+
+        return this.isSingleLine;
+    }
+
+    //**************************************************************************
+
+    final public void setIsSingleLine(boolean isSingleLine) {
+
+        this.isSingleLine = isSingleLine;
+    }
+
+    //**************************************************************************
+
+    final public String getErrorTitle() {
+
+        return this.errorTitle;
+    }
+
+    //**************************************************************************
+
+    final public void setErrorTitle(String errorTitle) {
+
+        this.errorTitle = errorTitle;
+    }
+
+    //**************************************************************************
+
+    final public Common getCommon() {
+
+        return this.common;
+    }
+
+    //**************************************************************************
+
+    final public void setCommon(Common common) {
+
+        this.common = common;
     }
 
     //**************************************************************************
@@ -249,9 +291,11 @@ public class Tile implements Cloneable {
             this.getReport().resetSkipTiles();
         }
 
-        this.errorTitle = filter.isEmpty() || drillLevel == 1 ?
+        String errorTitleText = filter.isEmpty() || drillLevel == 1 ?
                 this.getTitle() + ":" :
                 this.getTitle() + " with filter: " + filter;
+
+        this.setErrorTitle(errorTitleText);
 
         AtomicInteger lineCount = new AtomicInteger(0);
         AtomicBoolean isLineMatch = new AtomicBoolean(false);
@@ -336,7 +380,7 @@ public class Tile implements Cloneable {
 
 
         if (! filter.isEmpty() && ! this.getNoDrill()) {
-            this.checkTallies(filter, testResults.get("tally"));
+//            this.checkTallies(filter, testResults.get("tally"));
         }
 
         if (isCellDrill || splitParent.length == 0) {
@@ -350,7 +394,7 @@ public class Tile implements Cloneable {
                 put("isOutput", true);
                 put("lineCount", 1);
             }});
-        } else if (! this.isSingleLine && ! isLineMatch.get()) {
+        } else if (! this.getIsSingleLine() && ! isLineMatch.get()) {
 
             String lineErrorCaption = this.getLineErrorCaption(splitParent);
 
@@ -403,7 +447,7 @@ public class Tile implements Cloneable {
 
         params.put("isCellDrill", true);
 
-        this.columns.values().parallelStream()
+        this.getColumns().values().parallelStream()
                 .filter(values -> values.get("cellDrill") != null)
                 .forEach(values -> {
 
@@ -412,7 +456,7 @@ public class Tile implements Cloneable {
                     params.put("cellDrill", order);
 
                     for (String operator : new String [] {null, "not"}) {
-                        if (operator == null && this.isSingleLine
+                        if (operator == null && this.getIsSingleLine()
                          && ((String [])values.get("cellDrill")).length == 0) {
                             // skip as row drill will perform the same action as call drill
                             continue;
@@ -448,7 +492,7 @@ public class Tile implements Cloneable {
             put("stopTime", endTime);
         }};
         // do not use parallelStream() as startTime/stopTime columns most likely are at the beginning of the column list
-        this.columns.values().stream()
+        this.getColumns().values().stream()
                 .filter(info -> info.get("startTime") != null || info.get("stopTime") != null)
                 .forEach(info -> {
 
@@ -530,7 +574,7 @@ public class Tile implements Cloneable {
 
     private Map<String, Object> tally(String [] split, Map<String, Object> tally) {
 
-        this.columns.forEach((column, info) -> {
+        this.getColumns().forEach((column, info) -> {
 
             int count = (Integer)info.get("order");
             Object isTally = info.get("tally");
@@ -594,7 +638,7 @@ public class Tile implements Cloneable {
         AtomicReference<List<Map<String, Object>>> filterInfo =
                 new AtomicReference<>(new ArrayList<>());
 
-        this.columns.entrySet().parallelStream()
+        this.getColumns().entrySet().parallelStream()
                 .filter(info -> {
 
                     Map<String, Object> value = (Map<String, Object>)info.getValue();
@@ -616,7 +660,7 @@ public class Tile implements Cloneable {
 
                     String filterField = this.checkIfCustomRowFilter() ?
                             this.getRowFilter(params) :
-                            this.common.getCommonRowFilter(params);
+                            this.getCommon().getCommonRowFilter(params);
 
                     if (! filterField.isEmpty()) {
 
@@ -678,7 +722,7 @@ public class Tile implements Cloneable {
             return true;
         }
         // drilled row has some data so have to compare it with parent's row data
-        this.columns.forEach((column, info) -> {
+        this.getColumns().forEach((column, info) -> {
 
             int count = (Integer)info.get("order");
 
@@ -723,7 +767,7 @@ public class Tile implements Cloneable {
 
         ConcurrentMap<String, String> timeInfo = new ConcurrentHashMap<>();
 
-        this.columns.values().stream()
+        this.getColumns().values().stream()
                 .filter(dontNeed -> timeInfo.size() < 2)
                 .forEach(info -> {
 
@@ -803,7 +847,7 @@ public class Tile implements Cloneable {
         AtomicReference<String> caption = new AtomicReference<>("");
         AtomicReference<String> timeRange = new AtomicReference<>("");
 
-        this.columns.forEach((column, info) -> {
+        this.getColumns().forEach((column, info) -> {
 
             int count = (Integer)info.get("order");
 
@@ -866,9 +910,9 @@ public class Tile implements Cloneable {
 
     private void logError(String error) {
 
-        ErrorsLog.log(this.errorTitle);
+        ErrorsLog.log(this.getErrorTitle());
 
-        this.errorTitle = "";
+        this.setErrorTitle("");
 
         ErrorsLog.log(error);
     }
@@ -885,7 +929,7 @@ public class Tile implements Cloneable {
             return true;
         }
 
-        return this.columns.values().parallelStream()
+        return this.getColumns().values().parallelStream()
                 .anyMatch(info -> info.get("filter") != null);
     }
 
@@ -968,7 +1012,7 @@ public class Tile implements Cloneable {
             this.drillTile(params);
         } else {
 
-            boolean isTileSingleLine = this.isSingleLine;
+            boolean isTileSingleLine = this.getIsSingleLine();
 
             final boolean finalIsLineMatch = this.checkLine(new HashMap<String, Object>() {{
                 put("splitLine", split);

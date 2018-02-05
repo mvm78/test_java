@@ -12,7 +12,7 @@ public class TopVLANByBytesAndPackets extends Table {
         this.common = new CommonVLAN_CVLAN();
         this.commonBy = new CommonByBytesAndPackets();
 
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "Top VLAN by Bytes and Packets";
         this.prefix = "NetDist";
         this.setCommonData();

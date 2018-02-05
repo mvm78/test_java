@@ -13,13 +13,13 @@ public class TCPConnections extends Table {
         this.common = new CommonTCPSessions();
 
         this.title = "TCP Connections";
-        this.window = this.common.getWindow();
-        this.prefix = this.common.getPrefix();
+        this.window = this.getCommon().getWindow();
+        this.prefix = this.getCommon().getPrefix();
         this.fields = new String [] {
             "tcpflags pcid"
         };
         this.filters = new String [] {};
-        this.columns = this.common.getFilterColumns();
+        this.columns = this.getCommon().getFilterColumns();
         this.removeFirstItem = true;
     }
 

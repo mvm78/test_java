@@ -12,7 +12,7 @@ public class TopTOSByBytesAndPackets extends Table {
         this.common = new CommonTOS();
         this.commonBy = new CommonByBytesAndPackets();
 
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "Top TOS by Bytes and Packets";
         this.prefix = "NetDist";
         this.setCommonData();

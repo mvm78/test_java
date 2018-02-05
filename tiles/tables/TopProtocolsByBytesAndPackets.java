@@ -12,7 +12,7 @@ public class TopProtocolsByBytesAndPackets extends Table {
         this.common = new CommonTopProtocols();
         this.commonBy = new CommonByBytesAndPackets();
 
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "Top Protocols by Bytes and Packets";
         this.prefix = "NetDist";
         this.setCommonData();

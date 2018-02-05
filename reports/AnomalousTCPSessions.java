@@ -67,12 +67,4 @@ public class AnomalousTCPSessions extends Report {
 
     //**************************************************************************
 
-    @Override
-    protected String getTitle() {
-
-        return this.title;
-    }
-
-    //**************************************************************************
-
 }

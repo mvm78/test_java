@@ -12,7 +12,7 @@ public class DatabaseSessions extends Table {
 
     public DatabaseSessions() {
 
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "Database Sessions";
         this.window = "0.0";
         this.prefix = "DbFlow";

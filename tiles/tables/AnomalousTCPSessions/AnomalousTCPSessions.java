@@ -12,12 +12,12 @@ public class AnomalousTCPSessions extends Table {
 
         this.common = new CommonTCPSessions();
 
-        this.isSingleLine = true;
-        this.window = this.common.getWindow();
-        this.prefix = this.common.getPrefix();
-        this.fields = this.common.getFields();
-        this.filters = this.common.getFilters();
-        this.columns = this.common.getFilterColumns();
+        this.setIsSingleLine(true);
+        this.window = this.getCommon().getWindow();
+        this.prefix = this.getCommon().getPrefix();
+        this.fields = this.getCommon().getFields();
+        this.filters = this.getCommon().getFilters();
+        this.columns = this.getCommon().getFilterColumns();
         this.lineTally = "Connections";
         this.removeFirstItem = true;
     }

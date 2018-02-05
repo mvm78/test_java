@@ -12,7 +12,7 @@ public class TopLinkProtocolsByBytesAndPackets extends Table {
         this.common = new CommonLinkTopProtocols();
         this.commonBy = new CommonByBytesAndPackets();
 
-        this.isSingleLine = true;
+        this.setIsSingleLine(true);
         this.title = "Top Link Protocols by Bytes and Packets";
         this.prefix = "NetDist";
         this.setCommonData();
