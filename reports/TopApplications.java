@@ -8,7 +8,7 @@ public class TopApplications extends Report {
 
     public TopApplications() {
 
-        this.appPath = "/usr/local/mercury/bin/agg";
+        this.setAppPath("/usr/local/mercury/bin/agg");
         this.refresh = "refreshTO 5.0";
 
         this.title = "Top Applications";

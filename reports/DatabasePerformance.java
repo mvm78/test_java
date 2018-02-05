@@ -8,7 +8,7 @@ public class DatabasePerformance extends Report {
 
     public DatabasePerformance() {
 
-        this.appPath = "/usr/local/mercury/bin/agg-db";
+        this.setAppPath("/usr/local/mercury/bin/agg-db");
         this.refresh = "refreshTO 5.0";
 
         this.title = "Database Performance";

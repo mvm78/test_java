@@ -8,7 +8,7 @@ public class FlowBasedRTP_KPIs extends Report {
 
     public FlowBasedRTP_KPIs() {
 
-        this.appPath = "/usr/local/mercury/bin/agg-netflow";
+        this.setAppPath("/usr/local/mercury/bin/agg-netflow");
         this.refresh = "refreshTO 5.0";
 
         this.title = "Media Flow";

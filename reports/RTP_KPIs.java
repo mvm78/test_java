@@ -8,7 +8,7 @@ public class RTP_KPIs extends Report {
 
     public RTP_KPIs() {
 
-        this.appPath = "/usr/local/mercury/bin/agg-rtp";
+        this.setAppPath("/usr/local/mercury/bin/agg-rtp");
         this.refresh = "refreshTO 5.0";
 
         this.title = "RTP KPIs";

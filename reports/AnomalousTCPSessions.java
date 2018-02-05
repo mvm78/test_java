@@ -8,7 +8,7 @@ public class AnomalousTCPSessions extends Report {
 
     public AnomalousTCPSessions() {
 
-        this.appPath = "/usr/local/mercury/bin/agg";
+        this.setAppPath("/usr/local/mercury/bin/agg");
         this.refresh = "refreshTO 5.0";
 
         this.title = "Anomalous TCP Sessions";

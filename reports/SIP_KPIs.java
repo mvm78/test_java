@@ -8,7 +8,7 @@ public class SIP_KPIs extends Report {
 
     public SIP_KPIs() {
 
-        this.appPath = "/usr/local/niksun/netvoice/bin/queryCdr";
+        this.setAppPath("/usr/local/niksun/netvoice/bin/queryCdr");
         this.refresh = "";
 
         this.title = "SIP KPIs";

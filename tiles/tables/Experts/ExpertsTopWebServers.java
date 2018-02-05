@@ -8,7 +8,7 @@ public class ExpertsTopWebServers extends TopWebServers {
 
     public ExpertsTopWebServers() {
 
-        this.appPath = "/usr/local/mercury/bin/agg";
+        this.setAppPath("/usr/local/mercury/bin/agg");
     }
 
     //**************************************************************************

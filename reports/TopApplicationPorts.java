@@ -8,7 +8,7 @@ public class TopApplicationPorts extends Report {
 
     public TopApplicationPorts() {
 
-        this.appPath = "/usr/local/mercury/bin/agg";
+        this.setAppPath("/usr/local/mercury/bin/agg");
         this.refresh = "refreshTO 5.0";
 
         this.title = "Top Application Ports";

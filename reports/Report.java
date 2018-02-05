@@ -88,6 +88,20 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
+    final public String getAppPath() {
+
+        return this.appPath;
+    }
+
+    //**************************************************************************
+
+    final public void setAppPath(String appPath) {
+
+        this.appPath = appPath;
+    }
+
+    //**************************************************************************
+
     @SuppressWarnings("unchecked")
     public Report cloneReport() {
 
@@ -146,7 +160,7 @@ public class Report implements Cloneable {
 
         String tileAppPath = tile.getAppPath();
 
-        String path = tileAppPath == null ? this.appPath : tileAppPath;
+        String path = tileAppPath == null ? this.getAppPath() : tileAppPath;
 
         return path + this.getCmdAppliance() +
                 " " + this.refresh +

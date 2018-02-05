@@ -126,6 +126,48 @@ public class Tile implements Cloneable {
 
     //**************************************************************************
 
+    final public String getAppPath() {
+
+        return this.appPath;
+    }
+
+    //**************************************************************************
+
+    final public void setAppPath(String appPath) {
+
+        this.appPath = appPath;
+    }
+
+    //**************************************************************************
+
+    final public boolean getIsSingleLine() {
+
+        return this.isSingleLine;
+    }
+
+    //**************************************************************************
+
+    final public void setIsSingleLine(boolean isSingleLine) {
+
+        this.isSingleLine = isSingleLine;
+    }
+
+    //**************************************************************************
+
+    final public String getTitle() {
+
+        return this.title;
+    }
+
+    //**************************************************************************
+
+    final public void setTitle(String title) {
+
+        this.title = title;
+    }
+
+    //**************************************************************************
+
     @Override
     final public Object clone() throws CloneNotSupportedException {
 
@@ -144,13 +186,6 @@ public class Tile implements Cloneable {
     public void setWindow(float timeInterval) {
 
         this.window = this.window == null ? "0.0" : this.window;
-    }
-
-    //**************************************************************************
-
-    final public String getTitle() {
-
-        return this.title;
     }
 
     //**************************************************************************
@@ -197,31 +232,10 @@ public class Tile implements Cloneable {
 
     //**************************************************************************
 
-    final public String getAppPath() {
-
-        return this.appPath;
-    }
-
-    //**************************************************************************
-
     final public String getCommonByClassName() {
 
         return this.getCommonBy() == null ? "" :
                 this.getCommonBy().getClass().getName();
-    }
-
-    //**************************************************************************
-
-    final public boolean getIsSingleLine() {
-
-        return this.isSingleLine;
-    }
-
-    //**************************************************************************
-
-    final public void setIsSingleLine(boolean isSingleLine) {
-
-        this.isSingleLine = isSingleLine;
     }
 
     //**************************************************************************

@@ -8,7 +8,7 @@ public class DNSPerformance extends Report {
 
     public DNSPerformance() {
 
-        this.appPath = "/usr/local/mercury/bin/agg-dns R";
+        this.setAppPath("/usr/local/mercury/bin/agg-dns R");
         this.refresh = "refreshTO 5.0";
 
         this.title = "DNS Performance";

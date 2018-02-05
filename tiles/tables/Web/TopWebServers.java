@@ -17,7 +17,7 @@ public class TopWebServers extends Table {
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.title = "Top Web Servers";
-        this.appPath = "/usr/local/mercury/bin/agg-http";
+        this.setAppPath("/usr/local/mercury/bin/agg-http");
         this.prefix = "HttpAgg";
         this.setCommonData();
     }

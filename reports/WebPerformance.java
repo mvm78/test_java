@@ -8,7 +8,7 @@ public class WebPerformance extends Report {
 
     public WebPerformance() {
 
-        this.appPath = "/usr/local/mercury/bin/agg-http";
+        this.setAppPath("/usr/local/mercury/bin/agg-http");
         this.refresh = "refreshTO 5.0";
 
         this.title = "Web Performance";
