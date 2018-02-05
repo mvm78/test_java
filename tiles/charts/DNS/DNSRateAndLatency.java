@@ -1,7 +1,6 @@
 package test_java.tiles.charts.DNS;
 
 import test_java.tiles.charts.*;
-
 import test_java.tiles.common.DNS.CommonByNumberOfRecordsAndLatency;
 
 public class DNSRateAndLatency extends Chart {

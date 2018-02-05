@@ -10,10 +10,10 @@ public class TopRTPSources extends Table {
 
     public TopRTPSources() {
 
-        this.common = new CommonTopRTPSources();
-
+        CommonTopRTPSources CommonInstance = new CommonTopRTPSources();
         CommonByRTP_KPIs CommonByInstance = new CommonByRTP_KPIs();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.title = "RTP - Top Sources";
         this.prefix = "RtpAgg flowsegments";

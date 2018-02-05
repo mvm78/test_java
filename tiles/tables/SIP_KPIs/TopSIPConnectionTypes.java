@@ -10,10 +10,11 @@ public class TopSIPConnectionTypes extends Table {
 
     public TopSIPConnectionTypes() {
 
-        this.common = new CommonTopSIPConnectionTypes();
-
+        CommonTopSIPConnectionTypes CommonInstance =
+                new CommonTopSIPConnectionTypes();
         CommonByCalls CommonByInstance = new CommonByCalls();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.title = "SIP - Top Connection Types";
         this.prefix = "top 0 desc on connectiontype";

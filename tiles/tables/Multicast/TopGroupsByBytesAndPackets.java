@@ -10,10 +10,10 @@ public class TopGroupsByBytesAndPackets extends Table {
 
     public TopGroupsByBytesAndPackets() {
 
-        this.common = new CommonTopGroups();
-
+        CommonTopGroups CommonInstance = new CommonTopGroups();
         CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.title = "Multicast - Top Groups";
         this.prefix = "NetDist";

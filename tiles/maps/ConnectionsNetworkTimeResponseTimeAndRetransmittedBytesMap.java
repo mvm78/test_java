@@ -10,12 +10,12 @@ public class ConnectionsNetworkTimeResponseTimeAndRetransmittedBytesMap extends 
 
     public ConnectionsNetworkTimeResponseTimeAndRetransmittedBytesMap() {
 
-        this.common = new CommonTopCountries();
-
+        CommonTopCountries CommonInstance = new CommonTopCountries();
         CommonByResponseTimeAndRetransmittedBytes CommonByInstance =
                 new CommonByResponseTimeAndRetransmittedBytes();
 
         this.setCommonBy(CommonByInstance);
+        this.setCommon(CommonInstance);
         this.title = "Connections, Network Time, Response Time, and Retransmitted Bytes Map";
         this.prefix = "TcpAgg flowsegments";
         this.fields = new String [] {

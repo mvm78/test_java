@@ -9,10 +9,10 @@ public class TopServersByThroughput extends Table {
 
     public TopServersByThroughput() {
 
-        this.common = new CommonTopServers();
-
+        CommonTopServers CommonInstance = new CommonTopServers();
         CommonByThroughput CommonByInstance = new CommonByThroughput();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.title = "Top Servers by Throughput";
         this.prefix = "TcpAgg flowsegments";

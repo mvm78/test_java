@@ -1,7 +1,8 @@
 package test_java.tiles.tables.AnomalousTCPSessions;
 
-import test_java.tiles.tables.*;
 import java.util.Map;
+
+import test_java.tiles.tables.*;
 import test_java.tiles.common.CommonTCPSessions;
 
 public class AnomalousTCPSessions extends Table {
@@ -10,8 +11,9 @@ public class AnomalousTCPSessions extends Table {
 
     public AnomalousTCPSessions() {
 
-        this.common = new CommonTCPSessions();
+        CommonTCPSessions CommonInstance = new CommonTCPSessions();
 
+        this.setCommon(CommonInstance);
         this.setIsSingleLine(true);
         this.window = this.getCommon().getWindow();
         this.prefix = this.getCommon().getPrefix();

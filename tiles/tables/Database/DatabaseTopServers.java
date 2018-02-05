@@ -10,11 +10,11 @@ public class DatabaseTopServers extends Table {
 
     public DatabaseTopServers() {
 
-        this.common = new CommonTopServers();
-
+        CommonTopServers CommonInstance = new CommonTopServers();
         CommonByDatabaseLatencyAndSessions CommonByInstance =
                 new CommonByDatabaseLatencyAndSessions();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.title = "Database - Top Servers";
         this.prefix = "DbAgg";

@@ -9,10 +9,10 @@ public class TopTCPApplicationPortsByBytes extends Table {
 
     public TopTCPApplicationPortsByBytes() {
 
-        this.common = new CommonTopApplicationPorts();
-
+        CommonTopApplicationPorts CommonInstance = new CommonTopApplicationPorts();
         CommonByTCPBytes CommonByInstance = new CommonByTCPBytes();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
         this.title = "Top TCP Application Ports by Bytes";

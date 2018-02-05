@@ -10,10 +10,10 @@ public class TopRTPVLAN extends Table {
 
     public TopRTPVLAN() {
 
-        this.common = new CommonTopRTPVLAN();
-
+        CommonTopRTPVLAN CommonInstance = new CommonTopRTPVLAN();
         CommonByRTP_KPIs CommonByInstance = new CommonByRTP_KPIs();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.title = "RTP - Top VLAN";
         this.prefix = "RtpAgg flowsegments";

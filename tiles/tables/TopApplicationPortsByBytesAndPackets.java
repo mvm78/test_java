@@ -9,10 +9,10 @@ public class TopApplicationPortsByBytesAndPackets extends Table {
 
     public TopApplicationPortsByBytesAndPackets() {
 
-        this.common = new CommonTopApplicationPorts();
-
+        CommonTopApplicationPorts CommonInstance = new CommonTopApplicationPorts();
         CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
         this.title = "Top Application Ports by Bytes and Packets";

@@ -9,11 +9,11 @@ public class TopHostPairsByResponseTimeAndRetransmittedBytes extends Table {
 
     public TopHostPairsByResponseTimeAndRetransmittedBytes() {
 
-        this.common = new CommonTopHostPairs();
-
+        CommonTopHostPairs CommonInstance = new CommonTopHostPairs();
         CommonByResponseTimeAndRetransmittedBytes CommonByInstance =
                 new CommonByResponseTimeAndRetransmittedBytes();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.title = "Top Host Pairs by ResponseTime (Retransmitted Bytes)";
         this.prefix = "TcpAgg flowsegments";

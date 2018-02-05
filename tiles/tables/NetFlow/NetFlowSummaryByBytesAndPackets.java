@@ -10,10 +10,10 @@ public class NetFlowSummaryByBytesAndPackets extends Table {
 
     public NetFlowSummaryByBytesAndPackets() {
 
-        this.common = new CommonNetFlowSummary();
-
+        CommonNetFlowSummary CommonInstance = new CommonNetFlowSummary();
         CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
         this.title = "Netflow - Summary";

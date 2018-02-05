@@ -10,10 +10,10 @@ public class TopSIPCodec extends Table {
 
     public TopSIPCodec() {
 
-        this.common = new CommonTopSIPCodec();
-
+        CommonTopSIPCodec CommonInstance = new CommonTopSIPCodec();
         CommonByCalls CommonByInstance = new CommonByCalls();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.title = "SIP - Top Codec";
         this.prefix = "top 0 desc on codec";

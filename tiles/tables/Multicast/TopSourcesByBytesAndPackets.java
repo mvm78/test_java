@@ -10,10 +10,10 @@ public class TopSourcesByBytesAndPackets extends Table {
 
     public TopSourcesByBytesAndPackets() {
 
-        this.common = new CommonTopSources();
-
+        CommonTopSources CommonInstance = new CommonTopSources();
         CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.title = "Multicast - Top Sources";
         this.prefix = "NetDist";

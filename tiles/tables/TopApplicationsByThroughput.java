@@ -9,10 +9,10 @@ public class TopApplicationsByThroughput extends Table {
 
     public TopApplicationsByThroughput() {
 
-        this.common = new CommonTopTCPApplications();
-
+        CommonTopTCPApplications CommonInstance = new CommonTopTCPApplications();
         CommonByThroughput CommonByInstance = new CommonByThroughput();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
         this.title = "Top Applications by Throughput";

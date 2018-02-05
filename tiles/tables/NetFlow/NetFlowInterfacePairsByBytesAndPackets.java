@@ -10,10 +10,10 @@ public class NetFlowInterfacePairsByBytesAndPackets extends Table {
 
     public NetFlowInterfacePairsByBytesAndPackets() {
 
-        this.common = new CommonTopInterfacePairs();
-
+        CommonTopInterfacePairs CommonInstance = new CommonTopInterfacePairs();
         CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
         this.title = "Netflow - Ifaces Pair";

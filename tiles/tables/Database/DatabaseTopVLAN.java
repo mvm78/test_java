@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+
 import test_java.common.Consts;
 import test_java.common.Util;
 import test_java.reports.Report;
@@ -18,11 +19,11 @@ public class DatabaseTopVLAN extends Table {
 
     public DatabaseTopVLAN() {
 
-        this.common = new CommonVLAN();
-
+        CommonVLAN CommonInstance = new CommonVLAN();
         CommonByDatabaseLatencyAndSessions CommonByInstance =
                 new CommonByDatabaseLatencyAndSessions();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.title = "Database - Top VLAN";
         this.prefix = "DbAgg";

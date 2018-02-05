@@ -10,11 +10,11 @@ public class MediaFlow extends Table {
 
     public MediaFlow() {
 
-        this.common = new CommonMediaFlow();
-
+        CommonMediaFlow CommonInstance = new CommonMediaFlow();
         CommonByTransportJitterAndEvents CommonByInstance =
                 new CommonByTransportJitterAndEvents();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.title = "Media Flow";
         this.prefix = "MediaFlow";

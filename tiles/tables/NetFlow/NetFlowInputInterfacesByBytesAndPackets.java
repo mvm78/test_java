@@ -10,10 +10,10 @@ public class NetFlowInputInterfacesByBytesAndPackets extends Table {
 
     public NetFlowInputInterfacesByBytesAndPackets() {
 
-        this.common = new CommonTopInputInterfaces();
-
+        CommonTopInputInterfaces CommonInstance = new CommonTopInputInterfaces();
         CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
         this.title = "Netflow - Input Interfaces";

@@ -9,10 +9,10 @@ public class TopVLAN extends Table {
 
     public TopVLAN() {
 
-        this.common = new CommonVLAN_CVLAN();
-
+        CommonVLAN_CVLAN CommonInstance = new CommonVLAN_CVLAN();
         CommonByTCPBytes CommonByInstance = new CommonByTCPBytes();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
         this.title = "Top VLAN";

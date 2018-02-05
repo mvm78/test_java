@@ -10,10 +10,11 @@ public class NetFlowTopProtocolAndEtherTypesByBytesAndPackets extends Table {
 
     public NetFlowTopProtocolAndEtherTypesByBytesAndPackets() {
 
-        this.common = new CommonTopProtocolAndEtherTypes();
-
+        CommonTopProtocolAndEtherTypes CommonInstance =
+                new CommonTopProtocolAndEtherTypes();
         CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
         this.title = "Network - Top Protocol and EtherType by Packets and Bytes";

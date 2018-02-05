@@ -9,11 +9,11 @@ public class TopApplicationsByResponseTimeAndRetransmittedBytes extends Table {
 
     public TopApplicationsByResponseTimeAndRetransmittedBytes() {
 
-        this.common = new CommonTopTCPApplications();
-
+        CommonTopTCPApplications CommonInstance = new CommonTopTCPApplications();
         CommonByResponseTimeAndRetransmittedBytes CommonByInstance =
                 new CommonByResponseTimeAndRetransmittedBytes();
 
+        this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
         this.title = "Top Applications by ResponseTime (Retransmitted Bytes)";

@@ -2,6 +2,7 @@ package test_java.tiles.charts.AnomalousTCPSessions;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+
 import test_java.tiles.charts.*;
 import test_java.tiles.common.CommonTCPSessions;
 
@@ -11,8 +12,9 @@ public class AnomalousTCPSessionsTrend extends Chart {
 
     public AnomalousTCPSessionsTrend() {
 
-        this.common = new CommonTCPSessions();
+        CommonTCPSessions CommonInstance = new CommonTCPSessions();
 
+        this.setCommon(CommonInstance);
         this.setIsSingleLine(true);
         this.prefix = this.getCommon().getPrefix();
         this.fields = new String [] {""};
