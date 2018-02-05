@@ -16,7 +16,7 @@ public class TopWebResponsePhrases extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Top Response Phrases";
+        this.setTitle("Top Response Phrases");
         this.prefix = "HttpAgg";
         this.setCommonData();
     }

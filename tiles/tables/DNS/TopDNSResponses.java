@@ -16,7 +16,7 @@ public class TopDNSResponses extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Top DNS Responses";
+        this.setTitle("Top DNS Responses");
         this.prefix = "DnsAgg";
         this.setCommonData();
     }

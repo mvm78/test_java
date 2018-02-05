@@ -15,7 +15,7 @@ public class TopVLAN extends Table {
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
-        this.title = "Top VLAN";
+        this.setTitle("Top VLAN");
         this.prefix = "TcpAgg flowsegments";
         this.setCommonData();
     }

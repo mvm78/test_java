@@ -11,7 +11,7 @@ public class WebPerformance extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg-http");
         this.refresh = "refreshTO 5.0";
 
-        this.title = "Web Performance";
+        this.setTitle("Web Performance");
         this.tilesFolder = "Web";
 
         this.tileList = new HashMap<String, String []>() {{

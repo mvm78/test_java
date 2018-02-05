@@ -16,7 +16,7 @@ public class DatabaseTypes extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Database Types";
+        this.setTitle("Database Types");
         this.prefix = "DbAgg";
         this.setCommonData();
     }

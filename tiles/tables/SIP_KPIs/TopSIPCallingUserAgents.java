@@ -16,7 +16,7 @@ public class TopSIPCallingUserAgents extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "SIP - Top Calling User Agents";
+        this.setTitle("SIP - Top Calling User Agents");
         this.prefix = "top 0 desc on srcuseragent";
         this.splitChar = ",";
         this.columnIncrement = 0;

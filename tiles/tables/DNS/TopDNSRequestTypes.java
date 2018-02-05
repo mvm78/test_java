@@ -16,7 +16,7 @@ public class TopDNSRequestTypes extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Top DNS Request Types";
+        this.setTitle("Top DNS Request Types");
         this.prefix = "DnsAgg";
         this.setCommonData();
     }

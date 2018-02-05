@@ -11,7 +11,7 @@ public class PerformanceOverview extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg");
         this.refresh = "refreshTO 5.0";
 
-        this.title = "Performance Overview";
+        this.setTitle("Performance Overview");
 
         this.tileList = new HashMap<String, String []>() {{
             put("charts", new String [] {

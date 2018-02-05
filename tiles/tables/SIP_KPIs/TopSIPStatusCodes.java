@@ -15,7 +15,7 @@ public class TopSIPStatusCodes extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "SIP - Top SIP Status Codes";
+        this.setTitle("SIP - Top SIP Status Codes");
         this.prefix = "top 0 desc on errorcode";
         this.splitChar = ",";
         this.columnIncrement = 0;

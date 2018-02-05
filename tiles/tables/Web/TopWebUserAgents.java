@@ -16,7 +16,7 @@ public class TopWebUserAgents extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Top User Agents";
+        this.setTitle("Top User Agents");
         this.prefix = "HttpAgg";
         this.setCommonData();
     }

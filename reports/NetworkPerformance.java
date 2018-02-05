@@ -11,7 +11,7 @@ public class NetworkPerformance extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg");
         this.refresh = "refreshTO 5.0";
 
-        this.title = "Network Performance";
+        this.setTitle("Network Performance");
 
         this.tileList = new HashMap<String, String []>() {{
             put("charts", new String [] {

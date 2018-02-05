@@ -6,7 +6,7 @@ public class HighRetransmissionTCPSessionsTrend extends AnomalousTCPSessionsTren
 
     public HighRetransmissionTCPSessionsTrend() {
 
-        this.title = "High Retransmission TCP Sessions Trend";
+        this.setTitle("High Retransmission TCP Sessions Trend");
         this.suffix = "pq 'client.rx > 10000 and server.rx > 10000' w 0 '|' TcpAgg count conn";
     }
 

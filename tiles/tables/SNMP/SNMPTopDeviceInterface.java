@@ -15,7 +15,7 @@ public class SNMPTopDeviceInterface extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "SNMP - Top Device Interface";
+        this.setTitle("SNMP - Top Device Interface");
         this.prefix = "NetDist";
         this.setCommonData();
     }

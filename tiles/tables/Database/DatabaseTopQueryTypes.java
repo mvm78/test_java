@@ -16,7 +16,7 @@ public class DatabaseTopQueryTypes extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Database - Top Query Types";
+        this.setTitle("Database - Top Query Types");
         this.prefix = "DbAgg";
         this.setCommonData();
     }

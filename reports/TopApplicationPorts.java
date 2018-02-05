@@ -11,7 +11,7 @@ public class TopApplicationPorts extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg");
         this.refresh = "refreshTO 5.0";
 
-        this.title = "Top Application Ports";
+        this.setTitle("Top Application Ports");
 
         this.tileList = new HashMap<String, String []>() {{
             put("charts", new String [] {

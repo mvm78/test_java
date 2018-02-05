@@ -38,6 +38,20 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
+    final public String getTitle() {
+
+        return this.title;
+    }
+
+    //**************************************************************************
+
+    final public void setTitle(String title) {
+
+        this.title = title;
+    }
+
+    //**************************************************************************
+
     @Override
     public Object clone() throws CloneNotSupportedException {
 
@@ -63,13 +77,6 @@ public class Report implements Cloneable {
     final public String getBeginTime() {
 
         return this.beginTime;
-    }
-
-    //**************************************************************************
-
-    final protected String getTitle() {
-
-        return this.title;
     }
 
     //**************************************************************************

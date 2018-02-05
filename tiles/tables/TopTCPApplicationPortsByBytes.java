@@ -15,7 +15,7 @@ public class TopTCPApplicationPortsByBytes extends Table {
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
-        this.title = "Top TCP Application Ports by Bytes";
+        this.setTitle("Top TCP Application Ports by Bytes");
         this.prefix = "TcpAgg flowsegments";
         this.fields = new String [] {
             "dport " + this.commonBy.getFields(),

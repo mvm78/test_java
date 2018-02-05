@@ -25,7 +25,7 @@ public class DatabaseTopVLAN extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Database - Top VLAN";
+        this.setTitle("Database - Top VLAN");
         this.prefix = "DbAgg";
         this.setCommonData();
     }

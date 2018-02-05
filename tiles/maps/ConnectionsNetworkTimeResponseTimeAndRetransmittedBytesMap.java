@@ -16,7 +16,7 @@ public class ConnectionsNetworkTimeResponseTimeAndRetransmittedBytesMap extends 
 
         this.setCommonBy(CommonByInstance);
         this.setCommon(CommonInstance);
-        this.title = "Connections, Network Time, Response Time, and Retransmitted Bytes Map";
+        this.setTitle("Connections, Network Time, Response Time, and Retransmitted Bytes Map");
         this.prefix = "TcpAgg flowsegments";
         this.fields = new String [] {
             this.common.getFields()[0] + " " + this.commonBy.getFields(),

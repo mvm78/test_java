@@ -16,7 +16,7 @@ public class Flows extends Table {
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
-        this.title = "Flows";
+        this.setTitle("Flows");
         this.prefix = "NetDist";
         this.setCommonData();
     }

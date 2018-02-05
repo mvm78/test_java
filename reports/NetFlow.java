@@ -11,7 +11,7 @@ public class NetFlow extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg");
         this.refresh = "refreshTO 5.0";
 
-        this.title = "NetFlow";
+        this.setTitle("NetFlow");
 
         this.tileList = new HashMap<String, String []>() {{
             put("tables", new String [] {

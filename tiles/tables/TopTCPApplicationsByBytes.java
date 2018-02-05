@@ -15,7 +15,7 @@ public class TopTCPApplicationsByBytes extends Table {
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
-        this.title = "Top TCP Applications by Bytes";
+        this.setTitle("Top TCP Applications by Bytes");
         this.prefix = "TcpAgg flowsegments";
         this.setCommonData();
     }

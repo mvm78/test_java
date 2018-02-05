@@ -15,7 +15,7 @@ public class TopRTPDestinations extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "RTP - Top Destinations";
+        this.setTitle("RTP - Top Destinations");
         this.prefix = "RtpAgg flowsegments";
         this.setCommonData();
     }

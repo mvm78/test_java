@@ -13,7 +13,7 @@ public class DNSSessions extends Table {
     public DNSSessions() {
 
         this.setIsSingleLine(true);
-        this.title = "DNS Sessions";
+        this.setTitle("DNS Sessions");
         this.window = "0.0";
         this.prefix = "DnsFlow";
         this.fields = new String [] {""};

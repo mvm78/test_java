@@ -15,7 +15,7 @@ public class TopRTPVLAN extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "RTP - Top VLAN";
+        this.setTitle("RTP - Top VLAN");
         this.prefix = "RtpAgg flowsegments";
         this.setCommonData();
     }

@@ -11,7 +11,7 @@ public class Experts extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg-multi");
         this.refresh = "refreshTO 5.0";
 
-        this.title = "Experts - Network vs Web Application Weight";
+        this.setTitle("Experts - Network vs Web Application Weight");
 
         this.tileList = new HashMap<String, String []>() {{
             put("tables", new String [] {

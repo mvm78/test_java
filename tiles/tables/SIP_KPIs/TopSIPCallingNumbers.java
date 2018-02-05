@@ -15,7 +15,7 @@ public class TopSIPCallingNumbers extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "SIP - Top Calling Numbers";
+        this.setTitle("SIP - Top Calling Numbers");
         this.prefix = "top 0 desc on srcnum";
         this.splitChar = ",";
         this.columnIncrement = 0;

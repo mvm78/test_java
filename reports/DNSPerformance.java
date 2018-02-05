@@ -11,7 +11,7 @@ public class DNSPerformance extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg-dns R");
         this.refresh = "refreshTO 5.0";
 
-        this.title = "DNS Performance";
+        this.setTitle("DNS Performance");
         this.tilesFolder = "DNS";
 
         this.tileList = new HashMap<String, String []>() {{

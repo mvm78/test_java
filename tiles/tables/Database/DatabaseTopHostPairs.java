@@ -16,7 +16,7 @@ public class DatabaseTopHostPairs extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Database - Top Host Pairs";
+        this.setTitle("Database - Top Host Pairs");
         this.prefix = "DbAgg";
         this.setCommonData();
     }

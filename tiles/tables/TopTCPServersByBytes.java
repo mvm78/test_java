@@ -14,7 +14,7 @@ public class TopTCPServersByBytes extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Top TCP Servers by Bytes";
+        this.setTitle("Top TCP Servers by Bytes");
         this.prefix = "TcpAgg flowsegments";
         this.setCommonData();
     }

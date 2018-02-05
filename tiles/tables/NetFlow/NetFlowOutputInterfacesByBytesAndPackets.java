@@ -16,7 +16,7 @@ public class NetFlowOutputInterfacesByBytesAndPackets extends Table {
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
-        this.title = "Netflow - Output Interfaces";
+        this.setTitle("Netflow - Output Interfaces");
         this.prefix = "NetDist";
         this.setCommonData();
     }

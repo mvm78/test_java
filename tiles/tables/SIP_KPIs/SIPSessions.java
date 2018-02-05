@@ -13,7 +13,7 @@ public class SIPSessions extends Table {
     public SIPSessions() {
 
         this.setIsSingleLine(true);
-        this.title = "Web Sessions";
+        this.setTitle("Web Sessions");
         this.window = "0.0";
         this.prefix = "list 999";
         this.fields = new String [] {""};

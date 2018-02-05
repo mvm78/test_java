@@ -15,7 +15,7 @@ public class TopSIPCodec extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "SIP - Top Codec";
+        this.setTitle("SIP - Top Codec");
         this.prefix = "top 0 desc on codec";
         this.splitChar = ",";
         this.columnIncrement = 0;

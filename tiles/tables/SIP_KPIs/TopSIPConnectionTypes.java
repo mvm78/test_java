@@ -16,7 +16,7 @@ public class TopSIPConnectionTypes extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "SIP - Top Connection Types";
+        this.setTitle("SIP - Top Connection Types");
         this.prefix = "top 0 desc on connectiontype";
         this.splitChar = ",";
         this.columnIncrement = 0;

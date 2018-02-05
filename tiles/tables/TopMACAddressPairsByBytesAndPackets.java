@@ -14,7 +14,7 @@ public class TopMACAddressPairsByBytesAndPackets extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Top MAC Address Pairs by Packets and Bytes";
+        this.setTitle("Top MAC Address Pairs by Packets and Bytes");
         this.prefix = "NetDist";
         this.setCommonData();
     }

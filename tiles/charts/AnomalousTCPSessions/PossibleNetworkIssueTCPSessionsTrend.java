@@ -6,7 +6,7 @@ public class PossibleNetworkIssueTCPSessionsTrend extends AnomalousTCPSessionsTr
 
     public PossibleNetworkIssueTCPSessionsTrend() {
 
-        this.title = "Possible Network Issue TCP Sessions Trend";
+        this.setTitle("Possible Network Issue TCP Sessions Trend");
         this.suffix = "pq 'rtt > 1 and response < 1' w 0 '|' TcpAgg count conn";
     }
 

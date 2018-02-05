@@ -17,7 +17,7 @@ public class NetFlowTopProtocolAndEtherTypesByBytesAndPackets extends Table {
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
-        this.title = "Network - Top Protocol and EtherType by Packets and Bytes";
+        this.setTitle("Network - Top Protocol and EtherType by Packets and Bytes");
         this.prefix = "NetDist";
         this.setCommonData();
     }

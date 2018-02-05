@@ -16,7 +16,7 @@ public class NetFlowInputInterfacesByBytesAndPackets extends Table {
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
-        this.title = "Netflow - Input Interfaces";
+        this.setTitle("Netflow - Input Interfaces");
         this.prefix = "NetDist";
         this.setCommonData();
     }

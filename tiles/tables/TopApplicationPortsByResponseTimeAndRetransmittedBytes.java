@@ -16,7 +16,7 @@ public class TopApplicationPortsByResponseTimeAndRetransmittedBytes extends Tabl
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
         this.setIsSingleLine(true);
-        this.title = "Top Application Ports by ResponseTime (Retransmitted Bytes)";
+        this.setTitle("Top Application Ports by ResponseTime (Retransmitted Bytes)");
         this.prefix = "TcpAgg flowsegments";
         this.fields = new String [] {
             "dport " + this.commonBy.getFields(),

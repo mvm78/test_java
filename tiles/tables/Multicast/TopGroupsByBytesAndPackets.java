@@ -15,7 +15,7 @@ public class TopGroupsByBytesAndPackets extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Multicast - Top Groups";
+        this.setTitle("Multicast - Top Groups");
         this.prefix = "NetDist";
         this.setCommonData();
     }

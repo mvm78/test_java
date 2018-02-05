@@ -12,7 +12,7 @@ public class RTPSessions extends Table {
 
     public RTPSessions() {
 
-        this.title = "RTP Sessions";
+        this.setTitle("RTP Sessions");
         this.window = "0.0";
         this.prefix = "RtpFlow";
         this.fields = new String [] {"plink ptun pmin pmax"};

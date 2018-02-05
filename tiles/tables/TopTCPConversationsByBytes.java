@@ -14,7 +14,7 @@ public class TopTCPConversationsByBytes extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Top TCP Conversations by Bytes";
+        this.setTitle("Top TCP Conversations by Bytes");
         this.prefix = "TcpAgg flowsegments";
         this.setCommonData();
     }

@@ -15,7 +15,7 @@ public class TopSIPVLAN extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "SIP - Top VLAN";
+        this.setTitle("SIP - Top VLAN");
         this.prefix = "top 0 desc on vlan";
         this.splitChar = ",";
         this.columnIncrement = 0;

@@ -14,7 +14,7 @@ public class IPConversations extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "IP Conversations";
+        this.setTitle("IP Conversations");
         this.prefix = "NetDist";
         this.setCommonData();
     }

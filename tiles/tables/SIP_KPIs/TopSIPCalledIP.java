@@ -15,7 +15,7 @@ public class TopSIPCalledIP extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "SIP - Top Called IPs";
+        this.setTitle("SIP - Top Called IPs");
         this.prefix = "top 0 desc on dst";
         this.splitChar = ",";
         this.columnIncrement = 0;

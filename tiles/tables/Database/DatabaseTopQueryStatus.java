@@ -16,7 +16,7 @@ public class DatabaseTopQueryStatus extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Database - Top Query Status";
+        this.setTitle("Database - Top Query Status");
         this.prefix = "DbAgg";
         this.setCommonData();
     }

@@ -16,7 +16,7 @@ public class MediaFlow extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Media Flow";
+        this.setTitle("Media Flow");
         this.prefix = "MediaFlow";
         this.fields = new String [] {
             this.common.getFields()[0] + " " + this.commonBy.getFields(),

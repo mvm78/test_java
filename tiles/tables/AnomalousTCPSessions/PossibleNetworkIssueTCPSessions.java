@@ -6,7 +6,7 @@ public class PossibleNetworkIssueTCPSessions extends AnomalousTCPSessions {
 
     public PossibleNetworkIssueTCPSessions() {
 
-        this.title = "Possible Network Issue TCP Sessions";
+        this.setTitle("Possible Network Issue TCP Sessions");
         this.suffix = "pq 'rtt > 1 and response < 1'";
     }
 

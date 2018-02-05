@@ -6,7 +6,7 @@ public class PossibleServerOrApplicationIssueTCPSessionsTrend extends AnomalousT
 
     public PossibleServerOrApplicationIssueTCPSessionsTrend() {
 
-        this.title = "Possible Server or Application Issue TCP Sessions Trend";
+        this.setTitle("Possible Server or Application Issue TCP Sessions Trend");
         this.suffix = "pq 'rtt < .5 and response > 3' w 0 '|' TcpAgg count conn";
     }
 

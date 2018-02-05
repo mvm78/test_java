@@ -15,7 +15,7 @@ public class SNMPVariables extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "SNMP - Variables";
+        this.setTitle("SNMP - Variables");
         this.prefix = "NetDist";
         this.setCommonData();
     }

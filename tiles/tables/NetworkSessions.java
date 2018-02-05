@@ -14,7 +14,7 @@ public class NetworkSessions extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Network - Sessions";
+        this.setTitle("Network - Sessions");
         this.prefix = "NetDist";
         this.setCommonData();
     }

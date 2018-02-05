@@ -11,7 +11,7 @@ public class DatabasePerformance extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg-db");
         this.refresh = "refreshTO 5.0";
 
-        this.title = "Database Performance";
+        this.setTitle("Database Performance");
         this.tilesFolder = "Database";
 
         this.tileList = new HashMap<String, String []>() {{

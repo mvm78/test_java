@@ -11,7 +11,7 @@ public class TopServers extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg");
         this.refresh = "refreshTO 5.0";
 
-        this.title = "Top Servers";
+        this.setTitle("Top Servers");
 
         this.tileList = new HashMap<String, String []>() {{
             put("charts", new String [] {

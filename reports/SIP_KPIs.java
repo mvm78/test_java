@@ -11,7 +11,7 @@ public class SIP_KPIs extends Report {
         this.setAppPath("/usr/local/niksun/netvoice/bin/queryCdr");
         this.refresh = "";
 
-        this.title = "SIP KPIs";
+        this.setTitle("SIP KPIs");
         this.tilesFolder = "SIP_KPIs";
 
         this.tileList = new HashMap<String, String []>() {{

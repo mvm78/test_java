@@ -16,7 +16,7 @@ public class DatabaseTopServers extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Database - Top Servers";
+        this.setTitle("Database - Top Servers");
         this.prefix = "DbAgg";
         this.setCommonData();
     }

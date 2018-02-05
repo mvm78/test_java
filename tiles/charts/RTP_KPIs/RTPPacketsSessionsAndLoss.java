@@ -13,7 +13,7 @@ public class RTPPacketsSessionsAndLoss extends Chart {
                 new CommonByPacketsSessionsAndLoss();
 
         this.setCommonBy(CommonByInstance);
-        this.title = "RTP - Packets, Sessions and Loss";
+        this.setTitle("RTP - Packets, Sessions and Loss");
         this.prefix = "RtpAgg";
         this.setCommonByData();
     }

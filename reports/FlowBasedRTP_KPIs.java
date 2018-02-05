@@ -11,7 +11,7 @@ public class FlowBasedRTP_KPIs extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg-netflow");
         this.refresh = "refreshTO 5.0";
 
-        this.title = "Media Flow";
+        this.setTitle("Media Flow");
         this.tilesFolder = "MediaFlow";
 
         this.tileList = new HashMap<String, String []>() {{

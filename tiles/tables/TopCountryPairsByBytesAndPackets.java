@@ -14,7 +14,7 @@ public class TopCountryPairsByBytesAndPackets extends Table {
 
         this.setCommon(CommonInstance);
         this.setCommonBy(CommonByInstance);
-        this.title = "Top Country Pair by Packets and Bytes";
+        this.setTitle("Top Country Pair by Packets and Bytes");
         this.prefix = "NetDist";
         this.setCommonData();
     }
