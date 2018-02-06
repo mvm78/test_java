@@ -30,8 +30,8 @@ public class AnomalousTCPSessions extends Table {
         this.setFields(instanceFields);
         this.setFilters(instanceFilters);
         this.setColumns(instanceColumns);
-        this.lineTally = "Connections";
-        this.removeFirstItem = true;
+        this.setLineTally("Connections");
+        this.setRemoveFirstItem(true);
     }
 
     //**************************************************************************

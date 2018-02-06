@@ -30,7 +30,7 @@ public class TCPConnections extends Table {
         });
         this.setFilters();
         this.setColumns(instanceColumns);
-        this.removeFirstItem = true;
+        this.setRemoveFirstItem(true);
     }
 
     //**************************************************************************

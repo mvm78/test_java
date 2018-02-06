@@ -6,26 +6,27 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.nio.charset.StandardCharsets;
-import java.lang.reflect.Field;
 
 import test_java.ErrorsLog;
-import test_java.tiles.Tile;
 
 public class Util {
 
     //**************************************************************************
 
     @SuppressWarnings("unchecked")
-    public static void debugOutput(HashMap<String, Object> data) {
+    public static void debugOutput(Map<String, Object> data) {
 
-        Tile tile = (Tile)data.get("tile");
         String finalCmd = (String)data.get("finalCmd");
-        List<String []> lines = (List<String []>)((ArrayList<String []>)data.get("lines")).clone();
+        List<String []> lines =
+                (List<String []>)((ArrayList<String []>)data.get("lines")).clone();
         String parentLine = (String)data.get("parentLine");
         boolean skipCompare = data.get("skipCompare") == null ? true :
                 (boolean)data.get("skipCompare");
+        byte gebug = (byte)data.get("gebug");
+        String title = (String)data.get("title");
+        String splitChar = (String)data.get("splitChar");
 
-        if (tile.getDebug() == 0) {
+        if (gebug == 0) {
             return;
         }
 
@@ -33,18 +34,18 @@ public class Util {
 
         if (parentLine.isEmpty()) {
             System.out.println(resetColor); // empty line
-            System.out.println(Consts.BRIGHT_MAGENTA + tile.getTitle() + ":" + resetColor);
+            System.out.println(Consts.BRIGHT_MAGENTA + title+ ":" + resetColor);
             System.out.println(Consts.MAGENTA + finalCmd);
         } else {
 
             System.out.println(Consts.BLUE + finalCmd);
 
-            if (tile.getDebug() > 1) {
+            if (gebug > 1) {
                 System.out.println(Consts.MAGENTA + "\t" + parentLine);
             }
         }
 
-        if (tile.getDebug() < 2) {
+        if (gebug < 2) {
             return;
         }
 
@@ -53,7 +54,7 @@ public class Util {
         } else {
             lines.forEach(split -> {
 
-                    String line = String.join(tile.getSplitChar(), split);
+                    String line = String.join(splitChar, split);
 
                     String lineColor = skipCompare ? Consts.DARK_GREY :
                             Util.getLineColor(line, parentLine);
