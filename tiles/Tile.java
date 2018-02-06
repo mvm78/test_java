@@ -1411,13 +1411,13 @@ public abstract class Tile implements Cloneable {
         String error = " with filter \"" + filter + "\" has NO DATA";
 
         results.keySet().parallelStream()
-                .filter(tile -> this.checkIfTallyDiffter(results.get(tile), masterTally))
+                .filter(tile -> this.checkIfTallyDiffer(results.get(tile), masterTally))
                 .forEach(tile -> ErrorsLog.log("Tile " + tile + error));
     }
 
     //**************************************************************************
 
-    private boolean checkIfTallyDiffter(Map<String, Object> tally, Map<String, Object> masterTally) {
+    private boolean checkIfTallyDiffer(Map<String, Object> tally, Map<String, Object> masterTally) {
 
         return masterTally.keySet().parallelStream()
                 .filter(key -> tally.get(key) == null && (Double)masterTally.get(key) > 0)

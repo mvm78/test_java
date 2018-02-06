@@ -422,9 +422,7 @@ public class Report implements Cloneable {
 
                     Arrays.stream(typeTiles).parallel()
                             .filter(tile -> this.getSkipTile(tile) == null)
-                            .forEach(tile -> {
-                                this.addTile(tile, type);
-                            });
+                            .forEach(tile -> this.addTile(tile, type));
                 });
     }
 
