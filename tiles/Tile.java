@@ -34,7 +34,7 @@ public abstract class Tile implements Cloneable {
     private String [] filters;
     private LinkedHashMap<String, HashMap<String, Object>> filterColumns;
     private LinkedHashMap<String, HashMap<String, Object>> columns;
-    private List<String> cellDrillFilters = new LinkedList<>();
+    private final List<String> cellDrillFilters = new LinkedList<>();
     protected String splitChar = " ";
     protected byte columnIncrement = 1;
     protected String lineTally;
@@ -333,7 +333,7 @@ public abstract class Tile implements Cloneable {
 
     //**************************************************************************
 
-    final public void setCellDrillFilters(String filter) {
+    final public void addCellDrillFilters(String filter) {
 
         this.getCellDrillFilters().add(filter);
     }
@@ -651,7 +651,7 @@ public abstract class Tile implements Cloneable {
                             continue;
                         }
 
-                        this.setCellDrillFilters(finalFilter);
+                        this.addCellDrillFilters(finalFilter);
 
                         params.put("filter", finalFilter);
 
