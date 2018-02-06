@@ -20,7 +20,7 @@ public class TCPConnections extends Table {
 
         final String instancePrefix = this.getCommon().getPrefix();
         final String instanceWindow = this.getCommon().getWindow();
-        LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
+        final LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
                 this.getCommon().getFilterColumns();
 
         this.setPrefix(instancePrefix);

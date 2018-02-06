@@ -22,7 +22,7 @@ public class AnomalousTCPSessions extends Table {
         final String instanceWindow = this.getCommon().getWindow();
         final String [] instanceFields = this.getCommon().getFields();
         final String [] instanceFilters = this.getCommon().getFilters();
-        LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
+        final LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
                 this.getCommon().getFilterColumns();
 
         this.setPrefix(instancePrefix);

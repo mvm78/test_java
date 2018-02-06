@@ -23,7 +23,7 @@ public class ConnectionsNetworkTimeResponseTimeAndRetransmittedBytesMap extends 
         final String [] instanceFilters = this.getCommon().getFilters();
         final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =
                 this.getCommon().getFilterColumns();
-        LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
+        final LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
                 this.getCommonBy().appendCompareColumns(instanceFilterColumns, 1);
 
         this.setTitle("Connections, Network Time, Response Time, and Retransmitted Bytes Map");

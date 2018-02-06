@@ -22,7 +22,7 @@ public class MediaFlow extends Table {
         final String [] instanceFilters = this.getCommon().getFilters();
         final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =
                 this.getCommon().getFilterColumns();
-        LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
+        final LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
                 this.getCommonBy().appendCompareColumns(instanceFilterColumns, 2);
 
         this.setTitle("Media Flow");
