@@ -9,9 +9,8 @@ public class Multicast extends Report {
     public Multicast() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-
         this.setTitle("Multicast");
-        this.tilesFolder = "Multicast";
+        this.setTilesFolder("Multicast");
 
         this.setTileList(new HashMap<String, String []>() {{
             put("tables", new String [] {

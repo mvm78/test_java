@@ -9,9 +9,8 @@ public class AnomalousTCPSessions extends Report {
     public AnomalousTCPSessions() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-
         this.setTitle("Anomalous TCP Sessions");
-        this.tilesFolder = "AnomalousTCPSessions";
+        this.setTilesFolder("AnomalousTCPSessions");
 
         this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {

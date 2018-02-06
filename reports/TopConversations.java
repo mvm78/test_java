@@ -9,7 +9,6 @@ public class TopConversations extends Report {
     public TopConversations() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-
         this.setTitle("Top Conversations");
 
         this.setTileList(new HashMap<String, String []>() {{

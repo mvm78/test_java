@@ -9,7 +9,6 @@ public class PerformanceOverview extends Report {
     public PerformanceOverview() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-
         this.setTitle("Performance Overview");
 
         this.setTileList(new HashMap<String, String []>() {{

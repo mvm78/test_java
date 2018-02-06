@@ -9,9 +9,8 @@ public class RTP_KPIs extends Report {
     public RTP_KPIs() {
 
         this.setAppPath("/usr/local/mercury/bin/agg-rtp");
-
         this.setTitle("RTP KPIs");
-        this.tilesFolder = "RTP_KPIs";
+        this.setTilesFolder("RTP_KPIs");
 
         this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {

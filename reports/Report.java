@@ -19,18 +19,17 @@ public class Report implements Cloneable {
     private final String hashKey = "1";
     private final String appliance = "Appliance-PM_Perf";
     private final String pcap = "em1";
-
     private final int maxDrillLevel = 1;
+
     private String title;
     private HashMap<String, String []> tileList;
     private HashMap<String, String []> tallyCheck;
-    protected Map<String, Boolean> skipTiles = new HashMap<>();
-    protected String tilesFolder = "";
+    private Map<String, Boolean> skipTiles = new HashMap<>();
+    private String tilesFolder = "";
     private String appPath;
     private String refresh = "refreshTO 5.0";
     private String interval;
-
-    protected Map<String, String> tiles;
+    private Map<String, String> tiles;
 
     //**************************************************************************
 
@@ -41,7 +40,7 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    private String getTitle() {
+    public final String getTitle() {
 
         return this.title;
     }
@@ -58,6 +57,13 @@ public class Report implements Cloneable {
     private HashMap<String, String []> getTileList() {
 
         return this.tileList;
+    }
+
+    //**************************************************************************
+
+    final public String [] getTilesByType(String type) {
+
+        return this.getTileList().get(type);
     }
 
     //**************************************************************************
@@ -83,6 +89,20 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
+    private Map<String, Boolean> getSkipTiles() {
+
+        return this.skipTiles;
+    }
+
+    //**************************************************************************
+
+    private Boolean getSkipTile(String skipTile) {
+
+        return this.getSkipTiles().get(skipTile);
+    }
+
+    //**************************************************************************
+
     final public void addSkipTile(String skipTile) {
 
         this.skipTiles.put(skipTile, true);
@@ -93,6 +113,20 @@ public class Report implements Cloneable {
     final public void resetSkipTiles() {
 
         this.skipTiles = new HashMap<>();
+    }
+
+    //**************************************************************************
+
+    final protected String getTilesFolder() {
+
+        return this.tilesFolder;
+    }
+
+    //**************************************************************************
+
+    final protected void setTilesFolder(String tilesFolder) {
+
+        this.tilesFolder = tilesFolder;
     }
 
     //**************************************************************************
@@ -114,6 +148,27 @@ public class Report implements Cloneable {
     final public Map<String, String> getTiles() {
 
         return this.tiles;
+    }
+
+    //**************************************************************************
+
+    private void resetTiles() {
+
+        this.tiles = new HashMap<String, String>() {};
+    }
+
+    //**************************************************************************
+
+    private String getTile(String type) {
+
+        return this.getTiles().get(type);
+    }
+
+    //**************************************************************************
+
+    private void addTile(String tile, String type) {
+
+        this.tiles.put(tile, type);
     }
 
     //**************************************************************************
@@ -259,7 +314,7 @@ public class Report implements Cloneable {
 
         this.setInterval();
 
-        this.tiles.keySet().parallelStream()
+        this.getTiles().keySet().parallelStream()
                 .forEach(tile -> {
 
                     Tile testTile = this.getTileInstance(tile);
@@ -356,17 +411,17 @@ public class Report implements Cloneable {
 
     public final void setTiles() {
 
-        this.tiles = new HashMap<String, String>() {};
+        this.resetTiles();
 
         this.getTileList().keySet().parallelStream()
                 .forEach(type -> {
 
-                    String [] typeTiles = this.getTileList().get(type);
+                    String [] typeTiles = this.getTilesByType(type);
 
                     Arrays.stream(typeTiles).parallel()
-                            .filter(tile -> this.skipTiles.get(tile) == null)
+                            .filter(tile -> this.getSkipTile(tile) == null)
                             .forEach(tile -> {
-                                this.tiles.put(tile, type);
+                                this.addTile(tile, type);
                             });
                 });
     }
@@ -375,8 +430,9 @@ public class Report implements Cloneable {
 
     public final String setTileClassFullName(String tile) {
 
-        String tileFolder = this.tilesFolder.isEmpty() ? "" : this.tilesFolder + ".";
-        String type = this.tiles.get(tile);
+        String tileFolder = this.getTilesFolder().isEmpty() ? "" :
+                this.getTilesFolder() + ".";
+        String type = this.getTile(tile);
 
         return "test_java.tiles." + type + "." + tileFolder + tile;
     }

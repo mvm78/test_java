@@ -9,9 +9,8 @@ public class DatabasePerformance extends Report {
     public DatabasePerformance() {
 
         this.setAppPath("/usr/local/mercury/bin/agg-db");
-
         this.setTitle("Database Performance");
-        this.tilesFolder = "Database";
+        this.setTilesFolder("Database");
 
         this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {

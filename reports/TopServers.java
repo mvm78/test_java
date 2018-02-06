@@ -9,7 +9,6 @@ public class TopServers extends Report {
     public TopServers() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-
         this.setTitle("Top Servers");
 
         this.setTileList(new HashMap<String, String []>() {{

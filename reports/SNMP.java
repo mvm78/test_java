@@ -9,9 +9,8 @@ public class SNMP extends Report {
     public SNMP() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-
         this.setTitle("SNMP");
-        this.tilesFolder = "SNMP";
+        this.setTilesFolder("SNMP");
 
         this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {

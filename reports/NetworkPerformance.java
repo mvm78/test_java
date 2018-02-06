@@ -9,7 +9,6 @@ public class NetworkPerformance extends Report {
     public NetworkPerformance() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-
         this.setTitle("Network Performance");
 
         this.setTileList(new HashMap<String, String []>() {{

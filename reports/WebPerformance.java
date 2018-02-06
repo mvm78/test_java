@@ -11,7 +11,7 @@ public class WebPerformance extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg-http");
 
         this.setTitle("Web Performance");
-        this.tilesFolder = "Web";
+        this.setTilesFolder("Web");
 
         this.setTileList(new HashMap<String, String []>() {{
             put("tables", new String [] {

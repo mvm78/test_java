@@ -9,7 +9,6 @@ public class NetFlow extends Report {
     public NetFlow() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-
         this.setTitle("NetFlow");
 
         this.setTileList(new HashMap<String, String []>() {{

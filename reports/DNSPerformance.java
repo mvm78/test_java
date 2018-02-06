@@ -9,9 +9,8 @@ public class DNSPerformance extends Report {
     public DNSPerformance() {
 
         this.setAppPath("/usr/local/mercury/bin/agg-dns R");
-
         this.setTitle("DNS Performance");
-        this.tilesFolder = "DNS";
+        this.setTilesFolder("DNS");
 
         this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {
