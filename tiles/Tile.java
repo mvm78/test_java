@@ -13,7 +13,7 @@ import test_java.common.Consts;
 import test_java.tiles.common.Common;
 import test_java.tiles.common.CommonBy;
 
-public class Tile implements Cloneable {
+public abstract class Tile implements Cloneable {
 
     protected byte debug = 2;
 
@@ -39,6 +39,10 @@ public class Tile implements Cloneable {
     protected byte columnIncrement = 1;
     protected String lineTally;
     protected boolean removeFirstItem = false;
+
+    //**************************************************************************
+
+    public abstract void setWindow(float window);
 
     //**************************************************************************
 
@@ -220,13 +224,6 @@ public class Tile implements Cloneable {
     final public void setWindow(String window) {
 
         this.window = window;
-    }
-
-    //**************************************************************************
-
-    public void setWindow(float window) {
-
-        this.window = String.valueOf(window);
     }
 
     //**************************************************************************

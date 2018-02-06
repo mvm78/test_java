@@ -15,6 +15,14 @@ public abstract class Table extends Tile {
 
     //**************************************************************************
 
+    @Override
+    public void setWindow(float window) {
+
+        this.setWindow(this.getWindow() == null ? "0.0" : this.getWindow());
+    }
+
+    //**************************************************************************
+
     protected final void setCommonData() {
 
         final String [] instanceFields = this.getCommon().getFields().clone();

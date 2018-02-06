@@ -13,4 +13,12 @@ public abstract class Map extends Tile {
 
     //**************************************************************************
 
+    @Override
+    public void setWindow(float window) {
+
+        this.setWindow(this.getWindow() == null ? "0.0" : this.getWindow());
+    }
+
+    //**************************************************************************
+
 }
