@@ -9,11 +9,10 @@ public class TopApplications extends Report {
     public TopApplications() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-        this.refresh = "refreshTO 5.0";
 
         this.setTitle("Top Applications");
 
-        this.tileList = new HashMap<String, String []>() {{
+        this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {
                 "ThroughputVsGoodput",
             });
@@ -23,16 +22,16 @@ public class TopApplications extends Report {
                 "TopApplicationsByResponseTimeAndRetransmittedBytes",
                 "TopApplicationsByThroughput",
             });
-        }};
+        }});
 
-        this.tallyCheck = new HashMap<String, String []>() {{
+        this.setTallyCheck(new HashMap<String, String []>() {{
             put("TopTCPApplicationsByBytes", new String [] {
                 "TopApplicationsByResponseTimeAndRetransmittedBytes",
             });
             put("TopApplicationsByThroughput", new String [] {
                 "ThroughputVsGoodput",
             });
-        }};
+        }});
     }
 
     //**************************************************************************

@@ -14,48 +14,71 @@ import test_java.common.Util;
 
 public class Report implements Cloneable {
 
-    private final int maxDrillLevel = 1;
-
-    protected String title;
-
-    protected HashMap<String, String []> tileList;
-    protected Map<String, Boolean> skipTiles = new HashMap<>();
-    protected String tilesFolder = "";
-
-    private final String beginTime = "09:00:00 02/06/2018";
-    private final String endTime = "09:01:00 02/06/2018";
+    private final String beginTime = "12:00:00 02/06/2018";
+    private final String endTime = "12:00:20 02/06/2018";
     private final String hashKey = "1";
     private final String appliance = "Appliance-PM_Perf";
     private final String pcap = "em1";
 
-    protected String appPath;
-    protected String refresh;
-
-    protected String interval;
+    private final int maxDrillLevel = 1;
+    private String title;
+    private HashMap<String, String []> tileList;
+    private HashMap<String, String []> tallyCheck;
+    protected Map<String, Boolean> skipTiles = new HashMap<>();
+    protected String tilesFolder = "";
+    private String appPath;
+    private String refresh = "refreshTO 5.0";
+    private String interval;
 
     protected Map<String, String> tiles;
-    protected HashMap<String, String []> tallyCheck;
 
     //**************************************************************************
 
-    final public String getTitle() {
+    private int getMaxDrillLevel() {
+
+        return this.maxDrillLevel;
+    }
+
+    //**************************************************************************
+
+    private String getTitle() {
 
         return this.title;
     }
 
     //**************************************************************************
 
-    final public void setTitle(String title) {
+    final protected void setTitle(String title) {
 
         this.title = title;
     }
 
     //**************************************************************************
 
-    @Override
-    public Object clone() throws CloneNotSupportedException {
+    private HashMap<String, String []> getTileList() {
 
-        return super.clone();
+        return this.tileList;
+    }
+
+    //**************************************************************************
+
+    final protected void setTileList(HashMap<String, String []> tileList) {
+
+        this.tileList = tileList;
+    }
+
+    //**************************************************************************
+
+    private HashMap<String, String []> getTallyCheck() {
+
+        return this.tallyCheck;
+    }
+
+    //**************************************************************************
+
+    final protected void setTallyCheck(HashMap<String, String []> tallyCheck) {
+
+        this.tallyCheck = tallyCheck;
     }
 
     //**************************************************************************
@@ -74,14 +97,14 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    final public String getBeginTime() {
+    private String getBeginTime() {
 
         return this.beginTime;
     }
 
     //**************************************************************************
 
-    final public String getEndTime() {
+    private String getEndTime() {
 
         return this.endTime;
     }
@@ -95,16 +118,38 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    final public String getAppPath() {
+    private String getAppPath() {
 
         return this.appPath;
     }
 
     //**************************************************************************
 
-    final public void setAppPath(String appPath) {
+    final protected void setAppPath(String appPath) {
 
         this.appPath = appPath;
+    }
+
+    //**************************************************************************
+
+    final protected String getRefresh() {
+
+        return this.refresh;
+    }
+
+    //**************************************************************************
+
+    final protected void setRefresh(String refresh) {
+
+        this.refresh = refresh;
+    }
+
+    //**************************************************************************
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+
+        return super.clone();
     }
 
     //**************************************************************************
@@ -170,7 +215,7 @@ public class Report implements Cloneable {
         String path = tileAppPath == null ? this.getAppPath() : tileAppPath;
 
         return path + this.getCmdAppliance() +
-                " " + this.refresh +
+                " " + this.getRefresh() +
                 " B " + drillTime.get("startTime") +
                 " E " + drillTime.get("stopTime");
     }
@@ -201,7 +246,7 @@ public class Report implements Cloneable {
     @SuppressWarnings("unchecked")
     public void tests(int drillLevel, String filter) {
 
-        if (drillLevel > this.maxDrillLevel) {
+        if (this.getMaxDrillLevel() < drillLevel) {
             return;
         }
 
@@ -229,7 +274,7 @@ public class Report implements Cloneable {
                     results.put(testTile.getTrueName(), result);
                 });
 
-        if (this.tallyCheck != null) {
+        if (this.getTallyCheck() != null) {
             this.checkTally(results, filter);
         }
     }
@@ -242,7 +287,7 @@ public class Report implements Cloneable {
             String filter
     ) {
 
-        this.tallyCheck.keySet().parallelStream()
+        this.getTallyCheck().keySet().parallelStream()
                 .filter(tile -> results.get(tile) != null)
                 .forEach(tile -> {
 
@@ -255,7 +300,7 @@ public class Report implements Cloneable {
                     AtomicReference<String> caption = new AtomicReference<>(text);
                     AtomicBoolean isCompareToPrined = new AtomicBoolean(false);
 
-                    Arrays.stream(this.tallyCheck.get(tile))
+                    Arrays.stream(this.getTallyCheck().get(tile))
                             .filter(item -> results.get(item) != null)
                             .forEach(item -> {
                                 this.compareTallies(compareToData, (Map)results.get(item),
@@ -313,10 +358,10 @@ public class Report implements Cloneable {
 
         this.tiles = new HashMap<String, String>() {};
 
-        this.tileList.keySet().parallelStream()
+        this.getTileList().keySet().parallelStream()
                 .forEach(type -> {
 
-                    String [] typeTiles = this.tileList.get(type);
+                    String [] typeTiles = this.getTileList().get(type);
 
                     Arrays.stream(typeTiles).parallel()
                             .filter(tile -> this.skipTiles.get(tile) == null)

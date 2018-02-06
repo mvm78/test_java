@@ -9,12 +9,11 @@ public class RTP_KPIs extends Report {
     public RTP_KPIs() {
 
         this.setAppPath("/usr/local/mercury/bin/agg-rtp");
-        this.refresh = "refreshTO 5.0";
 
         this.setTitle("RTP KPIs");
         this.tilesFolder = "RTP_KPIs";
 
-        this.tileList = new HashMap<String, String []>() {{
+        this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {
                 "RTPPacketsSessionsAndLoss",
             });
@@ -25,16 +24,16 @@ public class RTP_KPIs extends Report {
                 "TopRTPVLAN",
                 "RTPSessions",
             });
-        }};
+        }});
 
-        this.tallyCheck = new HashMap<String, String []>() {{
+        this.setTallyCheck(new HashMap<String, String []>() {{
             put("RTPPacketsSessionsAndLoss", new String [] {
                 "TopRTPCodec",
                 "TopRTPSources",
                 "TopRTPDestinations",
                 "TopRTPVLAN",
             });
-        }};
+        }});
    };
 
     //**************************************************************************

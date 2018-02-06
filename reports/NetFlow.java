@@ -9,11 +9,10 @@ public class NetFlow extends Report {
     public NetFlow() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-        this.refresh = "refreshTO 5.0";
 
         this.setTitle("NetFlow");
 
-        this.tileList = new HashMap<String, String []>() {{
+        this.setTileList(new HashMap<String, String []>() {{
             put("tables", new String [] {
                 "NetFlow.NetFlowDevicesByBytesAndPackets",
                 "NetFlow.NetFlowInputInterfacesByBytesAndPackets",
@@ -26,9 +25,9 @@ public class NetFlow extends Report {
                 "TopCountryPairsByBytesAndPackets",
                 "NetFlow.NetFlowSummaryByBytesAndPackets",
             });
-        }};
+        }});
 
-        this.tallyCheck = new HashMap<String, String []>() {{
+        this.setTallyCheck(new HashMap<String, String []>() {{
             put("NetFlowDevicesByBytesAndPackets", new String [] {
                 "NetFlowInputInterfacesByBytesAndPackets",
                 "NetFlowOutputInterfacesByBytesAndPackets",
@@ -39,7 +38,7 @@ public class NetFlow extends Report {
                 "TopCountryPairsByBytesAndPackets",
                 "NetFlowSummaryByBytesAndPackets",
             });
-        }};
+        }});
     };
 
     //**************************************************************************

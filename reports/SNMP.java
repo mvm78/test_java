@@ -9,12 +9,11 @@ public class SNMP extends Report {
     public SNMP() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-        this.refresh = "refreshTO 5.0";
 
         this.setTitle("SNMP");
         this.tilesFolder = "SNMP";
 
-        this.tileList = new HashMap<String, String []>() {{
+        this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {
                 "SNMPVariablesChart",
             });
@@ -22,14 +21,14 @@ public class SNMP extends Report {
                 "SNMPTopDeviceInterface",
                 "SNMPVariables",
             });
-        }};
+        }});
 
-        this.tallyCheck = new HashMap<String, String []>() {{
+        this.setTallyCheck(new HashMap<String, String []>() {{
             put("SNMPTopDeviceInterface", new String [] {
                 "SNMPVariables",
                 "SNMPVariablesChart",
             });
-        }};
+        }});
     };
 
     //**************************************************************************

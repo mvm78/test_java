@@ -9,11 +9,10 @@ public class TopServers extends Report {
     public TopServers() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-        this.refresh = "refreshTO 5.0";
 
         this.setTitle("Top Servers");
 
-        this.tileList = new HashMap<String, String []>() {{
+        this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {
                 "BitRateAndPacketRate",
                 "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
@@ -25,9 +24,9 @@ public class TopServers extends Report {
                 "TopServersByResponseTimeAndRetransmittedBytes",
                 "TopServersByThroughput",
             });
-        }};
+        }});
 
-        this.tallyCheck = new HashMap<String, String []>() {{
+        this.setTallyCheck(new HashMap<String, String []>() {{
             put("TopTCPServersByBytes", new String [] {
                 "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
                 "TopServersByResponseTimeAndRetransmittedBytes",
@@ -35,7 +34,7 @@ public class TopServers extends Report {
             put("TopServersByThroughput", new String [] {
                 "ThroughputVsGoodput",
             });
-        }};
+        }});
     }
 
     //**************************************************************************

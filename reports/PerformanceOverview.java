@@ -9,11 +9,10 @@ public class PerformanceOverview extends Report {
     public PerformanceOverview() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-        this.refresh = "refreshTO 5.0";
 
         this.setTitle("Performance Overview");
 
-        this.tileList = new HashMap<String, String []>() {{
+        this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {
                 "BitRateAndPacketRate",
                 "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
@@ -31,9 +30,9 @@ public class PerformanceOverview extends Report {
                 "NetworkSessions",
                 "TCPConnections",
             });
-        }};
+        }});
 
-        this.tallyCheck = new HashMap<String, String []>() {{
+        this.setTallyCheck(new HashMap<String, String []>() {{
             put("TopApplicationPortsByBytesAndPackets", new String [] {
                 "BitRateAndPacketRate",
                 "TopSourcesByBytesAndPackets",
@@ -43,7 +42,7 @@ public class PerformanceOverview extends Report {
                 "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
                 "TopHostPairsByResponseTimeAndRetransmittedBytes",
             });
-        }};
+        }});
     };
 
     //**************************************************************************

@@ -9,12 +9,11 @@ public class DNSPerformance extends Report {
     public DNSPerformance() {
 
         this.setAppPath("/usr/local/mercury/bin/agg-dns R");
-        this.refresh = "refreshTO 5.0";
 
         this.setTitle("DNS Performance");
         this.tilesFolder = "DNS";
 
-        this.tileList = new HashMap<String, String []>() {{
+        this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {
                 "DNSRateAndLatency",
             });
@@ -25,15 +24,15 @@ public class DNSPerformance extends Report {
                 "TopDNSRequests",
                 "DNSSessions",
             });
-        }};
+        }});
 
-        this.tallyCheck = new HashMap<String, String []>() {{
+        this.setTallyCheck(new HashMap<String, String []>() {{
             put("TopDNSRequestTypes", new String [] {
                 "DNSRateAndLatency",
                 "TopDNSResponses",
                 "TopDNSServers",
             });
-        }};
+        }});
     };
 
     //**************************************************************************

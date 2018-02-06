@@ -9,12 +9,11 @@ public class AnomalousTCPSessions extends Report {
     public AnomalousTCPSessions() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-        this.refresh = "refreshTO 5.0";
 
         this.setTitle("Anomalous TCP Sessions");
         this.tilesFolder = "AnomalousTCPSessions";
 
-        this.tileList = new HashMap<String, String []>() {{
+        this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {
                 "UnacknowledgedTCPSessionsTrend",
                 "ServerResetNoBytesTCPSessionsTrend",
@@ -35,9 +34,9 @@ public class AnomalousTCPSessions extends Report {
                 "PossibleNetworkIssueTCPSessions",
                 "PossibleServerOrApplicationIssueTCPSessions",
             });
-        }};
+        }});
 
-        this.tallyCheck = new HashMap<String, String []>() {{
+        this.setTallyCheck(new HashMap<String, String []>() {{
             put("UnacknowledgedTCPSessionsTrend", new String [] {
                 "UnacknowledgedTCPSessions",
             });
@@ -62,7 +61,7 @@ public class AnomalousTCPSessions extends Report {
             put("PossibleServerOrApplicationIssueTCPSessionsTrend", new String [] {
                 "PossibleServerOrApplicationIssueTCPSessions",
             });
-        }};
+        }});
     };
 
     //**************************************************************************

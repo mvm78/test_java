@@ -9,11 +9,10 @@ public class TopApplicationPorts extends Report {
     public TopApplicationPorts() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-        this.refresh = "refreshTO 5.0";
 
         this.setTitle("Top Application Ports");
 
-        this.tileList = new HashMap<String, String []>() {{
+        this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {
                 "BitRateAndPacketRate",
                 "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
@@ -25,9 +24,9 @@ public class TopApplicationPorts extends Report {
                 "TopApplicationPortsByResponseTimeAndRetransmittedBytes",
                 "TopApplicationPortsByThroughput",
             });
-        }};
+        }});
 
-        this.tallyCheck = new HashMap<String, String []>() {{
+        this.setTallyCheck(new HashMap<String, String []>() {{
             put("TopApplicationPortsByBytesAndPackets", new String [] {
                 "BitRateAndPacketRate",
             });
@@ -38,7 +37,7 @@ public class TopApplicationPorts extends Report {
             put("TopApplicationPortsByThroughput", new String [] {
                 "ThroughputVsGoodput",
             });
-        }};
+        }});
     }
 
     //**************************************************************************

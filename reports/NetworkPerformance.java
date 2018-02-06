@@ -9,11 +9,10 @@ public class NetworkPerformance extends Report {
     public NetworkPerformance() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-        this.refresh = "refreshTO 5.0";
 
         this.setTitle("Network Performance");
 
-        this.tileList = new HashMap<String, String []>() {{
+        this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {
                 "BitRateAndPacketRate",
                 "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
@@ -30,9 +29,9 @@ public class NetworkPerformance extends Report {
                 "TopVLAN",
                 "TopVLANByBytesAndPackets",
             });
-        }};
+        }});
 
-        this.tallyCheck = new HashMap<String, String []>() {{
+        this.setTallyCheck(new HashMap<String, String []>() {{
             put("TopProtocolsByBytesAndPackets", new String [] {
                 "BitRateAndPacketRate",
                 "TopLinkProtocolsByBytesAndPackets",
@@ -45,7 +44,7 @@ public class NetworkPerformance extends Report {
                 "ThroughputVsGoodput",
                 "TopVLAN",
             });
-        }};
+        }});
     };
 
     //**************************************************************************

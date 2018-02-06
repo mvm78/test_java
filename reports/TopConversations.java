@@ -9,11 +9,10 @@ public class TopConversations extends Report {
     public TopConversations() {
 
         this.setAppPath("/usr/local/mercury/bin/agg");
-        this.refresh = "refreshTO 5.0";
 
         this.setTitle("Top Conversations");
 
-        this.tileList = new HashMap<String, String []>() {{
+        this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {
                 "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
                 "ThroughputVsGoodput",
@@ -28,9 +27,9 @@ public class TopConversations extends Report {
                 "TopCountryPairsByBytesAndPackets",
                 "TopCountryPairsTCPPerformance",
             });
-        }};
+        }});
 
-        this.tallyCheck = new HashMap<String, String []>() {{
+        this.setTallyCheck(new HashMap<String, String []>() {{
             put("TopTCPConversationsByBytes", new String [] {
                 "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
                 "TopHostPairsByResponseTimeAndRetransmittedBytes",
@@ -40,7 +39,7 @@ public class TopConversations extends Report {
             put("TopHostPairsByThroughput", new String [] {
                 "ThroughputVsGoodput",
             });
-        }};
+        }});
     }
 
     //**************************************************************************

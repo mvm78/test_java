@@ -9,12 +9,11 @@ public class DatabasePerformance extends Report {
     public DatabasePerformance() {
 
         this.setAppPath("/usr/local/mercury/bin/agg-db");
-        this.refresh = "refreshTO 5.0";
 
         this.setTitle("Database Performance");
         this.tilesFolder = "Database";
 
-        this.tileList = new HashMap<String, String []>() {{
+        this.setTileList(new HashMap<String, String []>() {{
             put("charts", new String [] {
                 "DatabaseLatencyAndRecordsOverTime",
             });
@@ -27,9 +26,9 @@ public class DatabasePerformance extends Report {
                 "DatabaseTopVLAN",
                 "DatabaseSessions",
             });
-        }};
+        }});
 
-        this.tallyCheck = new HashMap<String, String []>() {{
+        this.setTallyCheck(new HashMap<String, String []>() {{
             put("DatabaseLatencyAndRecordsOverTime", new String [] {
                 "DatabaseTopQueryTypes",
                 "DatabaseTopQueryStatus",
@@ -38,7 +37,7 @@ public class DatabasePerformance extends Report {
                 "DatabaseTypes",
                 "DatabaseTopVLAN",
             });
-        }};
+        }});
     };
 
     //**************************************************************************
