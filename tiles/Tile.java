@@ -46,7 +46,7 @@ public abstract class Tile implements Cloneable {
 
     //**************************************************************************
 
-    final protected Report getReport() {
+    private Report getReport() {
 
         return this.report;
     }
@@ -60,7 +60,7 @@ public abstract class Tile implements Cloneable {
 
     //**************************************************************************
 
-    final protected Map<String, String> getReportTime() {
+    private Map<String, String> getReportTime() {
 
         return this.reportTime;
     }
@@ -74,28 +74,28 @@ public abstract class Tile implements Cloneable {
 
     //**************************************************************************
 
-    final protected boolean getNoDrill() {
+    private boolean getNoDrill() {
 
         return this.noDrill;
     }
 
     //**************************************************************************
 
-    final protected void setNoDrill(boolean noDrill) {
+    private void setNoDrill(boolean noDrill) {
 
         this.noDrill = noDrill;
     }
 
     //**************************************************************************
 
-    final protected String getErrorTitle() {
+    private String getErrorTitle() {
 
         return this.errorTitle;
     }
 
     //**************************************************************************
 
-    final protected void setErrorTitle(String errorTitle) {
+    private void setErrorTitle(String errorTitle) {
 
         this.errorTitle = errorTitle;
     }
@@ -144,7 +144,7 @@ public abstract class Tile implements Cloneable {
 
     //**************************************************************************
 
-    final protected boolean getIsSingleLine() {
+    private boolean getIsSingleLine() {
 
         return this.isSingleLine;
     }
@@ -172,7 +172,7 @@ public abstract class Tile implements Cloneable {
 
     //**************************************************************************
 
-    final protected String getTileType() {
+    private String getTileType() {
 
         return this.tileType;
     }
@@ -326,14 +326,14 @@ public abstract class Tile implements Cloneable {
 
     //**************************************************************************
 
-    final protected List<String> getCellDrillFilters() {
+    private List<String> getCellDrillFilters() {
 
         return this.cellDrillFilters;
     }
 
     //**************************************************************************
 
-    final protected void addCellDrillFilters(String filter) {
+    private void addCellDrillFilters(String filter) {
 
         this.getCellDrillFilters().add(filter);
     }
@@ -368,7 +368,7 @@ public abstract class Tile implements Cloneable {
 
     //**************************************************************************
 
-    final protected String getLineTally() {
+    private String getLineTally() {
 
         return this.lineTally;
     }
@@ -378,6 +378,27 @@ public abstract class Tile implements Cloneable {
     final protected void setLineTally(String lineTally) {
 
         this.lineTally = lineTally;
+    }
+
+    //**************************************************************************
+
+    private byte getDebug() {
+
+        return this.debug;
+    }
+
+    //**************************************************************************
+
+    private boolean getRemoveFirstItem() {
+
+        return this.removeFirstItem;
+    }
+
+    //**************************************************************************
+
+    final protected void setRemoveFirstItem(boolean removeFirstItem) {
+
+        this.removeFirstItem = removeFirstItem;
     }
 
     //**************************************************************************
@@ -393,27 +414,6 @@ public abstract class Tile implements Cloneable {
     protected String getRowFilter(Map<String, Object> data) {
 
         return "";
-    }
-
-    //**************************************************************************
-
-    final protected byte getDebug() {
-
-        return this.debug;
-    }
-
-    //**************************************************************************
-
-    final protected boolean getRemoveFirstItem() {
-
-        return this.removeFirstItem;
-    }
-
-    //**************************************************************************
-
-    final protected void setRemoveFirstItem(boolean removeFirstItem) {
-
-        this.removeFirstItem = removeFirstItem;
     }
 
     //**************************************************************************
