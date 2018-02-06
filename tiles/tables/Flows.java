@@ -9,12 +9,12 @@ public class Flows extends Table {
 
     public Flows() {
 
-        final CommonTopApplicationsHostPairsAndPorts CommonInstance =
+        final CommonTopApplicationsHostPairsAndPorts commonInstance =
                 new CommonTopApplicationsHostPairsAndPorts();
-        final CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
+        final CommonByBytesAndPackets commonByInstance = new CommonByBytesAndPackets();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
         this.setIsSingleLine(true);
         this.setTitle("Flows");
         this.setPrefix("NetDist");

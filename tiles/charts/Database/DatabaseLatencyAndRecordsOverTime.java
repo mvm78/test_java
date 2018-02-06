@@ -9,10 +9,10 @@ public class DatabaseLatencyAndRecordsOverTime extends Chart {
 
     public DatabaseLatencyAndRecordsOverTime() {
 
-        final CommonByDatabaseLatencyAndSessions CommonByInstance =
+        final CommonByDatabaseLatencyAndSessions commonByInstance =
                 new CommonByDatabaseLatencyAndSessions();
 
-        this.setCommonBy(CommonByInstance);
+        this.setCommonBy(commonByInstance);
         this.setTitle("Database Latency and Records OverTime");
         this.setPrefix("DbAgg");
         this.setCommonByData();

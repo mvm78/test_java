@@ -10,12 +10,12 @@ public class TopDNSServers extends Table {
 
     public TopDNSServers() {
 
-        final CommonTopServers CommonInstance = new CommonTopServers();
-        final CommonByNumberOfRecordsAndLatency CommonByInstance =
+        final CommonTopServers commonInstance = new CommonTopServers();
+        final CommonByNumberOfRecordsAndLatency commonByInstance =
                 new CommonByNumberOfRecordsAndLatency();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
         this.setTitle("Top DNS Servers");
         this.setPrefix("DnsAgg");
         this.setCommonData();

@@ -13,12 +13,12 @@ public class MediaFlow extends Table {
 
     public MediaFlow() {
 
-        final CommonMediaFlow CommonInstance = new CommonMediaFlow();
-        final CommonByTransportJitterAndEvents CommonByInstance =
+        final CommonMediaFlow commonInstance = new CommonMediaFlow();
+        final CommonByTransportJitterAndEvents commonByInstance =
                 new CommonByTransportJitterAndEvents();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
 
         final String [] instanceFilters = this.getCommon().getFilters();
         final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =

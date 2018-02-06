@@ -12,9 +12,9 @@ public class AnomalousTCPSessionsTrend extends Chart {
 
     public AnomalousTCPSessionsTrend() {
 
-        final CommonTCPSessions CommonInstance = new CommonTCPSessions();
+        final CommonTCPSessions commonInstance = new CommonTCPSessions();
 
-        this.setCommon(CommonInstance);
+        this.setCommon(commonInstance);
         this.setIsSingleLine(true);
 
         final String instancePrefix = this.getCommon().getPrefix();

@@ -12,12 +12,12 @@ public class TopApplicationPortsByResponseTimeAndRetransmittedBytes extends Tabl
 
     public TopApplicationPortsByResponseTimeAndRetransmittedBytes() {
 
-        final CommonTopApplicationPorts CommonInstance = new CommonTopApplicationPorts();
-        final CommonByResponseTimeAndRetransmittedBytes CommonByInstance =
+        final CommonTopApplicationPorts commonInstance = new CommonTopApplicationPorts();
+        final CommonByResponseTimeAndRetransmittedBytes commonByInstance =
                 new CommonByResponseTimeAndRetransmittedBytes();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
 
         final String [] instanceFilters = this.getCommon().getFilters();
         final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =

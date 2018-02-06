@@ -10,12 +10,12 @@ public class DatabaseTopHostPairs extends Table {
 
     public DatabaseTopHostPairs() {
 
-        final CommonTopHostPairs CommonInstance = new CommonTopHostPairs();
-        final CommonByDatabaseLatencyAndSessions CommonByInstance =
+        final CommonTopHostPairs commonInstance = new CommonTopHostPairs();
+        final CommonByDatabaseLatencyAndSessions commonByInstance =
                 new CommonByDatabaseLatencyAndSessions();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
         this.setTitle("Database - Top Host Pairs");
         this.setPrefix("DbAgg");
         this.setCommonData();

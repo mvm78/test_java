@@ -12,11 +12,11 @@ public class TopApplicationPortsByThroughput extends Table {
 
     public TopApplicationPortsByThroughput() {
 
-        final CommonTopApplicationPorts CommonInstance = new CommonTopApplicationPorts();
-        final CommonByThroughput CommonByInstance = new CommonByThroughput();
+        final CommonTopApplicationPorts commonInstance = new CommonTopApplicationPorts();
+        final CommonByThroughput commonByInstance = new CommonByThroughput();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
 
         final String [] instanceFilters = this.getCommon().getFilters();
         final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =

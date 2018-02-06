@@ -9,11 +9,11 @@ public class TopTCPLinkProtocolsByBytes extends Table {
 
     public TopTCPLinkProtocolsByBytes() {
 
-        final CommonLinkTopProtocols CommonInstance = new CommonLinkTopProtocols();
-        final CommonByTCPBytes CommonByInstance = new CommonByTCPBytes();
+        final CommonLinkTopProtocols commonInstance = new CommonLinkTopProtocols();
+        final CommonByTCPBytes commonByInstance = new CommonByTCPBytes();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
         this.setIsSingleLine(true);
         this.setTitle("Top TCP Link Protocols");
         this.setPrefix("TcpAgg flowsegments");

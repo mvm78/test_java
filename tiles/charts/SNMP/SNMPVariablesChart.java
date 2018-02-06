@@ -9,9 +9,9 @@ public class SNMPVariablesChart extends Chart {
 
     public SNMPVariablesChart() {
 
-        final CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
+        final CommonByBytesAndPackets commonByInstance = new CommonByBytesAndPackets();
 
-        this.setCommonBy(CommonByInstance);
+        this.setCommonBy(commonByInstance);
         this.setTitle("SNMP - Variables");
         this.setPrefix("NetDist");
         this.setCommonByData();

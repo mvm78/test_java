@@ -10,12 +10,12 @@ public class TopWebServers extends Table {
 
     public TopWebServers() {
 
-        final CommonTopWebServers CommonInstance = new CommonTopWebServers();
-        final CommonByNumberOfTransactionsBytesAndTransactionLatency CommonByInstance =
+        final CommonTopWebServers commonInstance = new CommonTopWebServers();
+        final CommonByNumberOfTransactionsBytesAndTransactionLatency commonByInstance =
                 new CommonByNumberOfTransactionsBytesAndTransactionLatency();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
         this.setTitle("Top Web Servers");
         this.setAppPath("/usr/local/mercury/bin/agg-http");
         this.setPrefix("HttpAgg");

@@ -19,12 +19,12 @@ public class DatabaseTopVLAN extends Table {
 
     public DatabaseTopVLAN() {
 
-        final CommonVLAN CommonInstance = new CommonVLAN();
-        final CommonByDatabaseLatencyAndSessions CommonByInstance =
+        final CommonVLAN commonInstance = new CommonVLAN();
+        final CommonByDatabaseLatencyAndSessions commonByInstance =
                 new CommonByDatabaseLatencyAndSessions();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
         this.setTitle("Database - Top VLAN");
         this.setPrefix("DbAgg");
         this.setCommonData();

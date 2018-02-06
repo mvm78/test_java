@@ -9,11 +9,11 @@ public class TopApplicationsByBytesAndPackets extends Table {
 
     public TopApplicationsByBytesAndPackets() {
 
-        final CommonTopApplications CommonInstance = new CommonTopApplications();
-        final CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
+        final CommonTopApplications commonInstance = new CommonTopApplications();
+        final CommonByBytesAndPackets commonByInstance = new CommonByBytesAndPackets();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
         this.setIsSingleLine(true);
         this.setTitle("Top Applications by Bytes and Packets");
         this.setPrefix("NetDist");

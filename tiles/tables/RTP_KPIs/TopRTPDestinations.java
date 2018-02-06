@@ -10,11 +10,11 @@ public class TopRTPDestinations extends Table {
 
     public TopRTPDestinations() {
 
-        final CommonTopRTPDestinations CommonInstance = new CommonTopRTPDestinations();
-        final CommonByRTP_KPIs CommonByInstance = new CommonByRTP_KPIs();
+        final CommonTopRTPDestinations commonInstance = new CommonTopRTPDestinations();
+        final CommonByRTP_KPIs commonByInstance = new CommonByRTP_KPIs();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
         this.setTitle("RTP - Top Destinations");
         this.setPrefix("RtpAgg flowsegments");
         this.setCommonData();

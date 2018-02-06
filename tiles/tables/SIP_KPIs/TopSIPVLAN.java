@@ -10,11 +10,11 @@ public class TopSIPVLAN extends Table {
 
     public TopSIPVLAN() {
 
-        final CommonTopSIPVLAN CommonInstance = new CommonTopSIPVLAN();
-        final CommonByCalls CommonByInstance = new CommonByCalls();
+        final CommonTopSIPVLAN commonInstance = new CommonTopSIPVLAN();
+        final CommonByCalls commonByInstance = new CommonByCalls();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
         this.setTitle("SIP - Top VLAN");
         this.setPrefix("top 0 desc on vlan");
         this.setSplitChar(",");

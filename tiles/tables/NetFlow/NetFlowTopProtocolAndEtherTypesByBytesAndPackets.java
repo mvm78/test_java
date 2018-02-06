@@ -10,12 +10,12 @@ public class NetFlowTopProtocolAndEtherTypesByBytesAndPackets extends Table {
 
     public NetFlowTopProtocolAndEtherTypesByBytesAndPackets() {
 
-        final CommonTopProtocolAndEtherTypes CommonInstance =
+        final CommonTopProtocolAndEtherTypes commonInstance =
                 new CommonTopProtocolAndEtherTypes();
-        final CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
+        final CommonByBytesAndPackets commonByInstance = new CommonByBytesAndPackets();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
         this.setIsSingleLine(true);
         this.setTitle("Network - Top Protocol and EtherType by Packets and Bytes");
         this.setPrefix("NetDist");

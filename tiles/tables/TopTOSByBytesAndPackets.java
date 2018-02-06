@@ -9,11 +9,11 @@ public class TopTOSByBytesAndPackets extends Table {
 
     public TopTOSByBytesAndPackets() {
 
-        final CommonTOS CommonInstance = new CommonTOS();
-        final CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
+        final CommonTOS commonInstance = new CommonTOS();
+        final CommonByBytesAndPackets commonByInstance = new CommonByBytesAndPackets();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
         this.setIsSingleLine(true);
         this.setTitle("Top TOS by Bytes and Packets");
         this.setPrefix("NetDist");

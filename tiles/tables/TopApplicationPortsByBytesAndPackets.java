@@ -9,11 +9,11 @@ public class TopApplicationPortsByBytesAndPackets extends Table {
 
     public TopApplicationPortsByBytesAndPackets() {
 
-        final CommonTopApplicationPorts CommonInstance = new CommonTopApplicationPorts();
-        final CommonByBytesAndPackets CommonByInstance = new CommonByBytesAndPackets();
+        final CommonTopApplicationPorts commonInstance = new CommonTopApplicationPorts();
+        final CommonByBytesAndPackets commonByInstance = new CommonByBytesAndPackets();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
         this.setIsSingleLine(true);
         this.setTitle("Top Application Ports by Bytes and Packets");
         this.setPrefix("NetDist");

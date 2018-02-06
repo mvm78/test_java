@@ -10,11 +10,11 @@ public class TopSIPStatusCodes extends Table {
 
     public TopSIPStatusCodes() {
 
-        final CommonTopSIPStatusCodes CommonInstance = new CommonTopSIPStatusCodes();
-        final CommonByCalls CommonByInstance = new CommonByCalls();
+        final CommonTopSIPStatusCodes commonInstance = new CommonTopSIPStatusCodes();
+        final CommonByCalls commonByInstance = new CommonByCalls();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
         this.setTitle("SIP - Top SIP Status Codes");
         this.setPrefix("top 0 desc on errorcode");
         this.setSplitChar(",");

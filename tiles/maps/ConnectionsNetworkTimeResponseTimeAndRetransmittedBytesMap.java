@@ -13,12 +13,12 @@ public class ConnectionsNetworkTimeResponseTimeAndRetransmittedBytesMap extends 
 
     public ConnectionsNetworkTimeResponseTimeAndRetransmittedBytesMap() {
 
-        final CommonTopCountries CommonInstance = new CommonTopCountries();
-        final CommonByResponseTimeAndRetransmittedBytes CommonByInstance =
+        final CommonTopCountries commonInstance = new CommonTopCountries();
+        final CommonByResponseTimeAndRetransmittedBytes commonByInstance =
                 new CommonByResponseTimeAndRetransmittedBytes();
 
-        this.setCommonBy(CommonByInstance);
-        this.setCommon(CommonInstance);
+        this.setCommonBy(commonByInstance);
+        this.setCommon(commonInstance);
 
         final String [] instanceFilters = this.getCommon().getFilters();
         final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =

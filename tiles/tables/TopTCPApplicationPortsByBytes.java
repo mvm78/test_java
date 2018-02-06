@@ -12,11 +12,11 @@ public class TopTCPApplicationPortsByBytes extends Table {
 
     public TopTCPApplicationPortsByBytes() {
 
-        final CommonTopApplicationPorts CommonInstance = new CommonTopApplicationPorts();
-        final CommonByTCPBytes CommonByInstance = new CommonByTCPBytes();
+        final CommonTopApplicationPorts commonInstance = new CommonTopApplicationPorts();
+        final CommonByTCPBytes commonByInstance = new CommonByTCPBytes();
 
-        this.setCommon(CommonInstance);
-        this.setCommonBy(CommonByInstance);
+        this.setCommon(commonInstance);
+        this.setCommonBy(commonByInstance);
 
         final String [] instanceFilters = this.getCommon().getFilters();
         final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =
