@@ -1408,11 +1408,11 @@ public abstract class Tile implements Cloneable {
 
         Map<String, Map<String, Object>> results = this.getTilesTallies(filter);
 
+        String error = " with filter \"" + filter + "\" has NO DATA";
+
         results.keySet().parallelStream()
                 .filter(tile -> this.checkIfTallyDiffter(results.get(tile), masterTally))
-                .forEach(tile -> {
-                    ErrorsLog.log("Tile " + tile + " with filter \"" + filter + "\" has NO DATA");
-                });
+                .forEach(tile -> ErrorsLog.log("Tile " + tile + error));
     }
 
     //**************************************************************************

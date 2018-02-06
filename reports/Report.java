@@ -22,8 +22,8 @@ public class Report implements Cloneable {
     private final int maxDrillLevel = 1;
 
     private String title;
-    private HashMap<String, String []> tileList;
-    private HashMap<String, String []> tallyCheck;
+    private Map<String, String []> tileList;
+    private Map<String, String []> tallyCheck;
     private Map<String, Boolean> skipTiles = new HashMap<>();
     private String tilesFolder = "";
     private String appPath;
@@ -54,7 +54,7 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    private HashMap<String, String []> getTileList() {
+    private Map<String, String []> getTileList() {
 
         return this.tileList;
     }
@@ -75,7 +75,7 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    private HashMap<String, String []> getTallyCheck() {
+    private Map<String, String []> getTallyCheck() {
 
         return this.tallyCheck;
     }
@@ -355,7 +355,9 @@ public class Report implements Cloneable {
                     AtomicReference<String> caption = new AtomicReference<>(text);
                     AtomicBoolean isCompareToPrined = new AtomicBoolean(false);
 
-                    Arrays.stream(this.getTallyCheck().get(tile))
+                    String [] checkTile = this.getTallyCheck().get(tile);
+
+                    Arrays.stream(checkTile)
                             .filter(item -> results.get(item) != null)
                             .forEach(item -> {
                                 this.compareTallies(compareToData, (Map)results.get(item),
