@@ -14,13 +14,12 @@ public class TopSIPConnectionTypes extends Table {
                 new CommonTopSIPConnectionTypes();
         final CommonByCalls commonByInstance = new CommonByCalls();
 
-        this.setCommon(commonInstance);
-        this.setCommonBy(commonByInstance);
+        this.setCommonData(commonInstance, commonByInstance);
+
         this.setTitle("SIP - Top Connection Types");
         this.setPrefix("top 0 desc on connectiontype");
         this.setSplitChar(",");
         this.setColumnIncrement(0);
-        this.setCommonData();
     }
 
     //**************************************************************************

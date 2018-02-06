@@ -12,11 +12,10 @@ public class TopCountryPairsByBytesAndPackets extends Table {
         final CommonTopCountryPairs commonInstance = new CommonTopCountryPairs();
         final CommonByBytesAndPackets commonByInstance = new CommonByBytesAndPackets();
 
-        this.setCommon(commonInstance);
-        this.setCommonBy(commonByInstance);
+        this.setCommonData(commonInstance, commonByInstance);
+
         this.setTitle("Top Country Pair by Packets and Bytes");
         this.setPrefix("NetDist");
-        this.setCommonData();
     }
 
     //**************************************************************************

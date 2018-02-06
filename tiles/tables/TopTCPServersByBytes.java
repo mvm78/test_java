@@ -12,11 +12,10 @@ public class TopTCPServersByBytes extends Table {
         final CommonTopServers commonInstance = new CommonTopServers();
         final CommonByTCPBytes commonByInstance = new CommonByTCPBytes();
 
-        this.setCommon(commonInstance);
-        this.setCommonBy(commonByInstance);
+        this.setCommonData(commonInstance, commonByInstance);
+
         this.setTitle("Top TCP Servers by Bytes");
         this.setPrefix("TcpAgg flowsegments");
-        this.setCommonData();
     }
 
     //**************************************************************************

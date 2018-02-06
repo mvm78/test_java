@@ -14,11 +14,10 @@ public class DatabaseTypes extends Table {
         final CommonByDatabaseLatencyAndSessions commonByInstance =
                 new CommonByDatabaseLatencyAndSessions();
 
-        this.setCommon(commonInstance);
-        this.setCommonBy(commonByInstance);
+        this.setCommonData(commonInstance, commonByInstance);
+
         this.setTitle("Database Types");
         this.setPrefix("DbAgg");
-        this.setCommonData();
     }
 
     //**************************************************************************

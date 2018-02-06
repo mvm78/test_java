@@ -14,11 +14,10 @@ public class TopWebUserAgents extends Table {
         final CommonByNumberOfTransactionsBytesAndTransactionLatency commonByInstance =
                 new CommonByNumberOfTransactionsBytesAndTransactionLatency();
 
-        this.setCommon(commonInstance);
-        this.setCommonBy(commonByInstance);
+        this.setCommonData(commonInstance, commonByInstance);
+
         this.setTitle("Top User Agents");
         this.setPrefix("HttpAgg");
-        this.setCommonData();
     }
 
     //**************************************************************************

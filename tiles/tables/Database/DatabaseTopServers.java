@@ -14,11 +14,10 @@ public class DatabaseTopServers extends Table {
         final CommonByDatabaseLatencyAndSessions commonByInstance =
                 new CommonByDatabaseLatencyAndSessions();
 
-        this.setCommon(commonInstance);
-        this.setCommonBy(commonByInstance);
+        this.setCommonData(commonInstance, commonByInstance);
+
         this.setTitle("Database - Top Servers");
         this.setPrefix("DbAgg");
-        this.setCommonData();
     }
 
     //**************************************************************************

@@ -13,12 +13,11 @@ public class Flows extends Table {
                 new CommonTopApplicationsHostPairsAndPorts();
         final CommonByBytesAndPackets commonByInstance = new CommonByBytesAndPackets();
 
-        this.setCommon(commonInstance);
-        this.setCommonBy(commonByInstance);
+        this.setCommonData(commonInstance, commonByInstance);
+
         this.setIsSingleLine(true);
         this.setTitle("Flows");
         this.setPrefix("NetDist");
-        this.setCommonData();
     }
 
     //**************************************************************************

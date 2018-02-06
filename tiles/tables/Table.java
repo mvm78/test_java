@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import test_java.tiles.Tile;
+import test_java.tiles.common.Common;
+import test_java.tiles.common.CommonBy;
 
 public abstract class Table extends Tile {
 
@@ -24,21 +26,25 @@ public abstract class Table extends Tile {
 
     //**************************************************************************
 
-    protected final void setCommonData() {
+    protected final <T1 extends Common, T2 extends CommonBy> void setCommonData(T1 common, T2 commonBy) {
 
-        final String [] instanceFields = this.getCommon().getFields().clone();
-        final String commonByFields = this.getCommonBy().getFields();
-        final String [] instanceFilters = this.getCommon().getFilters();
+        this.setCommon(common);
+        this.setCommonBy(commonBy);
+
+        final String [] instanceFields = common.getFields().clone();
+        final String commonByFields = commonBy.getFields();
+        final String [] instanceFilters = common.getFilters();
         final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =
-                this.getCommon().getFilterColumns();
+                common.getFilterColumns();
         final LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
-                this.getCommonBy().appendCompareColumns(instanceFilterColumns,
-                        this.getColumnIncrement());
+                commonBy.appendCompareColumns(instanceFilterColumns, this.getColumnIncrement());
 
         this.setFields(instanceFields);
+
         for (int count=0; count<this.getFields().length; count++) {
             this.setField(count, this.getField(count) + " " + commonByFields);
         }
+
         this.setFilters(instanceFilters);
         this.setFilterColumns(instanceFilterColumns);
         this.setColumns(instanceColumns);
