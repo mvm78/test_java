@@ -18,8 +18,8 @@ public class TopSIPConnectionTypes extends Table {
         this.setCommonBy(CommonByInstance);
         this.setTitle("SIP - Top Connection Types");
         this.setPrefix("top 0 desc on connectiontype");
-        this.splitChar = ",";
-        this.columnIncrement = 0;
+        this.setSplitChar(",");
+        this.setColumnIncrement(0);
         this.setCommonData();
     }
 

@@ -17,7 +17,7 @@ public class SIPSessions extends Table {
         this.setPrefix("list 999");
         this.setFields();
         this.setFilters();
-        this.splitChar = ",";
+        this.setSplitChar(",");
         this.setColumns(new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Initiation Time", new HashMap<String, Object>() {{
                 put("order", 1);

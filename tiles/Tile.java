@@ -35,8 +35,8 @@ public abstract class Tile implements Cloneable {
     private LinkedHashMap<String, HashMap<String, Object>> filterColumns;
     private LinkedHashMap<String, HashMap<String, Object>> columns;
     private final List<String> cellDrillFilters = new LinkedList<>();
-    protected String splitChar = " ";
-    protected byte columnIncrement = 1;
+    private String splitChar = " ";
+    private int columnIncrement = 1;
     protected String lineTally;
     protected boolean removeFirstItem = false;
 
@@ -340,6 +340,34 @@ public abstract class Tile implements Cloneable {
 
     //**************************************************************************
 
+    final public String getSplitChar() {
+
+        return this.splitChar;
+    }
+
+    //**************************************************************************
+
+    final public void setSplitChar(String splitChar) {
+
+        this.splitChar = splitChar;
+    }
+
+    //**************************************************************************
+
+    final public int getColumnIncrement() {
+
+        return this.columnIncrement;
+    }
+
+    //**************************************************************************
+
+    final public void setColumnIncrement(int columnIncrement) {
+
+        this.columnIncrement = columnIncrement;
+    }
+
+    //**************************************************************************
+
     @Override
     final public Object clone() throws CloneNotSupportedException {
 
@@ -358,13 +386,6 @@ public abstract class Tile implements Cloneable {
     final public byte getDebug() {
 
         return this.debug;
-    }
-
-    //**************************************************************************
-
-    final public String getSplitChar() {
-
-        return this.splitChar;
     }
 
     //**************************************************************************
@@ -1227,7 +1248,7 @@ public abstract class Tile implements Cloneable {
             results.lines().parallel()
                     .forEach(line -> {
 
-                        String [] split = Util.split(line.trim(), this.splitChar);
+                        String [] split = Util.split(line.trim(), this.getSplitChar());
 
                         if (this.removeFirstItem) {
                             split = Arrays.copyOfRange(split, 1, split.length);

@@ -32,7 +32,7 @@ public abstract class Table extends Tile {
                 this.getCommon().getFilterColumns();
         final LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
                 this.getCommonBy().appendCompareColumns(instanceFilterColumns,
-                        this.columnIncrement);
+                        this.getColumnIncrement());
 
         this.setFields(instanceFields);
         for (int count=0; count<this.getFields().length; count++) {
