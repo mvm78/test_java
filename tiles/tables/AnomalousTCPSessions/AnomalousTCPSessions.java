@@ -1,5 +1,7 @@
 package test_java.tiles.tables.AnomalousTCPSessions;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import test_java.tiles.tables.*;
@@ -20,12 +22,14 @@ public class AnomalousTCPSessions extends Table {
         final String instanceWindow = this.getCommon().getWindow();
         final String [] instanceFields = this.getCommon().getFields();
         final String [] instanceFilters = this.getCommon().getFilters();
+        LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
+                this.getCommon().getFilterColumns();
 
         this.setPrefix(instancePrefix);
         this.setWindow(instanceWindow);
         this.setFields(instanceFields);
         this.setFilters(instanceFilters);
-        this.columns = this.getCommon().getFilterColumns();
+        this.setColumns(instanceColumns);
         this.lineTally = "Connections";
         this.removeFirstItem = true;
     }
@@ -35,7 +39,7 @@ public class AnomalousTCPSessions extends Table {
     @Override
     protected String getRowFilter(Map<String, Object> data) {
 
-        data.put("columns", this.columns);
+        data.put("columns", this.getColumns());
 
         return CommonTCPSessions.getRowFilter(data);
     }

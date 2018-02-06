@@ -23,13 +23,13 @@ public class AnomalousTCPSessionsTrend extends Chart {
         this.setPrefix(instancePrefix);
         this.setFields();
         this.setFilters(instanceFilters);
-        this.columns = new LinkedHashMap<String, HashMap<String, Object>>() {{
+        this.setColumns(new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Connections", new HashMap<String, Object>() {{
                 put("order", 1);
                 put("tally", "true");
                 put("compare", "true");
             }});
-        }};
+        }});
     }
 
     //**************************************************************************

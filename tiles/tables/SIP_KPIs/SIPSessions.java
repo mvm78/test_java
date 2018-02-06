@@ -18,7 +18,7 @@ public class SIPSessions extends Table {
         this.setFields();
         this.setFilters();
         this.splitChar = ",";
-        this.columns = new LinkedHashMap<String, HashMap<String, Object>>() {{
+        this.setColumns(new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Initiation Time", new HashMap<String, Object>() {{
                 put("order", 1);
                 put("startTime", "");
@@ -122,7 +122,7 @@ public class SIPSessions extends Table {
                 });
                 put("compare", "true");
             }});
-        }};
+        }});
     }
 
     //**************************************************************************
@@ -134,7 +134,7 @@ public class SIPSessions extends Table {
 
         if (cellDrill > 0) {
 
-            data.put("columns", this.columns);
+            data.put("columns", this.getColumns());
 
             return Common.getRowFilter(data);
         }

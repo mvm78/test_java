@@ -18,7 +18,7 @@ public class RTPSessions extends Table {
             "plink ptun pmin pmax"
         });
         this.setFilters();
-        this.columns = new LinkedHashMap<String, HashMap<String, Object>>() {{
+        this.setColumns(new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("First Timestamp", new HashMap<String, Object>() {{
                 put("order", 0);
                 put("startTime", "");
@@ -132,7 +132,7 @@ public class RTPSessions extends Table {
                 put("order", 47);
                 put("compare", "true");
             }});
-        }};
+        }});
     }
 
     //**************************************************************************
@@ -140,7 +140,7 @@ public class RTPSessions extends Table {
     @Override
     protected String getRowFilter(Map<String, Object> data) {
 
-        data.put("columns", this.columns);
+        data.put("columns", this.getColumns());
 
         return Common.getRowFilter(data);
     }

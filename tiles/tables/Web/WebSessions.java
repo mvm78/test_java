@@ -18,7 +18,7 @@ public class WebSessions extends Table {
         this.setPrefix("HttpFlow");
         this.setFields();
         this.setFilters();
-        this.columns = new LinkedHashMap<String, HashMap<String, Object>>() {{
+        this.setColumns(new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Start Time", new HashMap<String, Object>() {{
                 put("order", 0);
                 put("startTime", "");
@@ -139,7 +139,7 @@ public class WebSessions extends Table {
                 put("order", 20);
                 put("compare", "number");
             }});
-        }};
+        }});
     }
 
     //**************************************************************************
@@ -147,7 +147,7 @@ public class WebSessions extends Table {
     @Override
     protected String getRowFilter(Map<String, Object> data) {
 
-        data.put("columns", this.columns);
+        data.put("columns", this.getColumns());
 
         return Common.getRowFilter(data);
     }

@@ -33,7 +33,7 @@ public class Tile implements Cloneable {
     private String [] fields;
     private String [] filters;
     private LinkedHashMap<String, HashMap<String, Object>> filterColumns;
-    protected LinkedHashMap<String, HashMap<String, Object>> columns;
+    private LinkedHashMap<String, HashMap<String, Object>> columns;
     protected List<String> cellDrillFilters = new LinkedList<>();
     protected String splitChar = " ";
     protected byte columnIncrement = 1;
@@ -315,6 +315,20 @@ public class Tile implements Cloneable {
 
     //**************************************************************************
 
+    final public LinkedHashMap<String, HashMap<String, Object>> getColumns() {
+
+        return this.columns;
+    }
+
+    //**************************************************************************
+
+    final public void setColumns(LinkedHashMap<String, HashMap<String, Object>> columns) {
+
+        this.columns = columns;
+    }
+
+    //**************************************************************************
+
     @Override
     final public Object clone() throws CloneNotSupportedException {
 
@@ -326,13 +340,6 @@ public class Tile implements Cloneable {
     protected String getRowFilter(Map<String, Object> data) {
 
         return "";
-    }
-
-    //**************************************************************************
-
-    final public LinkedHashMap<String, HashMap<String, Object>> getColumns() {
-
-        return this.columns;
     }
 
     //**************************************************************************

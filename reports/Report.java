@@ -22,8 +22,8 @@ public class Report implements Cloneable {
     protected Map<String, Boolean> skipTiles = new HashMap<>();
     protected String tilesFolder = "";
 
-    private final String beginTime = "15:40:00 02/02/2018";
-    private final String endTime = "15:40:01 02/02/2018";
+    private final String beginTime = "09:00:00 02/06/2018";
+    private final String endTime = "09:01:00 02/06/2018";
     private final String hashKey = "1";
     private final String appliance = "Appliance-PM_Perf";
     private final String pcap = "em1";

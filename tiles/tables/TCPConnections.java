@@ -1,5 +1,7 @@
 package test_java.tiles.tables;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import test_java.tiles.common.Common;
@@ -18,6 +20,8 @@ public class TCPConnections extends Table {
 
         final String instancePrefix = this.getCommon().getPrefix();
         final String instanceWindow = this.getCommon().getWindow();
+        LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
+                this.getCommon().getFilterColumns();
 
         this.setPrefix(instancePrefix);
         this.setWindow(instanceWindow);
@@ -25,7 +29,7 @@ public class TCPConnections extends Table {
             "tcpflags pcid"
         });
         this.setFilters();
-        this.columns = this.getCommon().getFilterColumns();
+        this.setColumns(instanceColumns);
         this.removeFirstItem = true;
     }
 
@@ -34,7 +38,7 @@ public class TCPConnections extends Table {
     @Override
     protected String getRowFilter(Map<String, Object> data) {
 
-        data.put("columns", this.columns);
+        data.put("columns", this.getColumns());
 
         return Common.getRowFilter(data);
     }

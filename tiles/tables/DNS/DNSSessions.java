@@ -17,7 +17,7 @@ public class DNSSessions extends Table {
         this.setPrefix("DnsFlow");
         this.setFields();
         this.setFilters();
-        this.columns = new LinkedHashMap<String, HashMap<String, Object>>() {{
+        this.setColumns(new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Start Time", new HashMap<String, Object>() {{
                 put("order", 0);
                 put("startTime", "");
@@ -99,7 +99,7 @@ public class DNSSessions extends Table {
             put("Unknown", new HashMap<String, Object>() {{
                 put("order", 19);
             }});
-        }};
+        }});
     }
 
     //**************************************************************************
@@ -107,7 +107,7 @@ public class DNSSessions extends Table {
     @Override
     protected String getRowFilter(Map<String, Object> data) {
 
-        data.put("columns", this.columns);
+        data.put("columns", this.getColumns());
 
         return Common.getRowFilter(data);
     }

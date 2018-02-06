@@ -37,7 +37,7 @@ public class DatabaseTopVLAN extends Table {
 
         Report report = (Report)data.get("report");
 
-        data.put("columns", this.columns);
+        data.put("columns", this.getColumns());
 
         String cmd = "/usr/local/mercury/bin/agg" +
                 report.getCmdAppliance() +

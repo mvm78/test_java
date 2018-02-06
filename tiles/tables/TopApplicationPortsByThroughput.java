@@ -21,6 +21,8 @@ public class TopApplicationPortsByThroughput extends Table {
         final String [] instanceFilters = this.getCommon().getFilters();
         final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =
                 this.getCommon().getFilterColumns();
+        LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
+                this.getCommonBy().appendCompareColumns(instanceFilterColumns, 1);
 
         this.setIsSingleLine(true);
         this.setTitle("Top Application Ports by Throughput");
@@ -30,7 +32,7 @@ public class TopApplicationPortsByThroughput extends Table {
         });
         this.setFilters(instanceFilters);
         this.setFilterColumns(instanceFilterColumns);
-        this.columns = this.getCommonBy().appendCompareColumns(instanceFilterColumns, 1);
+        this.setColumns(instanceColumns);
     }
 
     //**************************************************************************
