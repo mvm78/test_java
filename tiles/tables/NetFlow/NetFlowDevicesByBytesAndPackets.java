@@ -13,11 +13,11 @@ public class NetFlowDevicesByBytesAndPackets extends Table {
         final CommonTopDevices commonInstance = new CommonTopDevices();
         final CommonByBytesAndPackets commonByInstance = new CommonByBytesAndPackets();
 
-        this.setCommonData(commonInstance, commonByInstance);
-
         this.setIsSingleLine(true);
         this.setTitle("Netflow - Devices");
         this.setPrefix("NetDist");
+
+        this.setCommonData(commonInstance, commonByInstance);
     }
 
     //**************************************************************************

@@ -12,11 +12,11 @@ public class TopTCPApplicationsByBytes extends Table {
         final CommonTopTCPApplications commonInstance = new CommonTopTCPApplications();
         final CommonByTCPBytes commonByInstance = new CommonByTCPBytes();
 
-        this.setCommonData(commonInstance, commonByInstance);
-
         this.setIsSingleLine(true);
         this.setTitle("Top TCP Applications by Bytes");
         this.setPrefix("TcpAgg flowsegments");
+
+        this.setCommonData(commonInstance, commonByInstance);
     }
 
     //**************************************************************************

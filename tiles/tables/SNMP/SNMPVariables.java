@@ -13,10 +13,10 @@ public class SNMPVariables extends Table {
         final CommonDestinationPorts commonInstance = new CommonDestinationPorts();
         final CommonByBytesAndPackets commonByInstance = new CommonByBytesAndPackets();
 
-        this.setCommonData(commonInstance, commonByInstance);
-
         this.setTitle("SNMP - Variables");
         this.setPrefix("NetDist");
+
+        this.setCommonData(commonInstance, commonByInstance);
     }
 
     //**************************************************************************

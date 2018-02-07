@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import test_java.tiles.Tile;
+import test_java.tiles.common.CommonBy;
 
 public abstract class Chart extends Tile {
 
@@ -14,7 +15,6 @@ public abstract class Chart extends Tile {
     public Chart() {
 
         this.setTileType("charts");
-        this.debug = 2;
     }
 
     //**************************************************************************
@@ -47,15 +47,17 @@ public abstract class Chart extends Tile {
 
     //**************************************************************************
 
-    protected final void setCommonByData() {
+    protected final <T extends CommonBy> void setCommonByData(T commonBy) {
 
+        this.setCommonBy(commonBy);
+
+        final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =
+                new LinkedHashMap<String, HashMap<String, Object>>() {};
         final LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
-                this.getCommonBy().appendCompareColumns(
-                        new LinkedHashMap<String, HashMap<String, Object>>() {}, 1
-                );
+                commonBy.appendCompareColumns(instanceFilterColumns, this.getColumnIncrement());
 
         this.setFields(new String [] {
-            this.getCommonBy().getFields(),
+            commonBy.getFields(),
         });
         this.setFilters();
         this.setColumns(instanceColumns);

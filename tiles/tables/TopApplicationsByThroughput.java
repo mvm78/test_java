@@ -12,11 +12,11 @@ public class TopApplicationsByThroughput extends Table {
         final CommonTopTCPApplications commonInstance = new CommonTopTCPApplications();
         final CommonByThroughput commonByInstance = new CommonByThroughput();
 
-        this.setCommonData(commonInstance, commonByInstance);
-
         this.setIsSingleLine(true);
         this.setTitle("Top Applications by Throughput");
         this.setPrefix("TcpAgg flowsegments");
+
+        this.setCommonData(commonInstance, commonByInstance);
     }
 
     //**************************************************************************

@@ -13,12 +13,12 @@ public class TopSIPCodec extends Table {
         final CommonTopSIPCodec commonInstance = new CommonTopSIPCodec();
         final CommonByCalls commonByInstance = new CommonByCalls();
 
-        this.setCommonData(commonInstance, commonByInstance);
-
         this.setTitle("SIP - Top Codec");
         this.setPrefix("top 0 desc on codec");
         this.setSplitChar(",");
         this.setColumnIncrement(0);
+
+        this.setCommonData(commonInstance, commonByInstance);
     }
 
     //**************************************************************************

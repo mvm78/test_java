@@ -12,10 +12,10 @@ public class IPConversations extends Table {
         final CommonTopHostPairs commonInstance = new CommonTopHostPairs();
         final CommonByBytesAndPackets commonByInstance = new CommonByBytesAndPackets();
 
-        this.setCommonData(commonInstance, commonByInstance);
-
         this.setTitle("IP Conversations");
         this.setPrefix("NetDist");
+
+        this.setCommonData(commonInstance, commonByInstance);
     }
 
     //**************************************************************************

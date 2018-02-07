@@ -10,10 +10,10 @@ public class ThroughputVsGoodput extends Chart {
 
         final CommonByThroughput commonByInstance = new CommonByThroughput();
 
-        this.setCommonBy(commonByInstance);
         this.setTitle("Throughput vs Goodput");
         this.setPrefix("TcpAgg flowsegments");
-        this.setCommonByData();
+
+        this.setCommonByData(commonByInstance);
     }
 
     //**************************************************************************

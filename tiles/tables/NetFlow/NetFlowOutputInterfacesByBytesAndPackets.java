@@ -13,11 +13,11 @@ public class NetFlowOutputInterfacesByBytesAndPackets extends Table {
         final CommonTopInputInterfaces commonInstance = new CommonTopInputInterfaces();
         final CommonByBytesAndPackets commonByInstance = new CommonByBytesAndPackets();
 
-        this.setCommonData(commonInstance, commonByInstance);
-
         this.setIsSingleLine(true);
         this.setTitle("Netflow - Output Interfaces");
         this.setPrefix("NetDist");
+
+        this.setCommonData(commonInstance, commonByInstance);
     }
 
     //**************************************************************************
