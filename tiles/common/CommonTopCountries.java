@@ -8,9 +8,9 @@ public class CommonTopCountries extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"dst_geo"};
+        return new String[] {"dst_geo"};
     }
 
     //**************************************************************************
@@ -21,7 +21,7 @@ public class CommonTopCountries extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Country", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "geo {{value}}",
                 });
             }});

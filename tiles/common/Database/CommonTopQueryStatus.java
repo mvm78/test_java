@@ -9,9 +9,9 @@ public class CommonTopQueryStatus extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"querystatus"};
+        return new String[] {"querystatus"};
     }
 
     //**************************************************************************
@@ -22,10 +22,10 @@ public class CommonTopQueryStatus extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Query Status", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "querystatus \"{{value}}\"",
                 });
-                put("cellDrill", new String [] {});
+                put("cellDrill", new String[] {});
             }});
         }};
     }

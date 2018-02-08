@@ -15,7 +15,7 @@ public class RTPSessions extends Table {
 
         this.setTitle("RTP Sessions");
         this.setPrefix("RtpFlow");
-        this.setFields(new String [] {
+        this.setFields(new String[] {
             "plink ptun pmin pmax"
         });
         this.setFilters();
@@ -38,45 +38,45 @@ public class RTPSessions extends Table {
             }});
             put("Tunnel Id", new HashMap<String, Object>() {{
                 put("order", 13);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "teid {{value}}",
                 });
                 put("compare", "true");
             }});
             put("Source", new HashMap<String, Object>() {{
                 put("order", 19);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "host {{value}}",
                 });
             }});
             put("Destination", new HashMap<String, Object>() {{
                 put("order", 20);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "host {{value}}",
                 });
             }});
             put("Client Port", new HashMap<String, Object>() {{
                 put("order", 21);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "port {{value}}",
                 });
             }});
             put("RTP Destination Port", new HashMap<String, Object>() {{
                 put("order", 22);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "port {{value}}",
                 });
             }});
             put("RTP Synchronization Source", new HashMap<String, Object>() {{
                 put("order", 23);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "ssrc {{value}}",
                 });
                 put("compare", "true");
             }});
             put("RTP Payload Type (Codec)", new HashMap<String, Object>() {{
                 put("order", 24);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "pt \"{{value}}\"",
                 });
                 put("compare", "true");

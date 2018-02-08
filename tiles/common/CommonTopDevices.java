@@ -8,17 +8,17 @@ public class CommonTopDevices extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"device"};
+        return new String[] {"device"};
     }
 
     //**************************************************************************
 
     @Override
-    public String [] getFilters() {
+    public String[] getFilters() {
 
-        return new String [] {};
+        return new String[] {};
     }
 
     //**************************************************************************
@@ -29,10 +29,10 @@ public class CommonTopDevices extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Device", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "device {{value}}",
                 });
-                put("cellDrill", new String [] {});
+                put("cellDrill", new String[] {});
             }});
         }};
     }

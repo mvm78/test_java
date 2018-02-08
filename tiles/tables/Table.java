@@ -31,9 +31,9 @@ public abstract class Table extends Tile {
         this.setCommon(common);
         this.setCommonBy(commonBy);
 
-        final String [] instanceFields = common.getFields().clone();
+        final String[] instanceFields = common.getFields().clone();
         final String commonByFields = commonBy.getFields();
-        final String [] instanceFilters = common.getFilters();
+        final String[] instanceFilters = common.getFilters();
         final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =
                 common.getFilterColumns();
         final LinkedHashMap<String, HashMap<String, Object>> instanceColumns =

@@ -8,9 +8,9 @@ public class CommonDestinationPorts extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"dport"};
+        return new String[] {"dport"};
     }
 
     //**************************************************************************
@@ -21,7 +21,7 @@ public class CommonDestinationPorts extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Destination Port", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "dport {{value}}",
                 });
             }});

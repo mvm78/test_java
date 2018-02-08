@@ -8,9 +8,9 @@ public class CommonDeviceInterface extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"src sport"};
+        return new String[] {"src sport"};
     }
 
     //**************************************************************************
@@ -21,13 +21,13 @@ public class CommonDeviceInterface extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Source", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "src {{value}}",
                 });
             }});
             put("Source Port", new HashMap<String, Object>() {{
                 put("order", 2);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "sport {{value}}",
                 });
             }});

@@ -12,8 +12,8 @@ public class AnomalousTCPSessions extends Report {
         this.setTitle("Anomalous TCP Sessions");
         this.setTilesFolder("AnomalousTCPSessions");
 
-        this.setTileList(new HashMap<String, String []>() {{
-            put("charts", new String [] {
+        this.setTileList(new HashMap<String, String[]>() {{
+            put("charts", new String[] {
                 "UnacknowledgedTCPSessionsTrend",
                 "ServerResetNoBytesTCPSessionsTrend",
                 "ClientResetTCPSessionsTrend",
@@ -23,7 +23,7 @@ public class AnomalousTCPSessions extends Report {
                 "PossibleNetworkIssueTCPSessionsTrend",
                 "PossibleServerOrApplicationIssueTCPSessionsTrend",
             });
-            put("tables", new String [] {
+            put("tables", new String[] {
                 "UnacknowledgedTCPSessions",
                 "ServerResetNoBytesTCPSessions",
                 "ClientResetTCPSessions",
@@ -35,29 +35,29 @@ public class AnomalousTCPSessions extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String []>() {{
-            put("UnacknowledgedTCPSessionsTrend", new String [] {
+        this.setTallyCheck(new HashMap<String, String[]>() {{
+            put("UnacknowledgedTCPSessionsTrend", new String[] {
                 "UnacknowledgedTCPSessions",
             });
-            put("ServerResetNoBytesTCPSessionsTrend", new String [] {
+            put("ServerResetNoBytesTCPSessionsTrend", new String[] {
                 "ServerResetNoBytesTCPSessions",
             });
-            put("ClientResetTCPSessionsTrend", new String [] {
+            put("ClientResetTCPSessionsTrend", new String[] {
                 "ClientResetTCPSessions",
             });
-            put("ShortTCPSessionsTrend", new String [] {
+            put("ShortTCPSessionsTrend", new String[] {
                 "ShortTCPSessions",
             });
-            put("LongTCPSessionsTrend", new String [] {
+            put("LongTCPSessionsTrend", new String[] {
                 "LongTCPSessions",
             });
-            put("HighRetransmissionTCPSessionsTrend", new String [] {
+            put("HighRetransmissionTCPSessionsTrend", new String[] {
                 "HighRetransmissionTCPSessions",
             });
-            put("PossibleNetworkIssueTCPSessionsTrend", new String [] {
+            put("PossibleNetworkIssueTCPSessionsTrend", new String[] {
                 "PossibleNetworkIssueTCPSessions",
             });
-            put("PossibleServerOrApplicationIssueTCPSessionsTrend", new String [] {
+            put("PossibleServerOrApplicationIssueTCPSessionsTrend", new String[] {
                 "PossibleServerOrApplicationIssueTCPSessions",
             });
         }});

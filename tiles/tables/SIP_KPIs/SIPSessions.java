@@ -23,7 +23,7 @@ public class SIPSessions extends Table {
             put("Initiation Time", new HashMap<String, Object>() {{
                 put("order", 1);
                 put("startTime", "");
-                put("filter", new String [] {});
+                put("filter", new String[] {});
             }});
             put("End Time", new HashMap<String, Object>() {{
                 put("order", 7);
@@ -32,7 +32,7 @@ public class SIPSessions extends Table {
             }});
             put("VLAN", new HashMap<String, Object>() {{
                 put("order", 2);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "vlan {{value}}",
                 });
             }});
@@ -46,42 +46,42 @@ public class SIPSessions extends Table {
             }});
             put("Calling Party Number", new HashMap<String, Object>() {{
                 put("order", 13);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "calling_num == \"{{value}}\"",
                 });
                 put("compare", "true");
             }});
             put("Called Party Number", new HashMap<String, Object>() {{
                 put("order", 14);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "called_num == \"{{value}}\"",
                 });
                 put("compare", "true");
             }});
             put("Source", new HashMap<String, Object>() {{
                 put("order", 15);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "host {{value}}",
                 });
                 put("compare", "true");
             }});
             put("Client Port", new HashMap<String, Object>() {{
                 put("order", 16);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "port {{value}}",
                 });
                 put("compare", "true");
             }});
             put("Destination", new HashMap<String, Object>() {{
                 put("order", 17);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "host {{value}}",
                 });
                 put("compare", "true");
             }});
             put("Client Port", new HashMap<String, Object>() {{
                 put("order", 18);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "app_port {{value}}",
                 });
                 put("compare", "true");
@@ -92,7 +92,7 @@ public class SIPSessions extends Table {
             }});
             put("Connection Type", new HashMap<String, Object>() {{
                 put("order", 21); // may need to swap with Reason Header
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "connectionType == \"{{value}}\"",
                 });
                 put("compare", "true");
@@ -104,21 +104,21 @@ public class SIPSessions extends Table {
             }});
             put("Release Cause Code", new HashMap<String, Object>() {{
                 put("order", 23);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "rcode \"{{value}}\"",
                 });
                 put("compare", "true");
             }});
             put("Calling Party User Agent", new HashMap<String, Object>() {{
                 put("order", 30);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "callingPartyProductName == \"{{value}}\"",
                 });
                 put("compare", "true");
             }});
             put("Called Party User Agent", new HashMap<String, Object>() {{
                 put("order", 32);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "calledPartyProductName == \"{{value}}\"",
                 });
                 put("compare", "true");
@@ -140,7 +140,7 @@ public class SIPSessions extends Table {
             return Common.getRowFilter(data);
         }
 
-        String [] split = (String [])data.get("split");
+        String[] split = (String[])data.get("split");
         byte blocksStart = 49;
         byte blockLength = 43;
 

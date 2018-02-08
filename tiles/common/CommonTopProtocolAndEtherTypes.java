@@ -8,9 +8,9 @@ public class CommonTopProtocolAndEtherTypes extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"proto type"};
+        return new String[] {"proto type"};
     }
 
     //**************************************************************************
@@ -21,17 +21,17 @@ public class CommonTopProtocolAndEtherTypes extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Protocol", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "proto {{value}}",
                 });
-                put("cellDrill", new String [] {});
+                put("cellDrill", new String[] {});
             }});
             put("Ether Type", new HashMap<String, Object>() {{
                 put("order", 2);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "type {{value}}",
                 });
-                put("cellDrill", new String [] {});
+                put("cellDrill", new String[] {});
             }});
         }};
     }

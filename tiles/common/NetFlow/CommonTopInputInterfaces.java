@@ -9,9 +9,9 @@ public class CommonTopInputInterfaces extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"dlci device"};
+        return new String[] {"dlci device"};
     }
 
     //**************************************************************************
@@ -22,17 +22,17 @@ public class CommonTopInputInterfaces extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Input Device", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "device {{value}}",
                 });
-                put("cellDrill", new String [] {});
+                put("cellDrill", new String[] {});
             }});
             put("Input Interface", new HashMap<String, Object>() {{
                 put("order", 2);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "dlci {{value}}",
                 });
-                put("cellDrill", new String [] {});
+                put("cellDrill", new String[] {});
             }});
         }};
     }

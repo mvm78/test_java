@@ -8,9 +8,9 @@ public class CommonTopApplicationsHostPairsAndPorts extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {
+        return new String[] {
             "src dst sport dport app_port",
             "src dst sport dport apptype pcname",
         };
@@ -19,9 +19,9 @@ public class CommonTopApplicationsHostPairsAndPorts extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFilters() {
+    public String[] getFilters() {
 
-        return new String [] {
+        return new String[] {
             "apptype none",
             "not apptype none"
         };
@@ -35,35 +35,35 @@ public class CommonTopApplicationsHostPairsAndPorts extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Source", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "host {{value}}",
                     "host {{value}}",
                 });
             }});
             put("Destination", new HashMap<String, Object>() {{
                 put("order", 2);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "host {{value}}",
                     "host {{value}}",
                 });
             }});
             put("Source Port", new HashMap<String, Object>() {{
                 put("order", 3);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "port {{value}}",
                     "port {{value}}",
                 });
             }});
             put("Destination Port", new HashMap<String, Object>() {{
                 put("order", 4);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "app_port {{value}}",
                     "app_port {{value}}",
                 });
             }});
             put("Application", new HashMap<String, Object>() {{
                 put("order", 5);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "apptype none and app_port {{value}}",
                     "apptype {{value}}",
                 });

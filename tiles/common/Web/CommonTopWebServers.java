@@ -9,9 +9,9 @@ public class CommonTopWebServers extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"hosthttp dst"};
+        return new String[] {"hosthttp dst"};
     }
 
     //**************************************************************************
@@ -22,13 +22,13 @@ public class CommonTopWebServers extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Host", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "hosthttp \"{{value}}\"",
                 });
             }});
             put("Destination", new HashMap<String, Object>() {{
                 put("order", 2);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "host {{value}}",
                 });
             }});

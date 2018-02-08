@@ -18,7 +18,7 @@ public class AnomalousTCPSessionsTrend extends Chart {
         this.setIsSingleLine(true);
 
         final String instancePrefix = this.getCommon().getPrefix();
-        final String [] instanceFilters = this.getCommon().getFilters();
+        final String[] instanceFilters = this.getCommon().getFilters();
 
         this.setPrefix(instancePrefix);
         this.setFields();

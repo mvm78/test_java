@@ -5,17 +5,17 @@ public class CommonTopTCPApplicationPorts extends CommonTopApplicationPorts {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"dport"};
+        return new String[] {"dport"};
     }
 
     //**************************************************************************
 
     @Override
-    public String [] getFilters() {
+    public String[] getFilters() {
 
-        return new String [] {};
+        return new String[] {};
     }
 
     //**************************************************************************

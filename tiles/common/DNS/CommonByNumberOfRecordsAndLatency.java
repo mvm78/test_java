@@ -27,9 +27,9 @@ public class CommonByNumberOfRecordsAndLatency extends CommonBy {
     //**************************************************************************
 
     @Override
-    public String [] getNoTallyColumns() {
+    public String[] getNoTallyColumns() {
 
-        return new String [] {"DNS Latency"};
+        return new String[] {"DNS Latency"};
     }
 
     //**************************************************************************

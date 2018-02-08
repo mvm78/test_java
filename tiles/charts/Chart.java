@@ -56,7 +56,7 @@ public abstract class Chart extends Tile {
         final LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
                 commonBy.appendCompareColumns(instanceFilterColumns, this.getColumnIncrement());
 
-        this.setFields(new String [] {
+        this.setFields(new String[] {
             commonBy.getFields(),
         });
         this.setFilters();

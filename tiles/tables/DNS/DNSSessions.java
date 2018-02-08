@@ -53,25 +53,25 @@ public class DNSSessions extends Table {
             }});
             put("Client", new HashMap<String, Object>() {{
                 put("order", 9);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "host {{value}}",
                 });
             }});
             put("Destination", new HashMap<String, Object>() {{
                 put("order", 10);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "host {{value}}",
                 });
             }});
             put("Client Port", new HashMap<String, Object>() {{
                 put("order", 11);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "port {{value}}",
                 });
             }});
             put("Server Port", new HashMap<String, Object>() {{
                 put("order", 12);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "app_port {{value}}",
                 });
             }});

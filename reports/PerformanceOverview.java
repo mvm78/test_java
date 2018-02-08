@@ -11,12 +11,12 @@ public class PerformanceOverview extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg");
         this.setTitle("Performance Overview");
 
-        this.setTileList(new HashMap<String, String []>() {{
-            put("charts", new String [] {
+        this.setTileList(new HashMap<String, String[]>() {{
+            put("charts", new String[] {
                 "BitRateAndPacketRate",
                 "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
             });
-            put("tables", new String [] {
+            put("tables", new String[] {
 //                "Flows",        missing on 10.30.165.20
                 "TopApplicationsByBytesAndPackets",
                 "TopApplicationPortsByBytesAndPackets",
@@ -31,13 +31,13 @@ public class PerformanceOverview extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String []>() {{
-            put("TopApplicationPortsByBytesAndPackets", new String [] {
+        this.setTallyCheck(new HashMap<String, String[]>() {{
+            put("TopApplicationPortsByBytesAndPackets", new String[] {
                 "BitRateAndPacketRate",
                 "TopSourcesByBytesAndPackets",
                 "IPConversations"
             });
-            put("TopApplicationPortsByResponseTimeAndRetransmittedBytes", new String [] {
+            put("TopApplicationPortsByResponseTimeAndRetransmittedBytes", new String[] {
                 "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
                 "TopHostPairsByResponseTimeAndRetransmittedBytes",
             });

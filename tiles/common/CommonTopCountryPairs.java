@@ -8,17 +8,17 @@ public class CommonTopCountryPairs extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"src_geo dst_geo"};
+        return new String[] {"src_geo dst_geo"};
     }
 
     //**************************************************************************
 
     @Override
-    public String [] getFilters() {
+    public String[] getFilters() {
 
-        return new String [] {};
+        return new String[] {};
     }
 
     //**************************************************************************
@@ -29,13 +29,13 @@ public class CommonTopCountryPairs extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Source Country", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "geo {{value}}",
                 });
             }});
             put("Destination Country", new HashMap<String, Object>() {{
                 put("order", 2);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "geo {{value}}",
                 });
             }});

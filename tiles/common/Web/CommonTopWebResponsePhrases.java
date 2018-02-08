@@ -9,9 +9,9 @@ public class CommonTopWebResponsePhrases extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"reason method"};
+        return new String[] {"reason method"};
     }
 
     //**************************************************************************
@@ -22,13 +22,13 @@ public class CommonTopWebResponsePhrases extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Request Method", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "method {{value}}",
                 });
             }});
             put("Response Phrase", new HashMap<String, Object>() {{
                 put("order", 2);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "reason \"{{value}}\"",
                 });
             }});

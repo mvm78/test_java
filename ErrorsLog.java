@@ -13,7 +13,7 @@ import test_java.common.Consts;
 
 public class ErrorsLog {
 
-    public static final String [] LOG_FILES = {
+    public static final String[] LOG_FILES = {
         "errors.log",
         "tallyErrors.log"
     };

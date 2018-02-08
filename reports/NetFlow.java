@@ -11,8 +11,8 @@ public class NetFlow extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg");
         this.setTitle("NetFlow");
 
-        this.setTileList(new HashMap<String, String []>() {{
-            put("tables", new String [] {
+        this.setTileList(new HashMap<String, String[]>() {{
+            put("tables", new String[] {
                 "NetFlow.NetFlowDevicesByBytesAndPackets",
                 "NetFlow.NetFlowInputInterfacesByBytesAndPackets",
                 "NetFlow.NetFlowOutputInterfacesByBytesAndPackets",
@@ -26,8 +26,8 @@ public class NetFlow extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String []>() {{
-            put("NetFlowDevicesByBytesAndPackets", new String [] {
+        this.setTallyCheck(new HashMap<String, String[]>() {{
+            put("NetFlowDevicesByBytesAndPackets", new String[] {
                 "NetFlowInputInterfacesByBytesAndPackets",
                 "NetFlowOutputInterfacesByBytesAndPackets",
                 "NetFlowInterfacePairsByBytesAndPackets",

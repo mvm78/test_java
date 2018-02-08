@@ -15,7 +15,7 @@ public class CommonTopSIPCallingNumbers extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Calling Party Number", new HashMap<String, Object>() {{
                 put("order", 0);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "calling_num == \"{{value}}\"",
                 });
             }});

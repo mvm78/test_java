@@ -29,13 +29,13 @@ public class CommonTCPSessions extends Common {
             }});
             put("Client", new HashMap<String, Object>() {{
                 put("order", 2);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "host {{value}}",
                 });
             }});
             put("Client Port", new HashMap<String, Object>() {{
                 put("order", 3);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "port {{value}}",
                 });
             }});
@@ -45,16 +45,16 @@ public class CommonTCPSessions extends Common {
             }});
             put("Server", new HashMap<String, Object>() {{
                 put("order", 6);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "host {{value}}",
                 });
             }});
             put("Server Port", new HashMap<String, Object>() {{
                 put("order", 7);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "app_port {{value}}",
                 });
-                put("cellDrill", new String [] {});
+                put("cellDrill", new String[] {});
             }});
             put("Server Bytes", new HashMap<String, Object>() {{
                 put("order", 9);

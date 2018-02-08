@@ -9,9 +9,9 @@ public class CommonTopTypes extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"dbtype"};
+        return new String[] {"dbtype"};
     }
 
     //**************************************************************************
@@ -22,10 +22,10 @@ public class CommonTopTypes extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Type", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "dbtype \"{{value}}\"",
                 });
-                put("cellDrill", new String [] {});
+                put("cellDrill", new String[] {});
             }});
         }};
     }

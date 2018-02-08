@@ -15,7 +15,7 @@ public class CommonTopSIPVLAN extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("VLAN", new HashMap<String, Object>() {{
                 put("order", 0);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "vlan {{value}}",
                 });
             }});

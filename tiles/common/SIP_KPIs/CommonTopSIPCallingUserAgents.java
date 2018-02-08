@@ -15,7 +15,7 @@ public class CommonTopSIPCallingUserAgents extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Calling Party User Agent", new HashMap<String, Object>() {{
                 put("order", 0);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "callingPartyProductName == \"{{value}}\"",
                 });
             }});

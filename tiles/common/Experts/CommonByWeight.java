@@ -27,9 +27,9 @@ public class CommonByWeight extends CommonBy {
     //**************************************************************************
 
     @Override
-    public String [] getNoTallyColumns() {
+    public String[] getNoTallyColumns() {
 
-        return new String [] {
+        return new String[] {
             "HTTP Network Weight",
             "HTTP Application Weight",
         };

@@ -8,9 +8,9 @@ public class CommonTopMACAddressPairs extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"macs macd"};
+        return new String[] {"macs macd"};
     }
 
     //**************************************************************************
@@ -21,13 +21,13 @@ public class CommonTopMACAddressPairs extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("MAC Source", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "macs {{value}}",
                 });
             }});
             put("MAC Destination", new HashMap<String, Object>() {{
                 put("order", 2);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "macd {{value}}",
                 });
             }});

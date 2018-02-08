@@ -12,8 +12,8 @@ public class FlowBasedRTP_KPIs extends Report {
         this.setTitle("Media Flow");
         this.setTilesFolder("MediaFlow");
 
-        this.setTileList(new HashMap<String, String []>() {{
-            put("tables", new String [] {
+        this.setTileList(new HashMap<String, String[]>() {{
+            put("tables", new String[] {
                 "MediaFlow",
             });
         }});

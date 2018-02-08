@@ -41,9 +41,9 @@ public abstract class Common {
 
     //**************************************************************************
 
-    public String [] getFields() {
+    public String[] getFields() {
 
-        return new String [] {""};
+        return new String[] {""};
     }
 
     //**************************************************************************
@@ -55,9 +55,9 @@ public abstract class Common {
 
     //**************************************************************************
 
-    public String [] getFilters() {
+    public String[] getFilters() {
 
-        return new String [] {};
+        return new String[] {};
     }
 
     //**************************************************************************
@@ -75,13 +75,13 @@ public abstract class Common {
     public static String getRowFilter(Map<String, Object> data) {
 
         Map<String, HashMap<String, Object>> columns =
-                (Map<String, HashMap<String, Object>>)((LinkedHashMap<String, HashMap<String, Object>>)data.get("columns")).clone();
+                (Map)((LinkedHashMap)data.get("columns")).clone();
         String filterColumn = (String)data.get("filterColumn");
         String value = (String)data.get("value");
         int count = (int)data.get("filterCount");
         int cellDrill = (int)data.get("cellDrill");
 
-        Map<String, Object> column = (HashMap<String, Object>)columns.get(filterColumn);
+        Map<String, Object> column = (HashMap)columns.get(filterColumn);
 
         String escaped;
 
@@ -111,10 +111,10 @@ public abstract class Common {
             }
         }
 
-        String type = cellDrill > 0 && ((String [])column.get("cellDrill")).length > 0 ?
+        String type = cellDrill > 0 && ((String[])column.get("cellDrill")).length > 0 ?
                 "cellDrill" : "filter";
 
-        String [] filters = (String [])column.get(type);
+        String[] filters = (String[])column.get(type);
 
         return filters[count].replace("{{value}}", escaped);
     }

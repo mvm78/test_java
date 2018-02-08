@@ -8,9 +8,9 @@ public class CommonTopProtocols extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"proto"};
+        return new String[] {"proto"};
     }
 
     //**************************************************************************
@@ -21,7 +21,7 @@ public class CommonTopProtocols extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Protocol", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "proto {{value}}",
                 });
             }});

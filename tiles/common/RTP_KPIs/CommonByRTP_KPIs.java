@@ -42,9 +42,9 @@ public class CommonByRTP_KPIs extends CommonBy {
     //**************************************************************************
 
     @Override
-    public String [] getNoTallyColumns() {
+    public String[] getNoTallyColumns() {
 
-        return new String [] {
+        return new String[] {
             "Packet Loss Percentage",
             "Average Jitter",
             "Maximum Interarrival Time Jitter",

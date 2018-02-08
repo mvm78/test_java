@@ -15,7 +15,7 @@ public class CommonTopSIPStatusCodes extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("SIP Status Code", new HashMap<String, Object>() {{
                 put("order", 0);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "error_code == \"{{value}}\"",
                 });
             }});

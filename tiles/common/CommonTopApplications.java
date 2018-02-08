@@ -8,9 +8,9 @@ public class CommonTopApplications extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {
+        return new String[] {
             "app_port",
             "apptype pcname",
         };
@@ -19,9 +19,9 @@ public class CommonTopApplications extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFilters() {
+    public String[] getFilters() {
 
-        return new String [] {
+        return new String[] {
             "apptype none",
             "not apptype none",
         };
@@ -35,7 +35,7 @@ public class CommonTopApplications extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Application", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "apptype none and app_port {{value}}",
                     "apptype {{value}}",
                 });

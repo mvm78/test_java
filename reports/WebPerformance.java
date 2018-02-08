@@ -13,8 +13,8 @@ public class WebPerformance extends Report {
         this.setTitle("Web Performance");
         this.setTilesFolder("Web");
 
-        this.setTileList(new HashMap<String, String []>() {{
-            put("tables", new String [] {
+        this.setTileList(new HashMap<String, String[]>() {{
+            put("tables", new String[] {
                 "TopWebServers",
                 "TopWebResponsePhrases",
                 "TopWebUserAgents",
@@ -22,8 +22,8 @@ public class WebPerformance extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String []>() {{
-            put("TopWebServers", new String [] {
+        this.setTallyCheck(new HashMap<String, String[]>() {{
+            put("TopWebServers", new String[] {
                 "TopWebResponsePhrases",
                 "TopWebUserAgents",
             });

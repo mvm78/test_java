@@ -29,9 +29,9 @@ public class CommonByResponseTimeAndRetransmittedBytes extends CommonBy {
     //**************************************************************************
 
     @Override
-    public String [] getNoTallyColumns() {
+    public String[] getNoTallyColumns() {
 
-        return new String [] {
+        return new String[] {
             "Network Time",
             "Response Time",
         };

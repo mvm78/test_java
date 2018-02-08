@@ -14,16 +14,16 @@ import test_java.common.Util;
 
 public class Report implements Cloneable {
 
-    private final String beginTime = "12:00:00 02/06/2018";
-    private final String endTime = "12:00:20 02/06/2018";
+    private final String beginTime = "09:00:00 02/08/2018";
+    private final String endTime = "09:00:20 02/08/2018";
     private final String hashKey = "1";
     private final String appliance = "Appliance-PM_Perf";
     private final String pcap = "em1";
     private final int maxDrillLevel = 1;
 
     private String title;
-    private Map<String, String []> tileList;
-    private Map<String, String []> tallyCheck;
+    private Map<String, String[]> tileList;
+    private Map<String, String[]> tallyCheck;
     private Map<String, Boolean> skipTiles = new HashMap<>();
     private String tilesFolder = "";
     private String appPath;
@@ -54,35 +54,35 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    private Map<String, String []> getTileList() {
+    private Map<String, String[]> getTileList() {
 
         return this.tileList;
     }
 
     //**************************************************************************
 
-    final public String [] getTilesByType(String type) {
+    final public String[] getTilesByType(String type) {
 
         return this.getTileList().get(type);
     }
 
     //**************************************************************************
 
-    final protected void setTileList(HashMap<String, String []> tileList) {
+    final protected void setTileList(HashMap<String, String[]> tileList) {
 
         this.tileList = tileList;
     }
 
     //**************************************************************************
 
-    private Map<String, String []> getTallyCheck() {
+    private Map<String, String[]> getTallyCheck() {
 
         return this.tallyCheck;
     }
 
     //**************************************************************************
 
-    final protected void setTallyCheck(HashMap<String, String []> tallyCheck) {
+    final protected void setTallyCheck(HashMap<String, String[]> tallyCheck) {
 
         this.tallyCheck = tallyCheck;
     }
@@ -355,7 +355,7 @@ public class Report implements Cloneable {
                     AtomicReference<String> caption = new AtomicReference<>(text);
                     AtomicBoolean isCompareToPrined = new AtomicBoolean(false);
 
-                    String [] checkTile = this.getTallyCheck().get(tile);
+                    String[] checkTile = this.getTallyCheck().get(tile);
 
                     Arrays.stream(checkTile)
                             .filter(item -> results.get(item) != null)
@@ -418,7 +418,7 @@ public class Report implements Cloneable {
         this.getTileList().keySet().parallelStream()
                 .forEach(type -> {
 
-                    String [] typeTiles = this.getTilesByType(type);
+                    String[] typeTiles = this.getTilesByType(type);
 
                     Arrays.stream(typeTiles).parallel()
                             .filter(tile -> this.getSkipTile(tile) == null)

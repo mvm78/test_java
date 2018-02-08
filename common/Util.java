@@ -14,11 +14,10 @@ public class Util {
     //**************************************************************************
 
     @SuppressWarnings("unchecked")
-    public static void debugOutput(Map<String, Object> data) {
+    public static void debugOutput(final Map<String, Object> data) {
 
         final String finalCmd = (String)data.get("finalCmd");
-        final List<String []> lines =
-                (List<String []>)((ArrayList<String []>)data.get("lines")).clone();
+        final List<String[]> lines = (List)((ArrayList)data.get("lines")).clone();
         final String parentLine = (String)data.get("parentLine");
         final boolean skipCompare = data.get("skipCompare") == null ? true :
                 (boolean)data.get("skipCompare");
@@ -68,7 +67,7 @@ public class Util {
 
     //**************************************************************************
 
-    private static String getLineColor(String line, String parentLine) {
+    private static String getLineColor(final String line, final String parentLine) {
 
         final String color = parentLine.isEmpty() ? Consts.MAGENTA : Consts.BLUE;
         boolean isEqual = parentLine.equals(line);
@@ -89,7 +88,7 @@ public class Util {
 
     //**************************************************************************
 
-    public static <T> String getPrettyNumber(T value) {
+    public static <T> String getPrettyNumber(final T value) {
 
         final String stringValue = String.valueOf(value);
 
@@ -113,14 +112,14 @@ public class Util {
 
     //**************************************************************************
 
-    public static boolean isNumeric(String value) {
+    public static boolean isNumeric(final String value) {
 
         return value != null && value.matches("[-+]?\\d*\\.?\\d+");
     }
 
     //**************************************************************************
 
-    public static String getTimeStamp(String dateTime) {
+    public static String getTimeStamp(final String dateTime) {
 
         final Map<String, Long> parsedTime = Util.getParsedTime(dateTime);
 
@@ -134,13 +133,13 @@ public class Util {
 
     //**************************************************************************
 
-    private static Map<String, Long> getParsedTime(String dateTime) {
+    private static Map<String, Long> getParsedTime(final String dateTime) {
 
         Long unixValue = 0L;
 
-        final String [] splitDateTime = dateTime.split("\\s+");
+        final String[] splitDateTime = dateTime.split("\\s+");
 
-        final String [] splitTime = splitDateTime[0].split("\\.");
+        final String[] splitTime = splitDateTime[0].split("\\.");
 
         final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy");
 
@@ -164,7 +163,7 @@ public class Util {
 
     //**************************************************************************
 
-    public static String getTimeInterval(String beginTime, String endTime) {
+    public static String getTimeInterval(final String beginTime, final String endTime) {
 
         final Map<String, Long> begin = Util.getParsedTime(beginTime);
         final Map<String, Long> end = Util.getParsedTime(endTime);
@@ -179,7 +178,7 @@ public class Util {
 
     //**************************************************************************
 
-    public static String [] split(String line, String splitChar) {
+    public static String[] split(final String line, final String splitChar) {
 
         String splitExpr;
 
@@ -210,9 +209,9 @@ public class Util {
 
     //**************************************************************************
 
-    public static boolean getBufferLineFilter(String [] line) {
+    public static boolean getBufferLineFilter(final String[] line) {
 
-        final String [] ignore = new String [] {"#I;", "window", "t=Refresh;"};
+        final String[] ignore = new String[] {"#I;", "window", "t=Refresh;"};
 
         return ! Arrays.stream(ignore).parallel()
                 .anyMatch(item -> item.equals(line[0]));
@@ -220,7 +219,7 @@ public class Util {
 
     //**************************************************************************
 
-    public static String getBase64(String value) {
+    public static String getBase64(final String value) {
 
         final byte[] authBytes = value.getBytes(StandardCharsets.UTF_8);
 
@@ -229,9 +228,9 @@ public class Util {
 
     //**************************************************************************
 
-    public static String getFromTimestamp(String value) {
+    public static String getFromTimestamp(final String value) {
 
-        final String [] splitTime = value.split("\\.");
+        final String[] splitTime = value.split("\\.");
 
         final Date date = new Date(Long.valueOf(splitTime[0]) * 1000L);
         final SimpleDateFormat textFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
@@ -240,7 +239,7 @@ public class Util {
 
         dateTime += splitTime.length > 1 ? "." + splitTime[1].substring(0, 6) : "";
 
-        final String [] splitDateTime = dateTime.split("\\s+");
+        final String[] splitDateTime = dateTime.split("\\s+");
 
         return splitDateTime[1] + " " + splitDateTime[0];
     }
@@ -249,27 +248,32 @@ public class Util {
 
     public static void removeLogs() {
 
-        for (byte count=0; count<ErrorsLog.LOG_FILES.length; count++) {
+        final File[] files = Arrays.stream(ErrorsLog.LOG_FILES).parallel()
+                .map(file -> new File(Consts.FOLDER + file))
+                .toArray(File[]::new);
 
-            final File logFile = new File(ErrorsLog.LOG_FILES[count]);
-
-            if (logFile.exists()) {
-                logFile.delete();
-            }
-        }
+        Util.removeFiles(files);
     }
 
     //**************************************************************************
 
     public static void removeShellFiles() {
 
-        final File folder = new File("/home/vcr/test_java/");
+        final File folder = new File(Consts.FOLDER);
 
         final File[] files = folder.listFiles((final File dontneed, final String name) -> {
             return name.startsWith("run_query");
         });
 
+        Util.removeFiles(files);
+    }
+
+    //**************************************************************************
+
+    private static void removeFiles(final File[] files) {
+
         Arrays.stream(files).parallel()
+                .filter(file -> file.exists() && ! file.isDirectory())
                 .filter(file -> ! file.delete())
                 .forEach(file -> {
                     System.err.println("Can't remove " + file.getAbsolutePath());

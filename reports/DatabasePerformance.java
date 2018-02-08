@@ -12,11 +12,11 @@ public class DatabasePerformance extends Report {
         this.setTitle("Database Performance");
         this.setTilesFolder("Database");
 
-        this.setTileList(new HashMap<String, String []>() {{
-            put("charts", new String [] {
+        this.setTileList(new HashMap<String, String[]>() {{
+            put("charts", new String[] {
                 "DatabaseLatencyAndRecordsOverTime",
             });
-            put("tables", new String [] {
+            put("tables", new String[] {
                 "DatabaseTopQueryTypes",
                 "DatabaseTopQueryStatus",
                 "DatabaseTopServers",
@@ -27,8 +27,8 @@ public class DatabasePerformance extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String []>() {{
-            put("DatabaseLatencyAndRecordsOverTime", new String [] {
+        this.setTallyCheck(new HashMap<String, String[]>() {{
+            put("DatabaseLatencyAndRecordsOverTime", new String[] {
                 "DatabaseTopQueryTypes",
                 "DatabaseTopQueryStatus",
                 "DatabaseTopServers",

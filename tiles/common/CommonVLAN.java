@@ -8,9 +8,9 @@ public class CommonVLAN extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"vlan"};
+        return new String[] {"vlan"};
     }
 
     //**************************************************************************
@@ -21,7 +21,7 @@ public class CommonVLAN extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("VLAN", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "vlan {{value}}",
                 });
             }});

@@ -20,8 +20,8 @@ public class AnomalousTCPSessions extends Table {
 
         final String instancePrefix = this.getCommon().getPrefix();
         final String instanceWindow = this.getCommon().getWindow();
-        final String [] instanceFields = this.getCommon().getFields();
-        final String [] instanceFilters = this.getCommon().getFilters();
+        final String[] instanceFields = this.getCommon().getFields();
+        final String[] instanceFilters = this.getCommon().getFilters();
         final LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
                 this.getCommon().getFilterColumns();
 

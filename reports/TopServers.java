@@ -11,13 +11,13 @@ public class TopServers extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg");
         this.setTitle("Top Servers");
 
-        this.setTileList(new HashMap<String, String []>() {{
-            put("charts", new String [] {
+        this.setTileList(new HashMap<String, String[]>() {{
+            put("charts", new String[] {
                 "BitRateAndPacketRate",
                 "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
                 "ThroughputVsGoodput",
             });
-            put("tables", new String [] {
+            put("tables", new String[] {
                 "TopSourcesByBytesAndPackets",
                 "TopTCPServersByBytes",
                 "TopServersByResponseTimeAndRetransmittedBytes",
@@ -25,12 +25,12 @@ public class TopServers extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String []>() {{
-            put("TopTCPServersByBytes", new String [] {
+        this.setTallyCheck(new HashMap<String, String[]>() {{
+            put("TopTCPServersByBytes", new String[] {
                 "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
                 "TopServersByResponseTimeAndRetransmittedBytes",
             });
-            put("TopServersByThroughput", new String [] {
+            put("TopServersByThroughput", new String[] {
                 "ThroughputVsGoodput",
             });
         }});

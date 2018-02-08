@@ -8,9 +8,9 @@ public class CommonTOS extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"tos diffserv"};
+        return new String[] {"tos diffserv"};
     }
 
     //**************************************************************************
@@ -21,13 +21,13 @@ public class CommonTOS extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Type of Service", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "tos {{value}}",
                 });
             }});
             put("Differentiated Services", new HashMap<String, Object>() {{
                 put("order", 2);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "diffserv {{value}}",
                 });
             }});

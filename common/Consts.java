@@ -2,6 +2,8 @@ package test_java.common;
 
 public final class Consts  {
 
+    public static final String FOLDER = "/home/vcr/test_java/";
+
     public static final String RED = (char)27 + "[31m";
     public static final String BRIGHT_RED = (char)27 + "[31;1m";
     public static final String DARK_RED = (char)27 + "[31;1;2m";

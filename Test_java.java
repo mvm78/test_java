@@ -12,7 +12,7 @@ public class Test_java {
         Util.removeLogs();
         Util.removeShellFiles();
 
-        String [] reports = {
+        String[] reports = {
             "PerformanceOverview",
             "TopApplications",
             "TopApplicationPorts",

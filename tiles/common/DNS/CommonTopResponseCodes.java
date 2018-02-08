@@ -10,9 +10,9 @@ public class CommonTopResponseCodes extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"rcode"};
+        return new String[] {"rcode"};
     }
 
     //**************************************************************************
@@ -23,10 +23,10 @@ public class CommonTopResponseCodes extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("DNS Response Code", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "dns.rcode \"{{value}}\"",
                 });
-                put("cellDrill", new String [] {});
+                put("cellDrill", new String[] {});
             }});
         }};
     }

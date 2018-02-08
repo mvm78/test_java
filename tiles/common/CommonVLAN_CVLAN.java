@@ -8,9 +8,9 @@ public class CommonVLAN_CVLAN extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"vlan cvlan"};
+        return new String[] {"vlan cvlan"};
     }
 
     //**************************************************************************
@@ -21,13 +21,13 @@ public class CommonVLAN_CVLAN extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("VLAN", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "vlan {{value}}",
                 });
             }});
             put("Inner VLAN", new HashMap<String, Object>() {{
                 put("order", 2);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "cvlan {{value}}",
                 });
             }});

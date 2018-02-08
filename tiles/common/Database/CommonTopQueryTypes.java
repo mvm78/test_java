@@ -9,9 +9,9 @@ public class CommonTopQueryTypes extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"querytype"};
+        return new String[] {"querytype"};
     }
 
     //**************************************************************************
@@ -22,10 +22,10 @@ public class CommonTopQueryTypes extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Query Type", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "querytype \"{{value}}\"",
                 });
-                put("cellDrill", new String [] {});
+                put("cellDrill", new String[] {});
             }});
         }};
     }

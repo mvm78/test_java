@@ -13,9 +13,9 @@ public abstract class CommonBy {
 
     //**************************************************************************
 
-    public String [] getNoTallyColumns() {
+    public String[] getNoTallyColumns() {
 
-        return new String [] {};
+        return new String[] {};
     }
 
     //**************************************************************************
@@ -25,7 +25,7 @@ public abstract class CommonBy {
             int columnIncrement
     ) {
 
-        String [] noTallyColumns = this.getNoTallyColumns();
+        String[] noTallyColumns = this.getNoTallyColumns();
 
         List noTally = Arrays.asList(noTallyColumns);
 

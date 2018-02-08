@@ -28,9 +28,9 @@ public class CommonByNumberOfTransactionsBytesAndTransactionLatency extends Comm
     //**************************************************************************
 
     @Override
-    public String [] getNoTallyColumns() {
+    public String[] getNoTallyColumns() {
 
-        return new String [] {"Transaction Latency"};
+        return new String[] {"Transaction Latency"};
     }
 
     //**************************************************************************

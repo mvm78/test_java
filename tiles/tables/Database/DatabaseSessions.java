@@ -29,25 +29,25 @@ public class DatabaseSessions extends Table {
             }});
             put("Source", new HashMap<String, Object>() {{
                 put("order", 2);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "host {{value}}",
                 });
             }});
             put("Destination", new HashMap<String, Object>() {{
                 put("order", 3);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "host {{value}}",
                 });
             }});
             put("Client Port", new HashMap<String, Object>() {{
                 put("order", 4);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "port {{value}}",
                 });
             }});
             put("Server Port", new HashMap<String, Object>() {{
                 put("order", 5);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "app_port {{value}}",
                 });
             }});
@@ -59,21 +59,21 @@ public class DatabaseSessions extends Table {
             }});
             put("Query Type", new HashMap<String, Object>() {{
                 put("order", 8);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "querytype \"{{value}}\"",
                 });
                 put("compare", "true");
             }});
             put("Query Status", new HashMap<String, Object>() {{
                 put("order", 9);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "querystatus \"{{value}}\""
                 });
                 put("compare", "true");
             }});
             put("Query", new HashMap<String, Object>() {{
                 put("order", 10);
-                put("cellDrill", new String [] {
+                put("cellDrill", new String[] {
                     "query \"{{value}}\"",
                 });
                 put("compare", "true");

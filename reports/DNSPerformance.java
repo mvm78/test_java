@@ -12,11 +12,11 @@ public class DNSPerformance extends Report {
         this.setTitle("DNS Performance");
         this.setTilesFolder("DNS");
 
-        this.setTileList(new HashMap<String, String []>() {{
-            put("charts", new String [] {
+        this.setTileList(new HashMap<String, String[]>() {{
+            put("charts", new String[] {
                 "DNSRateAndLatency",
             });
-            put("tables", new String [] {
+            put("tables", new String[] {
                 "TopDNSRequestTypes",
                 "TopDNSResponses",
                 "TopDNSServers",
@@ -25,8 +25,8 @@ public class DNSPerformance extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String []>() {{
-            put("TopDNSRequestTypes", new String [] {
+        this.setTallyCheck(new HashMap<String, String[]>() {{
+            put("TopDNSRequestTypes", new String[] {
                 "DNSRateAndLatency",
                 "TopDNSResponses",
                 "TopDNSServers",

@@ -8,9 +8,9 @@ import test_java.tiles.common.*;
 public class CommonTopRTPCodec extends Common {
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"codec"};
+        return new String[] {"codec"};
     }
 
     //**************************************************************************
@@ -21,7 +21,7 @@ public class CommonTopRTPCodec extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Codec", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "pt \"{{value}}\"",
                 });
             }});

@@ -13,8 +13,8 @@ public class SIP_KPIs extends Report {
         this.setTitle("SIP KPIs");
         this.setTilesFolder("SIP_KPIs");
 
-        this.setTileList(new HashMap<String, String []>() {{
-            put("tables", new String [] {
+        this.setTileList(new HashMap<String, String[]>() {{
+            put("tables", new String[] {
                 "TopSIPStatusCodes",
                 "TopSIPCallingNumbers",
                 "TopSIPCallingIP",

@@ -15,7 +15,7 @@ public class CommonTopSIPDestinations extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Destination", new HashMap<String, Object>() {{
                 put("order", 0);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "host {{value}}",
                 });
             }});

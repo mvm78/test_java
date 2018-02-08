@@ -15,7 +15,7 @@ public class CommonTopSIPConnectionTypes extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Connection Type", new HashMap<String, Object>() {{
                 put("order", 0);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "connectionType == \"{{value}}\"",
                 });
                 put("valueFunction", "getBase64");

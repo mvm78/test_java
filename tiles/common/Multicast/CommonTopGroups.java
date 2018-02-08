@@ -9,17 +9,17 @@ public class CommonTopGroups extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"dst"};
+        return new String[] {"dst"};
     }
 
     //**************************************************************************
 
     @Override
-    public String [] getFilters() {
+    public String[] getFilters() {
 
-        return new String [] {"ip multicast"};
+        return new String[] {"ip multicast"};
     }
 
     //**************************************************************************
@@ -30,7 +30,7 @@ public class CommonTopGroups extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Destination", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "host {{value}}",
                 });
             }});

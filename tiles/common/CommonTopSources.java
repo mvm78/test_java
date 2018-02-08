@@ -8,9 +8,9 @@ public class CommonTopSources extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"src"};
+        return new String[] {"src"};
     }
 
     //**************************************************************************
@@ -21,7 +21,7 @@ public class CommonTopSources extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Source", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "host {{value}}",
                 });
             }});

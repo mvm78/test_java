@@ -8,17 +8,17 @@ public class CommonTopApplicationPorts extends Common {
     //**************************************************************************
 
     @Override
-    public String [] getFields(){
+    public String[] getFields(){
 
-        return new String [] {"app_port"};
+        return new String[] {"app_port"};
     }
 
     //**************************************************************************
 
     @Override
-    public String [] getFilters() {
+    public String[] getFilters() {
 
-        return new String [] {
+        return new String[] {
             "tcp or udp or sctp",
         };
     }
@@ -31,10 +31,10 @@ public class CommonTopApplicationPorts extends Common {
         return new LinkedHashMap<String, HashMap<String, Object>>() {{
             put("Application Port", new HashMap<String, Object>() {{
                 put("order", 1);
-                put("filter", new String [] {
+                put("filter", new String[] {
                     "app_port {{value}}",
                 });
-                put("cellDrill", new String [] {});
+                put("cellDrill", new String[] {});
             }});
         }};
     }

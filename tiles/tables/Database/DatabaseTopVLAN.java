@@ -51,13 +51,13 @@ public class DatabaseTopVLAN extends Table {
             results.lines()
                     .filter(line -> {
 
-                        String [] split = Util.split(line.trim(), this.getSplitChar());
+                        String[] split = Util.split(line.trim(), this.getSplitChar());
 
                         return Util.getBufferLineFilter(split);
                     })
                     .forEach(line -> {
 
-                        String [] split = Util.split(line.trim(), this.getSplitChar());
+                        String[] split = Util.split(line.trim(), this.getSplitChar());
 
                         String filter = result.get().isEmpty() ? "" : " or ";
 

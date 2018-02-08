@@ -12,11 +12,11 @@ public class RTP_KPIs extends Report {
         this.setTitle("RTP KPIs");
         this.setTilesFolder("RTP_KPIs");
 
-        this.setTileList(new HashMap<String, String []>() {{
-            put("charts", new String [] {
+        this.setTileList(new HashMap<String, String[]>() {{
+            put("charts", new String[] {
                 "RTPPacketsSessionsAndLoss",
             });
-            put("tables", new String [] {
+            put("tables", new String[] {
                 "TopRTPCodec",
                 "TopRTPSources",
                 "TopRTPDestinations",
@@ -25,8 +25,8 @@ public class RTP_KPIs extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String []>() {{
-            put("RTPPacketsSessionsAndLoss", new String [] {
+        this.setTallyCheck(new HashMap<String, String[]>() {{
+            put("RTPPacketsSessionsAndLoss", new String[] {
                 "TopRTPCodec",
                 "TopRTPSources",
                 "TopRTPDestinations",
