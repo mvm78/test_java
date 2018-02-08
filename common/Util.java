@@ -1,10 +1,10 @@
 package test_java.common;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Arrays;
 import java.nio.charset.StandardCharsets;
 
 import test_java.ErrorsLog;
@@ -16,21 +16,21 @@ public class Util {
     @SuppressWarnings("unchecked")
     public static void debugOutput(Map<String, Object> data) {
 
-        String finalCmd = (String)data.get("finalCmd");
-        List<String []> lines =
+        final String finalCmd = (String)data.get("finalCmd");
+        final List<String []> lines =
                 (List<String []>)((ArrayList<String []>)data.get("lines")).clone();
-        String parentLine = (String)data.get("parentLine");
-        boolean skipCompare = data.get("skipCompare") == null ? true :
+        final String parentLine = (String)data.get("parentLine");
+        final boolean skipCompare = data.get("skipCompare") == null ? true :
                 (boolean)data.get("skipCompare");
-        byte gebug = (byte)data.get("gebug");
-        String title = (String)data.get("title");
-        String splitChar = (String)data.get("splitChar");
+        final byte gebug = (byte)data.get("gebug");
+        final String title = (String)data.get("title");
+        final String splitChar = (String)data.get("splitChar");
 
         if (gebug == 0) {
             return;
         }
 
-        String resetColor = Consts.RESET_COLOR;
+        final String resetColor = Consts.RESET_COLOR;
 
         if (parentLine.isEmpty()) {
             System.out.println(resetColor); // empty line
@@ -54,9 +54,9 @@ public class Util {
         } else {
             lines.forEach(split -> {
 
-                    String line = String.join(splitChar, split);
+                    final String line = String.join(splitChar, split);
 
-                    String lineColor = skipCompare ? Consts.DARK_GREY :
+                    final String lineColor = skipCompare ? Consts.DARK_GREY :
                             Util.getLineColor(line, parentLine);
 
                     System.out.println(resetColor + lineColor + "\t" + line + resetColor);
@@ -70,16 +70,16 @@ public class Util {
 
     private static String getLineColor(String line, String parentLine) {
 
-        String color = parentLine.isEmpty() ? Consts.MAGENTA : Consts.BLUE;
+        final String color = parentLine.isEmpty() ? Consts.MAGENTA : Consts.BLUE;
         boolean isEqual = parentLine.equals(line);
 
         if (! isEqual) {
 
-            int parentStart = Math.max(parentLine.indexOf(" "), 0);
-            int lineStart = Math.max(line.indexOf(" "), 0);
+            final int parentStart = Math.max(parentLine.indexOf(" "), 0);
+            final int lineStart = Math.max(line.indexOf(" "), 0);
 
-            String parentEffectiveString = parentLine.substring(parentStart);
-            String lineEffectiveString = line.substring(lineStart);
+            final String parentEffectiveString = parentLine.substring(parentStart);
+            final String lineEffectiveString = line.substring(lineStart);
 
             isEqual = parentEffectiveString.equals(lineEffectiveString);
         }
@@ -91,21 +91,21 @@ public class Util {
 
     public static <T> String getPrettyNumber(T value) {
 
-        String stringValue = String.valueOf(value);
+        final String stringValue = String.valueOf(value);
 
         if (! Util.isNumeric(stringValue)) {
             return "0";
         }
 
-        double number = Double.valueOf(stringValue);
+        final double number = Double.valueOf(stringValue);
 
-        long intPart = (long)number;
+        final long intPart = (long)number;
 
-        String fracPart = String.valueOf(number - intPart);
+        final String fracPart = String.valueOf(number - intPart);
 
-        float decimals = Math.round(Float.valueOf(fracPart) * 1000F) / 1000F;
+        final float decimals = Math.round(Float.valueOf(fracPart) * 1000F) / 1000F;
 
-        String decPart = decimals == 0 ? "" :
+        final String decPart = decimals == 0 ? "" :
                 String.valueOf(decimals).substring(1);
 
         return String.format("%,d", intPart) + decPart;
@@ -122,12 +122,12 @@ public class Util {
 
     public static String getTimeStamp(String dateTime) {
 
-        Map<String, Long> parsedTime = Util.getParsedTime(dateTime);
+        final Map<String, Long> parsedTime = Util.getParsedTime(dateTime);
 
-        Long unixTime = parsedTime.get("unixTime") / 1000;
-        Long ms = parsedTime.get("ms");
+        final Long unixTime = parsedTime.get("unixTime") / 1000;
+        final Long ms = parsedTime.get("ms");
 
-        String milliseconds = ms == 0 ? "" : "." + String.valueOf(ms);
+        final String milliseconds = ms == 0 ? "" : "." + String.valueOf(ms);
 
         return String.valueOf(unixTime) + milliseconds;
     }
@@ -138,23 +138,23 @@ public class Util {
 
         Long unixValue = 0L;
 
-        String [] splitDateTime = dateTime.split("\\s+");
+        final String [] splitDateTime = dateTime.split("\\s+");
 
-        String [] splitTime = splitDateTime[0].split("\\.");
+        final String [] splitTime = splitDateTime[0].split("\\.");
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy");
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy");
 
         try {
 
-            Date parsedEndDate = dateFormat.parse(splitTime[0] + " " + splitDateTime[1]);
+            final Date parsedEndDate = dateFormat.parse(splitTime[0] + " " + splitDateTime[1]);
 
             unixValue = parsedEndDate.getTime();
         } catch (ParseException e) {
             System.err.println(Consts.BRIGHT_RED + "Invalid End Time");
         }
 
-        Long ms = splitTime.length > 1 ? Long.valueOf(splitTime[1]) : 0;
-        Long unixTime = unixValue;
+        final Long ms = splitTime.length > 1 ? Long.valueOf(splitTime[1]) : 0;
+        final Long unixTime = unixValue;
 
         return new HashMap<String, Long>() {{
             put("unixTime", unixTime);
@@ -166,13 +166,13 @@ public class Util {
 
     public static String getTimeInterval(String beginTime, String endTime) {
 
-        Map<String, Long> begin = Util.getParsedTime(beginTime);
-        Map<String, Long> end = Util.getParsedTime(endTime);
+        final Map<String, Long> begin = Util.getParsedTime(beginTime);
+        final Map<String, Long> end = Util.getParsedTime(endTime);
 
-        Long beginUnixTime = begin.get("unixTime") + begin.get("ms");
-        Long endUnixTime = end.get("unixTime") + end.get("ms");
+        final Long beginUnixTime = begin.get("unixTime") + begin.get("ms");
+        final Long endUnixTime = end.get("unixTime") + end.get("ms");
 
-        Long timeInterval = endUnixTime - beginUnixTime;
+        final Long timeInterval = endUnixTime - beginUnixTime;
 
         return String.valueOf(timeInterval.floatValue() / 1000);
     }
@@ -193,7 +193,7 @@ public class Util {
         }
        // splitting the string on splitExpr that is followed by an even number of double quotes.
        // In other words, it splits on splitExpr outside the double quotes
-       String pattern = splitExpr + "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
+       final String pattern = splitExpr + "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
 //    splitExpr     - Split on splitExpr
 //    (?=           - Followed by
 //       (?:        - Start a non-capture group
@@ -212,7 +212,7 @@ public class Util {
 
     public static boolean getBufferLineFilter(String [] line) {
 
-        String [] ignore = new String [] {"#I;", "window", "t=Refresh;"};
+        final String [] ignore = new String [] {"#I;", "window", "t=Refresh;"};
 
         return ! Arrays.stream(ignore).parallel()
                 .anyMatch(item -> item.equals(line[0]));
@@ -222,7 +222,7 @@ public class Util {
 
     public static String getBase64(String value) {
 
-        byte[] authBytes = value.getBytes(StandardCharsets.UTF_8);
+        final byte[] authBytes = value.getBytes(StandardCharsets.UTF_8);
 
         return "BASE6464BASE" + Base64.getEncoder().encodeToString(authBytes);
     }
@@ -231,16 +231,16 @@ public class Util {
 
     public static String getFromTimestamp(String value) {
 
-        String [] splitTime = value.split("\\.");
+        final String [] splitTime = value.split("\\.");
 
-        Date date = new Date(Long.valueOf(splitTime[0]) * 1000L);
-        SimpleDateFormat textFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        final Date date = new Date(Long.valueOf(splitTime[0]) * 1000L);
+        final SimpleDateFormat textFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
         String dateTime = textFormat.format(date);
 
         dateTime += splitTime.length > 1 ? "." + splitTime[1].substring(0, 6) : "";
 
-        String [] splitDateTime = dateTime.split("\\s+");
+        final String [] splitDateTime = dateTime.split("\\s+");
 
         return splitDateTime[1] + " " + splitDateTime[0];
     }
@@ -251,7 +251,7 @@ public class Util {
 
         for (byte count=0; count<ErrorsLog.LOG_FILES.length; count++) {
 
-            File logFile = new File(ErrorsLog.LOG_FILES[count]);
+            final File logFile = new File(ErrorsLog.LOG_FILES[count]);
 
             if (logFile.exists()) {
                 logFile.delete();
@@ -264,18 +264,16 @@ public class Util {
     public static void removeShellFiles() {
 
         final File folder = new File("/home/vcr/test_java/");
-        final File[] files = folder.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(final File dir, final String name) {
-                return name.startsWith("run_query");
-            }
+
+        final File[] files = folder.listFiles((final File dontneed, final String name) -> {
+            return name.startsWith("run_query");
         });
 
-        for (final File file : files) {
-            if (! file.delete()) {
-                System.err.println("Can't remove " + file.getAbsolutePath());
-            }
-        }
+        Arrays.stream(files).parallel()
+                .filter(file -> ! file.delete())
+                .forEach(file -> {
+                    System.err.println("Can't remove " + file.getAbsolutePath());
+                });
     }
 
     //**************************************************************************
