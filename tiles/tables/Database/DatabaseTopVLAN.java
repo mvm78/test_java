@@ -67,7 +67,7 @@ public class DatabaseTopVLAN extends Table {
                         result.set(result.get() + filter);
                     });
         } catch (IOException e) {
-            System.err.println(Consts.BRIGHT_RED + "Error reading query file");
+            System.err.println(Consts.getBrightRed() + "Error reading query file");
             System.exit(1);
         }
 

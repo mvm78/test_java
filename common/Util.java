@@ -29,18 +29,18 @@ public class Util {
             return;
         }
 
-        final String resetColor = Consts.RESET_COLOR;
+        final String resetColor = Consts.getResetColor();
 
         if (parentLine.isEmpty()) {
             System.out.println(resetColor); // empty line
-            System.out.println(Consts.BRIGHT_MAGENTA + title+ ":" + resetColor);
-            System.out.println(Consts.MAGENTA + finalCmd);
+            System.out.println(Consts.getBrightMagenta() + title+ ":" + resetColor);
+            System.out.println(Consts.getMagenta() + finalCmd);
         } else {
 
-            System.out.println(Consts.BLUE + finalCmd);
+            System.out.println(Consts.getBlue() + finalCmd);
 
             if (gebug > 1) {
-                System.out.println(Consts.MAGENTA + "\t" + parentLine);
+                System.out.println(Consts.getMagenta() + "\t" + parentLine);
             }
         }
 
@@ -49,13 +49,13 @@ public class Util {
         }
 
         if (lines.isEmpty()) {
-            System.out.println(Consts.RED + "\t" + "NO DATA");
+            System.out.println(Consts.getRed() + "\t" + "NO DATA");
         } else {
             lines.forEach(split -> {
 
                     final String line = String.join(splitChar, split);
 
-                    final String lineColor = skipCompare ? Consts.DARK_GREY :
+                    final String lineColor = skipCompare ? Consts.getDarkGrey() :
                             Util.getLineColor(line, parentLine);
 
                     System.out.println(resetColor + lineColor + "\t" + line + resetColor);
@@ -69,7 +69,7 @@ public class Util {
 
     private static String getLineColor(final String line, final String parentLine) {
 
-        final String color = parentLine.isEmpty() ? Consts.MAGENTA : Consts.BLUE;
+        final String color = parentLine.isEmpty() ? Consts.getMagenta() : Consts.getBlue();
         boolean isEqual = parentLine.equals(line);
 
         if (! isEqual) {
@@ -83,7 +83,7 @@ public class Util {
             isEqual = parentEffectiveString.equals(lineEffectiveString);
         }
 
-        return isEqual ? Consts.DARK_GREEN : color;
+        return isEqual ? Consts.getDarkGreen() : color;
     }
 
     //**************************************************************************
@@ -149,7 +149,7 @@ public class Util {
 
             unixValue = parsedEndDate.getTime();
         } catch (ParseException e) {
-            System.err.println(Consts.BRIGHT_RED + "Invalid End Time");
+            System.err.println(Consts.getBrightRed() + "Invalid End Time");
         }
 
         final Long ms = splitTime.length > 1 ? Long.valueOf(splitTime[1]) : 0;
@@ -248,8 +248,8 @@ public class Util {
 
     public static void removeLogs() {
 
-        final File[] files = Arrays.stream(ErrorsLog.LOG_FILES).parallel()
-                .map(file -> new File(Consts.FOLDER + file))
+        final File[] files = Arrays.stream(ErrorsLog.getLogFiles()).parallel()
+                .map(file -> new File(Consts.getFolder() + file))
                 .toArray(File[]::new);
 
         Util.removeFiles(files);
@@ -259,7 +259,7 @@ public class Util {
 
     public static void removeShellFiles() {
 
-        final File folder = new File(Consts.FOLDER);
+        final File folder = new File(Consts.getFolder());
 
         final File[] files = folder.listFiles((final File dontneed, final String name) -> {
             return name.startsWith("run_query");

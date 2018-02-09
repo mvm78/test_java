@@ -19,14 +19,16 @@ public abstract class Table extends Tile {
     //**************************************************************************
 
     @Override
-    public void setWindow(float window) {
+    public void setWindow(final float window) {
 
         this.setWindow(this.getWindow() == null ? "0.0" : this.getWindow());
     }
 
     //**************************************************************************
 
-    protected final <T1 extends Common, T2 extends CommonBy> void setCommonData(T1 common, T2 commonBy) {
+    protected final <T1 extends Common, T2 extends CommonBy> void setCommonData(
+            final T1 common, final T2 commonBy
+    ) {
 
         this.setCommon(common);
         this.setCommonBy(commonBy);

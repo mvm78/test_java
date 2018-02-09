@@ -47,7 +47,7 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    final protected void setTitle(String title) {
+    final protected void setTitle(final String title) {
 
         this.title = title;
     }
@@ -61,14 +61,14 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    final public String[] getTilesByType(String type) {
+    final public String[] getTilesByType(final String type) {
 
         return this.getTileList().get(type);
     }
 
     //**************************************************************************
 
-    final protected void setTileList(HashMap<String, String[]> tileList) {
+    final protected void setTileList(final HashMap<String, String[]> tileList) {
 
         this.tileList = tileList;
     }
@@ -82,7 +82,7 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    final protected void setTallyCheck(HashMap<String, String[]> tallyCheck) {
+    final protected void setTallyCheck(final HashMap<String, String[]> tallyCheck) {
 
         this.tallyCheck = tallyCheck;
     }
@@ -96,14 +96,14 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    private Boolean getSkipTile(String skipTile) {
+    private Boolean getSkipTile(final String skipTile) {
 
         return this.getSkipTiles().get(skipTile);
     }
 
     //**************************************************************************
 
-    final public void addSkipTile(String skipTile) {
+    final public void addSkipTile(final String skipTile) {
 
         this.skipTiles.put(skipTile, true);
     }
@@ -124,7 +124,7 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    final protected void setTilesFolder(String tilesFolder) {
+    final protected void setTilesFolder(final String tilesFolder) {
 
         this.tilesFolder = tilesFolder;
     }
@@ -159,14 +159,14 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    private String getTile(String type) {
+    private String getTile(final String type) {
 
         return this.getTiles().get(type);
     }
 
     //**************************************************************************
 
-    private void addTile(String tile, String type) {
+    private void addTile(final String tile, final String type) {
 
         this.tiles.put(tile, type);
     }
@@ -180,7 +180,7 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    final protected void setAppPath(String appPath) {
+    final protected void setAppPath(final String appPath) {
 
         this.appPath = appPath;
     }
@@ -194,7 +194,7 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    final protected void setRefresh(String refresh) {
+    final protected void setRefresh(final String refresh) {
 
         this.refresh = refresh;
     }
@@ -217,12 +217,12 @@ public class Report implements Cloneable {
         try {
             report = (Report)this.clone();
         } catch (CloneNotSupportedException e) {
-            System.err.println(Consts.BRIGHT_RED + "Error cloning report");
+            System.err.println(Consts.getBrightRed() + "Error cloning report");
             System.exit(1);
         }
 
         if (report == null) {
-            System.err.println(Consts.BRIGHT_RED + "Error cloning report");
+            System.err.println(Consts.getBrightRed() + "Error cloning report");
             System.exit(1);
         }
 
@@ -242,8 +242,8 @@ public class Report implements Cloneable {
 
     public String getCmdTime() {
 
-        String startTime = Util.getTimeStamp(this.beginTime);
-        String stopTime = Util.getTimeStamp(this.endTime);
+        final String startTime = Util.getTimeStamp(this.beginTime);
+        final String stopTime = Util.getTimeStamp(this.endTime);
 
         return " B " + startTime + " E " + stopTime;
     }
@@ -252,8 +252,8 @@ public class Report implements Cloneable {
 
     public String getCmd(Tile tile) {
 
-        String startTime = Util.getTimeStamp(this.beginTime);
-        String stopTime = Util.getTimeStamp(this.endTime);
+        final String startTime = Util.getTimeStamp(this.beginTime);
+        final String stopTime = Util.getTimeStamp(this.endTime);
 
         return this.getCmd(tile, new HashMap<String, String>() {{
             put("startTime", startTime);
@@ -263,11 +263,11 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    public String getCmd(Tile tile, Map<String, String> drillTime) {
+    public String getCmd(final Tile tile, final Map<String, String> drillTime) {
 
-        String tileAppPath = tile.getAppPath();
+        final String tileAppPath = tile.getAppPath();
 
-        String path = tileAppPath == null ? this.getAppPath() : tileAppPath;
+        final String path = tileAppPath == null ? this.getAppPath() : tileAppPath;
 
         return path + this.getCmdAppliance() +
                 " " + this.getRefresh() +
@@ -299,7 +299,7 @@ public class Report implements Cloneable {
     //**************************************************************************
 
     @SuppressWarnings("unchecked")
-    public void tests(int drillLevel, String filter) {
+    public void tests(final int drillLevel, final String filter) {
 
         if (this.getMaxDrillLevel() < drillLevel) {
             return;
@@ -307,7 +307,7 @@ public class Report implements Cloneable {
 
         Map<String, Map<String, Map<String, Object>>> results = new HashMap<>();
 
-        Map<String, Object> params = new HashMap<String, Object>() {{
+        final Map<String, Object> params = new HashMap<String, Object>() {{
             put("filter", filter);
             put("drillLevel", drillLevel);
         }};
@@ -317,7 +317,7 @@ public class Report implements Cloneable {
         this.getTiles().keySet().parallelStream()
                 .forEach(tile -> {
 
-                    Tile testTile = this.getTileInstance(tile);
+                    final Tile testTile = this.getTileInstance(tile);
 
                     Map<String, Map<String, Object>> result = testTile.test(params);
 
@@ -338,15 +338,15 @@ public class Report implements Cloneable {
 
     @SuppressWarnings("unchecked")
     private void checkTally(
-            Map<String, Map<String, Map<String, Object>>> results,
-            String filter
+            final Map<String, Map<String, Map<String, Object>>> results,
+            final String filter
     ) {
 
         this.getTallyCheck().keySet().parallelStream()
                 .filter(tile -> results.get(tile) != null)
                 .forEach(tile -> {
 
-                    Map<String, Map<String, Object>> compareToData = results.get(tile);
+                    final Map<String, Map<String, Object>> compareToData = results.get(tile);
 
                     String text = compareToData.get("info").get("title").toString();
 
@@ -369,20 +369,20 @@ public class Report implements Cloneable {
     //**************************************************************************
 
     private void compareTallies(
-            Map<String, Map<String, Object>> compareToTile,
-            Map<String, Map<String, Object>> compareTile,
-            AtomicBoolean isCompareToPrined,
-            AtomicReference<String> caption
+            final Map<String, Map<String, Object>> compareToTile,
+            final Map<String, Map<String, Object>> compareTile,
+            final AtomicBoolean isCompareToPrined,
+            final AtomicReference<String> caption
     ) {
 
         AtomicBoolean isComparePrined = new AtomicBoolean(false);
 
-        Map<String, Object> columns = compareToTile.get("columns");
-        Map<String, Object> compareToTally = compareToTile.get("tally");
-        Map<String, Object> compareTally = compareTile.get("tally");
+        final Map<String, Object> columns = compareToTile.get("columns");
+        final Map<String, Object> compareToTally = compareToTile.get("tally");
+        final Map<String, Object> compareTally = compareTile.get("tally");
 
-        String logFile = "tallyErrors.log";
-        String compareTitle = compareTile.get("info").get("title").toString();
+        final String logFile = "tallyErrors.log";
+        final String compareTitle = compareTile.get("info").get("title").toString();
 
         columns.keySet().stream().parallel()
                 .filter(column -> ((Map)columns.get(column)).get("compare") != null)
@@ -390,8 +390,8 @@ public class Report implements Cloneable {
                 .filter(column -> compareTally.get(column) != null)
                 .forEach(column -> {
 
-                    String prettyToValue = Util.getPrettyNumber(compareToTally.get(column));
-                    String prettyValue = Util.getPrettyNumber(compareTally.get(column));
+                    final String prettyToValue = Util.getPrettyNumber(compareToTally.get(column));
+                    final String prettyValue = Util.getPrettyNumber(compareTally.get(column));
 
                     if (! prettyToValue.equals(prettyValue)) {
                         if (! isCompareToPrined.getAndSet(true)) {
@@ -402,7 +402,7 @@ public class Report implements Cloneable {
                             ErrorsLog.log("\t" + compareTitle, logFile);
                         }
 
-                        String error = prettyToValue + " # " + prettyValue;
+                        final String error = prettyToValue + " # " + prettyValue;
 
                         ErrorsLog.log("\t\t" + column + ": " + error, logFile);
                     }
@@ -418,7 +418,7 @@ public class Report implements Cloneable {
         this.getTileList().keySet().parallelStream()
                 .forEach(type -> {
 
-                    String[] typeTiles = this.getTilesByType(type);
+                    final String[] typeTiles = this.getTilesByType(type);
 
                     Arrays.stream(typeTiles).parallel()
                             .filter(tile -> this.getSkipTile(tile) == null)
@@ -428,26 +428,26 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    public final String setTileClassFullName(String tile) {
+    public final String setTileClassFullName(final String tile) {
 
-        String tileFolder = this.getTilesFolder().isEmpty() ? "" :
+        final String tileFolder = this.getTilesFolder().isEmpty() ? "" :
                 this.getTilesFolder() + ".";
-        String type = this.getTile(tile);
+        final String type = this.getTile(tile);
 
         return "test_java.tiles." + type + "." + tileFolder + tile;
     }
 
     //**************************************************************************
 
-    public final Tile getTileInstance(String tileName) {
+    public final Tile getTileInstance(final String tileName) {
 
-        float timeInterval = Float.valueOf(this.getInterval());
-        String className = this.setTileClassFullName(tileName);
+        final float timeInterval = Float.valueOf(this.getInterval());
+        final String className = this.setTileClassFullName(tileName);
 
-        String startTime = this.getBeginTime();
-        String stopTime = this.getEndTime();
+        final String startTime = this.getBeginTime();
+        final String stopTime = this.getEndTime();
 
-        Map<String, String> reportTime = new HashMap<String, String>() {{
+        final Map<String, String> reportTime = new HashMap<String, String>() {{
             put("interval", Util.getTimeInterval(startTime, stopTime));
             put("beginTime", Util.getTimeStamp(startTime));
             put("endTime", Util.getTimeStamp(stopTime));
@@ -455,7 +455,7 @@ public class Report implements Cloneable {
             put("endTimeString", stopTime);
         }};
 
-        Tile tile = TileFactory.getTile(className, timeInterval);
+        final Tile tile = TileFactory.getTile(className, timeInterval);
 
         tile.setReport(this);
         tile.setReportTime(reportTime);

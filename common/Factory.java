@@ -10,10 +10,10 @@ public class Factory {
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
 
             System.err.println(
-                    Consts.RESET_COLOR + "\n" +
-                    Consts.BRIGHT_RED + "Error creating " + clazz + " instance:\n" +
-                    Consts.BRIGHT_RED + e + "\n" +
-                    Consts.RESET_COLOR
+                    Consts.getResetColor() + "\n" +
+                    Consts.getBrightRed() + "Error creating " + clazz + " instance:\n" +
+                    Consts.getBrightRed() + e + "\n" +
+                    Consts.getResetColor()
             );
             System.exit(1);
         }

@@ -7,12 +7,12 @@ import test_java.reports.*;
 
 public class Test_java {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         Util.removeLogs();
         Util.removeShellFiles();
 
-        String[] reports = {
+        final String[] reports = {
             "PerformanceOverview",
             "TopApplications",
             "TopApplicationPorts",
