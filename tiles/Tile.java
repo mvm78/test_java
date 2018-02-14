@@ -1225,26 +1225,22 @@ public abstract class Tile implements Cloneable {
 
     private List<String[]> getQueryLines(final String finalCmd) {
 
-        List<String[]> result = new ArrayList<>();
+        final AtomicReference<String> splitBy = new AtomicReference<>(this.getSplitChar());
+        final AtomicInteger shift = new AtomicInteger(this.getRemoveFirstItem() ? 1 : 0);
 
-        try (BufferedReader results = this.getQueryResults(finalCmd)) {
+        List<String[]> result = Collections.synchronizedList(new ArrayList<>());
+
+        try (final BufferedReader results = this.getQueryResults(finalCmd)) {
             results.lines().parallel()
                     .forEach(line -> {
-
-                        String[] split = Util.split(line.trim(), this.getSplitChar());
-
-                        if (this.getRemoveFirstItem()) {
-                            split = Arrays.copyOfRange(split, 1, split.length);
-                        }
-
-                        result.add(split);
+                        result.add(Util.split(line.trim(), splitBy.get(), shift.get()));
                     });
         } catch (IOException e) {
             System.err.println(Consts.getBrightRed() + "Error reading query file");
             System.exit(1);
         }
 
-        return result;
+        return new ArrayList<>(result);
     }
 
     //**************************************************************************

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Arrays;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.atomic.AtomicReference;
 
 import test_java.ErrorsLog;
 
@@ -179,20 +180,29 @@ public class Util {
     //**************************************************************************
 
     public static String[] split(final String line, final String splitChar) {
+        // shift = 0 - will not require removal of the 1-st array element
+        return Util.split(line, splitChar, 0);
+    }
 
-        String splitExpr;
+    //**************************************************************************
+
+    public static String[] split(final String line, final String splitChar, final int shift) {
+
+        AtomicReference<String> splitExpr = new AtomicReference<>();
 
         switch (splitChar) {
             case ",": // split by comma
-                splitExpr = ",";
+                splitExpr.set(",");
                 break;
             default: // split by space
-                splitExpr = "\\s+";
+                splitExpr.set("\\s+");
                 break;
         }
        // splitting the string on splitExpr that is followed by an even number of double quotes.
        // In other words, it splits on splitExpr outside the double quotes
-       final String pattern = splitExpr + "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
+       final AtomicReference<String> pattern = new AtomicReference<>(
+               splitExpr.get() + "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
+       );
 //    splitExpr     - Split on splitExpr
 //    (?=           - Followed by
 //       (?:        - Start a non-capture group
@@ -204,7 +214,11 @@ public class Util {
 //       [^"]*      - Finally 0 or more non-quotes
 //       $          - Till the end  (This is necessary, else every comma will satisfy the condition)
 //    )
-        return line.split(pattern, -1);
+        final AtomicReference<String[]> split =
+                new AtomicReference<>(line.split(pattern.get(), -1));
+
+        return shift == 0 ? split.get() :
+                Arrays.copyOfRange(split.get(), shift, split.get().length) ;
     }
 
     //**************************************************************************
