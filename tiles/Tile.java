@@ -1265,11 +1265,7 @@ public abstract class Tile implements Cloneable {
 
         final String parentValue = splitParent[cellDrill];
 
-        final Map<String, List<String[]>> result = this.getArrayListIntersection(data);
-
-        final List<String[]> parentLines = (List)result.get("parentLines");
-
-        parentLines.stream().parallel()
+        this.getArrayListIntersection(data).stream().parallel()
                 .filter(line -> Util.getBufferLineFilter(line))
                 .filter(line -> operator.isEmpty() == line[cellDrill].equals(parentValue)) // either both (empty and equal) TRUE or both FALSE
                 .forEach(line -> {
@@ -1284,7 +1280,7 @@ public abstract class Tile implements Cloneable {
 
     //**************************************************************************
 
-    private Map<String, List<String[]>> getArrayListIntersection(final Map<String, Object> data) {
+    private List<String[]> getArrayListIntersection(final Map<String, Object> data) {
 
         final List<String[]> parentLines = (List)((ArrayList)data.get("parentLines")).clone();
         final List<String[]> filteredLines = (List)((ArrayList)data.get("lines")).clone();
@@ -1300,9 +1296,6 @@ public abstract class Tile implements Cloneable {
             final String[] filteredLine = filteredIterator.next();
 
             if (! Util.getBufferLineFilter(filteredLine)) {
-
-                filteredIterator.remove();
-
                 continue;
             }
 
@@ -1324,7 +1317,7 @@ public abstract class Tile implements Cloneable {
 
             while (parentIterator.hasNext()) {
 
-                String[] parentLine = parentIterator.next();
+                final String[] parentLine = parentIterator.next();
 
                 if (! Util.getBufferLineFilter(parentLine)) {
 
@@ -1335,7 +1328,6 @@ public abstract class Tile implements Cloneable {
 
                 if (Arrays.equals(filteredLine, parentLine)) {
 
-                    filteredIterator.remove();
                     parentIterator.remove();
 
                     break;
@@ -1343,10 +1335,7 @@ public abstract class Tile implements Cloneable {
             }
         }
 
-        return new HashMap<String, List<String[]>>() {{
-            put("parentLines", parentLines);
-            put("filteredLines", filteredLines);
-        }};
+        return parentLines;
     }
 
     //**************************************************************************
