@@ -14,10 +14,10 @@ import test_java.common.Util;
 
 public class Report implements Cloneable {
 
-    private final String beginTime = "09:00:00 02/08/2018";
-    private final String endTime = "09:00:20 02/08/2018";
+    private final String beginTime = "10:13:00 02/14/2018";
+    private final String endTime = "10:13:01 02/14/2018";
     private final String hashKey = "1";
-    private final String appliance = "Appliance-PM_Perf";
+    private final String appliance = "securityeng164";
     private final String pcap = "em1";
     private final int maxDrillLevel = 1;
 
@@ -106,6 +106,15 @@ public class Report implements Cloneable {
     final public void addSkipTile(final String skipTile) {
 
         this.skipTiles.put(skipTile, true);
+    }
+
+    //**************************************************************************
+
+    final public Report addSkipTileAndReturn(final String skipTile) {
+
+        this.addSkipTile(skipTile);
+
+        return this;
     }
 
     //**************************************************************************

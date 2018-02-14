@@ -614,10 +614,9 @@ public abstract class Tile implements Cloneable {
 
         this.test(params);
 
-        Report drillReport = this.getReport().cloneReport();
-
-        drillReport.addSkipTile(this.getTrueName());
-        drillReport.tests(drillLevel + 1, finalFilter);
+        this.getReport().cloneReport()
+                .addSkipTileAndReturn(this.getTrueName())
+                .tests(drillLevel + 1, finalFilter);
     }
 
     //**************************************************************************
@@ -625,38 +624,46 @@ public abstract class Tile implements Cloneable {
     @SuppressWarnings("unchecked")
     private void drillCell(final Map<String, Object> data) {
 
-        final String filter = (String)data.get("filter");
+        final AtomicReference<String> filter =
+                new AtomicReference<>((String)data.get("filter"));
         Map<String, Object> params = (Map)((HashMap)data).clone();
 
         params.put("isCellDrill", true);
+        params.put("filter", filter.get());
+
+        final AtomicBoolean singleLine = new AtomicBoolean(this.getIsSingleLine());
 
         this.getColumns().values().parallelStream()
                 .filter(values -> values.get("cellDrill") != null)
                 .forEach(values -> {
 
-                    final int order = (int)values.get("order");
+                    params.put("cellDrill", (int)values.get("order"));
+                    params.put("singleLine", singleLine.get());
 
-                    params.put("cellDrill", order);
+                    this.drillCellExecute(params);
+                });
+    }
 
-                    for (String operator : new String[] {null, "not"}) {
-                        if (operator == null && this.getIsSingleLine()
-                         && ((String[])values.get("cellDrill")).length == 0) {
-                            // skip as row drill will perform the same action as call drill
-                            continue;
-                        }
-                        // have to reset "filter" before passing it to getDrillFilter() method
-                        params.put("filter", filter);
-                        params.put("operator", operator);
+    //**************************************************************************
 
-                        String finalFilter = this.getDrillFilter(params);
+    @SuppressWarnings("unchecked")
+    private void drillCellExecute(final Map<String, Object> data) {
 
-                        if (this.getCellDrillFilters().contains(finalFilter)) {
-                            continue;
-                        }
+        Map<String, Object> params = (Map)((HashMap)data).clone();
 
-                        this.addCellDrillFilters(finalFilter);
+        Arrays.stream(new String[] {null, "not"}).parallel()
+                .filter(operator -> {
+                    // may need to skip as row drill will perform the same action as call drill
+                    return operator != null || ! (boolean)params.get("singleLine");
+                })
+                .forEach(operator -> {
 
-                        params.put("filter", finalFilter);
+                    params.put("operator", operator);
+                    params.put("filter", this.getDrillFilter(params));
+
+                    if (! this.getCellDrillFilters().contains((String)params.get("filter"))) {
+
+                        this.addCellDrillFilters((String)params.get("filter"));
 
                         this.test(params);
                     }
@@ -1230,15 +1237,10 @@ public abstract class Tile implements Cloneable {
 
         List<String[]> result = Collections.synchronizedList(new ArrayList<>());
 
-        try (final BufferedReader results = this.getQueryResults(finalCmd)) {
-            results.lines().parallel()
-                    .forEach(line -> {
-                        result.add(Util.split(line.trim(), splitBy.get(), shift.get()));
-                    });
-        } catch (IOException e) {
-            System.err.println(Consts.getBrightRed() + "Error reading query file");
-            System.exit(1);
-        }
+        this.getQueryResults(finalCmd).lines().parallel()
+                .forEach(line -> {
+                    result.add(Util.split(line.trim(), splitBy.get(), shift.get()));
+                });
 
         return new ArrayList<>(result);
     }
@@ -1263,11 +1265,12 @@ public abstract class Tile implements Cloneable {
         final String filter = (String)data.get("filter");
         final String operator = data.get("operator") == null ? "" : (String)data.get("operator");
 
-        final String parentValue = splitParent[cellDrill];
+        final AtomicReference<String> parentValue =
+                new AtomicReference<>(splitParent[cellDrill]);
 
         this.getArrayListIntersection(data).stream().parallel()
                 .filter(line -> Util.getBufferLineFilter(line))
-                .filter(line -> operator.isEmpty() == line[cellDrill].equals(parentValue)) // either both (empty and equal) TRUE or both FALSE
+                .filter(line -> operator.isEmpty() == line[cellDrill].equals(parentValue.get())) // either both (empty and equal) TRUE or both FALSE
                 .forEach(line -> {
                     this.logDrilledColumnError(new HashMap<String, Object>() {{
                         put("message", "is missing");
