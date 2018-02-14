@@ -23,7 +23,7 @@ public class CommonTopWebUserAgents extends Common {
             put("User-Agent", new HashMap<String, Object>() {{
                 put("order", 1);
                 put("filter", new String[] {
-                    "useragent \"{{value}}\"",
+                    "useragent {{value}}",
                 });
             }});
         }};

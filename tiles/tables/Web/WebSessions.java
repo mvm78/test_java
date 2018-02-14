@@ -81,7 +81,7 @@ public class WebSessions extends Table {
             put("User-Agent", new HashMap<String, Object>() {{
                 put("order", 10);
                 put("cellDrill", new String[] {
-                    "useragent \"{{value}}\"",
+                    "useragent {{value}}",
                 });
             }});
             put("X-Forwarded-For", new HashMap<String, Object>() {{
