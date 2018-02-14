@@ -29,7 +29,7 @@ public class CommonTopWebResponsePhrases extends Common {
             put("Response Phrase", new HashMap<String, Object>() {{
                 put("order", 2);
                 put("filter", new String[] {
-                    "reason \"{{value}}\"",
+                    "reason {{value}}",
                 });
             }});
         }};
