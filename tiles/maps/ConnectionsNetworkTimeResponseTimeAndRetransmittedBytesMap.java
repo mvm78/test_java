@@ -1,8 +1,5 @@
 package test_java.tiles.maps;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
 import test_java.tiles.tables.*;
 import test_java.tiles.common.CommonTopCountries;
 import test_java.tiles.common.CommonByResponseTimeAndRetransmittedBytes;
