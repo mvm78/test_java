@@ -1,8 +1,5 @@
 package test_java.tiles.tables.MediaFlow;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
 import test_java.tiles.tables.Table;
 import test_java.tiles.common.MediaFlow.CommonMediaFlow;
 import test_java.tiles.common.MediaFlow.CommonByTransportJitterAndEvents;
