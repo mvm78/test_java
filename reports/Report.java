@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 import test_java.ErrorsLog;
 import test_java.common.Consts;
@@ -14,8 +13,8 @@ import test_java.common.Util;
 
 public class Report implements Cloneable {
 
-    private final String beginTime = "10:13:00 02/14/2018";
-    private final String endTime = "10:13:01 02/14/2018";
+    private final String beginTime = "10:50:00 02/15/2018";
+    private final String endTime = "10:50:03 02/15/2018";
     private final String hashKey = "1";
     private final String appliance = "securityeng164";
     private final String pcap = "em1";
@@ -106,15 +105,6 @@ public class Report implements Cloneable {
     final public void addSkipTile(final String skipTile) {
 
         this.skipTiles.put(skipTile, true);
-    }
-
-    //**************************************************************************
-
-    final public Report addSkipTileAndReturn(final String skipTile) {
-
-        this.addSkipTile(skipTile);
-
-        return this;
     }
 
     //**************************************************************************
@@ -314,7 +304,7 @@ public class Report implements Cloneable {
             return;
         }
 
-        Map<String, Map<String, Map<String, Object>>> results = new HashMap<>();
+        final Map<String, Map<String, Map<String, Object>>> results = new HashMap<>();
 
         final Map<String, Object> params = new HashMap<String, Object>() {{
             put("filter", filter);
@@ -328,7 +318,8 @@ public class Report implements Cloneable {
 
                     final Tile testTile = this.getTileInstance(tile);
 
-                    Map<String, Map<String, Object>> result = testTile.test(params);
+                    final Map<String, Map<String, Object>> result =
+                            testTile.test(params);
 
                     result.put("columns", (Map)testTile.getColumns());
                     result.put("info", new HashMap<String, Object>() {{
@@ -355,16 +346,15 @@ public class Report implements Cloneable {
                 .filter(tile -> results.get(tile) != null)
                 .forEach(tile -> {
 
-                    final Map<String, Map<String, Object>> compareToData = results.get(tile);
-
-                    String text = compareToData.get("info").get("title").toString();
-
-                    text += filter.isEmpty() ? "" : " with filter \"" + filter + "\"";
-
-                    AtomicReference<String> caption = new AtomicReference<>(text);
+                    final String[] checkTile = this.getTallyCheck().get(tile);
                     AtomicBoolean isCompareToPrined = new AtomicBoolean(false);
+                    final Map<String, Map<String, Object>> compareToData =
+                            results.get(tile);
+                    final String description = filter.isEmpty() ? "" :
+                            " with filter \"" + filter + "\"";
 
-                    String[] checkTile = this.getTallyCheck().get(tile);
+                    final String caption =
+                            compareToData.get("info").get("title").toString() + description;
 
                     Arrays.stream(checkTile)
                             .filter(item -> results.get(item) != null)
@@ -377,11 +367,12 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
+    @SuppressWarnings("unchecked")
     private void compareTallies(
             final Map<String, Map<String, Object>> compareToTile,
             final Map<String, Map<String, Object>> compareTile,
-            final AtomicBoolean isCompareToPrined,
-            final AtomicReference<String> caption
+            AtomicBoolean isCompareToPrined,
+            final String caption
     ) {
 
         AtomicBoolean isComparePrined = new AtomicBoolean(false);
@@ -399,8 +390,10 @@ public class Report implements Cloneable {
                 .filter(column -> compareTally.get(column) != null)
                 .forEach(column -> {
 
-                    final String prettyToValue = Util.getPrettyNumber(compareToTally.get(column));
-                    final String prettyValue = Util.getPrettyNumber(compareTally.get(column));
+                    final String prettyToValue =
+                            Util.getPrettyNumber(compareToTally.get(column));
+                    final String prettyValue =
+                            Util.getPrettyNumber(compareTally.get(column));
 
                     if (! prettyToValue.equals(prettyValue)) {
                         if (! isCompareToPrined.getAndSet(true)) {

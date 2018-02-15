@@ -42,11 +42,10 @@ public class ErrorsLog {
         }
 
         try (
-                final FileWriter fileWriter = new FileWriter(logFile, true);
-                final BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                final PrintWriter errorsLog = new PrintWriter(bufferedWriter)
+            final FileWriter fileWriter = new FileWriter(logFile, true);
+            final BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            final PrintWriter errorsLog = new PrintWriter(bufferedWriter)
         ) {
-
             errorsLog.println(text);
         } catch (IOException e) {
 

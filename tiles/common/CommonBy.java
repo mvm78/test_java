@@ -21,15 +21,14 @@ public abstract class CommonBy {
     //**************************************************************************
 
     public LinkedHashMap<String, HashMap<String, Object>> appendCompareColumns(
-            LinkedHashMap<String, HashMap<String, Object>> _columns,
-            int columnIncrement
+            final LinkedHashMap<String, HashMap<String, Object>> _columns,
+            final int columnIncrement
     ) {
 
-        String[] noTallyColumns = this.getNoTallyColumns();
+        final String[] noTallyColumns = this.getNoTallyColumns();
 
-        List noTally = Arrays.asList(noTallyColumns);
-
-        int start = _columns.size() + columnIncrement;
+        final List noTally = Arrays.asList(noTallyColumns);
+        final int start = _columns.size() + columnIncrement;
 
         AtomicInteger count = new AtomicInteger(start);
 

@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Arrays;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.atomic.AtomicReference;
 
 import test_java.ErrorsLog;
 
@@ -70,7 +69,8 @@ public class Util {
 
     private static String getLineColor(final String line, final String parentLine) {
 
-        final String color = parentLine.isEmpty() ? Consts.getMagenta() : Consts.getBlue();
+        final String color = parentLine.isEmpty() ? Consts.getMagenta() :
+                Consts.getBlue();
         boolean isEqual = parentLine.equals(line);
 
         if (! isEqual) {
@@ -188,21 +188,19 @@ public class Util {
 
     public static String[] split(final String line, final String splitChar, final int shift) {
 
-        AtomicReference<String> splitExpr = new AtomicReference<>();
+        String splitExpr;
 
         switch (splitChar) {
             case ",": // split by comma
-                splitExpr.set(",");
+                splitExpr = ",";
                 break;
             default: // split by space
-                splitExpr.set("\\s+");
+                splitExpr = "\\s+";
                 break;
         }
        // splitting the string on splitExpr that is followed by an even number of double quotes.
        // In other words, it splits on splitExpr outside the double quotes
-       final AtomicReference<String> pattern = new AtomicReference<>(
-               splitExpr.get() + "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
-       );
+       final String pattern = splitExpr + "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
 //    splitExpr     - Split on splitExpr
 //    (?=           - Followed by
 //       (?:        - Start a non-capture group
@@ -214,11 +212,9 @@ public class Util {
 //       [^"]*      - Finally 0 or more non-quotes
 //       $          - Till the end  (This is necessary, else every comma will satisfy the condition)
 //    )
-        final AtomicReference<String[]> split =
-                new AtomicReference<>(line.split(pattern.get(), -1));
+        final String[] split = line.split(pattern, -1);
 
-        return shift == 0 ? split.get() :
-                Arrays.copyOfRange(split.get(), shift, split.get().length) ;
+        return shift > 0 ? Arrays.copyOfRange(split, shift, split.length) : split;
     }
 
     //**************************************************************************
@@ -248,10 +244,10 @@ public class Util {
 
         final Date date = new Date(Long.valueOf(splitTime[0]) * 1000L);
         final SimpleDateFormat textFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        final String milliseconds = splitTime.length > 1 ?
+                "." + splitTime[1].substring(0, 6) : "";
 
-        String dateTime = textFormat.format(date);
-
-        dateTime += splitTime.length > 1 ? "." + splitTime[1].substring(0, 6) : "";
+        final String dateTime = textFormat.format(date) + milliseconds;
 
         final String[] splitDateTime = dateTime.split("\\s+");
 
