@@ -436,20 +436,21 @@ public abstract class Tile implements Cloneable {
             System.exit(1);
         }
 
-        final Runtime runtime = Runtime.getRuntime();
-
         try {
 
-            final Process process = runtime.exec("sh " + shellFile);
+            final AtomicReference<Runtime> runtime =
+                    new AtomicReference<>(Runtime.getRuntime());
 
-            final InputStream inputStream = process.getInputStream();
+            final AtomicReference<Process> process =
+                    new AtomicReference<>(runtime.get().exec("sh " + shellFile));
 
-            final InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            final AtomicReference<InputStream> inputStream =
+                    new AtomicReference<>(process.get().getInputStream());
 
-            final BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            final AtomicReference<InputStreamReader> inputStreamReader =
+                    new AtomicReference<>(new InputStreamReader(inputStream.get()));
 
-            return bufferedReader;
-
+            return new BufferedReader(inputStreamReader.get());
         } catch (IOException e) {
             System.err.println(Consts.getBrightRed() + "Error running " + shellFile);
             System.exit(1);
@@ -1229,14 +1230,14 @@ public abstract class Tile implements Cloneable {
 
         final String splitBy = this.getSplitChar();
         final int shift = this.getRemoveFirstItem() ? 1 : 0;
-        final List<String[]> result = new ArrayList<>();
+        final List<String[]> result = Collections.synchronizedList(new ArrayList<>());
 
         this.getQueryResults(finalCmd).lines().parallel()
                 .forEach(line -> {
                     result.add(Util.split(line.trim(), splitBy, shift));
                 });
 
-        return result;
+        return new ArrayList<>(result);
     }
 
     //**************************************************************************
