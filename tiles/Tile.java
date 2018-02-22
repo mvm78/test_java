@@ -650,6 +650,7 @@ public abstract class Tile implements Cloneable {
     @SuppressWarnings("unchecked")
     private void drillCellExecute(final Map<String, Object> data) {
 
+        final String filter = (String)data.get("filter");
         final Map<String, Object> params = (Map)((HashMap)data).clone();
 
         Arrays.stream(new String[] {null, "not"}).parallel()
@@ -658,7 +659,8 @@ public abstract class Tile implements Cloneable {
                     return operator != null || ! (boolean)params.get("singleLine");
                 })
                 .forEach(operator -> {
-
+                    // have to reset "filter" before passing it to getDrillFilter() method
+                    params.put("filter", filter);
                     params.put("operator", operator);
                     params.put("filter", this.getDrillFilter(params));
 
