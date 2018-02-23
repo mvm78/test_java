@@ -1384,9 +1384,7 @@ public abstract class Tile implements Cloneable {
     ) {
 
         return masterTally.keySet().parallelStream()
-                .filter(key -> tally.get(key) == null && (Double)masterTally.get(key) > 0)
-                .findAny()
-                .isPresent();
+                .anyMatch(key -> tally.get(key) == null && (Double)masterTally.get(key) > 0);
     }
 
     //**************************************************************************
