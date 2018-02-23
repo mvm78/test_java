@@ -661,7 +661,6 @@ public abstract class Tile implements Cloneable {
                 .forEach(operator -> {
                     // have to reset "filter" before passing it to getDrillFilter() method
                     params.put("filter", oldFilter);
-
                     params.put("operator", operator);
 
                     final String newFilter = this.getDrillFilter(params);
@@ -891,8 +890,7 @@ public abstract class Tile implements Cloneable {
 
         final String[] splitLine = data.get("splitLine") == null ? null :
                 (String[])((String[])data.get("splitLine")).clone();
-        final String[] splitParent =
-                (String[])((String[])data.get("splitParent")).clone();
+        final String[] splitParent = (String[])((String[])data.get("splitParent")).clone();
         final boolean isOutput = (boolean)data.get("isOutput");
         final int lineCount = (int)data.get("lineCount");
 
@@ -976,64 +974,67 @@ public abstract class Tile implements Cloneable {
                             .forEach(field -> timeInfo.put(field, splitParent[count]));
                 });
 
-        if (timeInfo.size() == 2) {
-
-            final String lineStartTime = timeInfo.get("startTime");
-            final String lineStopTime = timeInfo.get("stopTime");
-            final String reportStartTime = this.getReportTime().get("beginTime");
-            final String reportStopTime = this.getReportTime().get("endTime");
-
-            final double lineDblStartTime = lineStartTime.isEmpty() ? 0 :
-                    Double.valueOf(lineStartTime);
-            final double lineDblStopTime = lineStopTime.isEmpty() ? 0 :
-                    Double.valueOf(lineStopTime);
-            final double reportDblStartTime = Double.valueOf(reportStartTime);
-            final double reportDblStopTime = Double.valueOf(reportStopTime);
-
-            if (lineDblStopTime < reportDblStartTime
-             || lineDblStartTime > reportDblStopTime
-             || lineDblStartTime > lineDblStopTime
-             || lineDblStartTime == 0 || lineDblStopTime == 0) {
-
-                final String beginTime = "Start Time \"" +
-                        this.getReportTime().get("beginTimeString") + "\"";
-                final String endTime = "Stop Time \"" +
-                        this.getReportTime().get("endTimeString") + "\"";
-                final String startTime = "Start Time \"" +
-                        Util.getFromTimestamp(lineStartTime) + "\"";
-                final String stopTime = "Stop Time \"" +
-                        Util.getFromTimestamp(lineStopTime) + "\"";
-
-                this.logError("\t" + lineErrorCaption + ":");
-
-                if (lineDblStopTime < reportDblStartTime) {
-                    this.logError("\t\tLine " + stopTime +
-                            " is less than report " + beginTime);
-                }
-
-                if (lineDblStartTime > reportDblStopTime) {
-                    this.logError("\t\tLine " + startTime +
-                            " is greater than report " + endTime);
-                }
-
-                if (lineDblStartTime > lineDblStopTime) {
-                    this.logError("\t\tLine " + startTime +
-                            " is greater than line " + stopTime);
-                }
-
-                if (lineDblStartTime == 0) {
-                    this.logError("\t\tLine Start Time equals to 0");
-                }
-
-                if (lineDblStopTime == 0) {
-                    this.logError("\t\tLine Stop Time equals to 0");
-                }
-            }
-
-            return true;
+        if (timeInfo.size() != 2) {
+            return false;
         }
 
-        return false;
+        final String lineStartTime = timeInfo.get("startTime");
+        final String lineStopTime = timeInfo.get("stopTime");
+        final String reportStartTime = this.getReportTime().get("beginTime");
+        final String reportStopTime = this.getReportTime().get("endTime");
+
+        final double lineDblStartTime = lineStartTime.isEmpty() ? 0 :
+                Double.valueOf(lineStartTime);
+        final double lineDblStopTime = lineStopTime.isEmpty() ? 0 :
+                Double.valueOf(lineStopTime);
+        final double reportDblStartTime = Double.valueOf(reportStartTime);
+        final double reportDblStopTime = Double.valueOf(reportStopTime);
+
+        boolean isCaptionPrinted = false;
+
+        if (lineDblStopTime < reportDblStartTime
+         || lineDblStartTime > reportDblStopTime
+         || lineDblStartTime > lineDblStopTime
+         || lineDblStartTime == 0 || lineDblStopTime == 0) {
+
+            final String beginTime = "Start Time \"" +
+                    this.getReportTime().get("beginTimeString") + "\"";
+            final String endTime = "Stop Time \"" +
+                    this.getReportTime().get("endTimeString") + "\"";
+            final String startTime = "Start Time \"" +
+                    Util.getFromTimestamp(lineStartTime) + "\"";
+            final String stopTime = "Stop Time \"" +
+                    Util.getFromTimestamp(lineStopTime) + "\"";
+
+            isCaptionPrinted = true;
+
+            this.logError("\t" + lineErrorCaption + ":");
+
+            if (lineDblStopTime < reportDblStartTime) {
+                this.logError("\t\tLine " + stopTime +
+                        " is less than report " + beginTime);
+            }
+
+            if (lineDblStartTime > reportDblStopTime) {
+                this.logError("\t\tLine " + startTime +
+                        " is greater than report " + endTime);
+            }
+
+            if (lineDblStartTime > lineDblStopTime) {
+                this.logError("\t\tLine " + startTime +
+                        " is greater than line " + stopTime);
+            }
+
+            if (lineDblStartTime == 0) {
+                this.logError("\t\tLine Start Time equals to 0");
+            }
+
+            if (lineDblStopTime == 0) {
+                this.logError("\t\tLine Stop Time equals to 0");
+            }
+        }
+
+        return isCaptionPrinted;
     }
 
     //**************************************************************************
@@ -1260,7 +1261,8 @@ public abstract class Tile implements Cloneable {
         final String[] splitParent = (String[])((String[])data.get("splitParent")).clone();
         final int cellDrill = (int)data.get("cellDrill");
         final String filter = (String)data.get("filter");
-        final String operator = data.get("operator") == null ? "" : (String)data.get("operator");
+        final String operator = data.get("operator") == null ? "" :
+                (String)data.get("operator");
 
         final String parentValue = splitParent[cellDrill];
 
@@ -1287,7 +1289,8 @@ public abstract class Tile implements Cloneable {
         final String[] splitParent = (String[])((String[])data.get("splitParent")).clone();
         final int cellDrill = (int)data.get("cellDrill");
         final String filter = (String)data.get("filter");
-        final String operator = data.get("operator") == null ? "" : (String)data.get("operator");
+        final String operator = data.get("operator") == null ? "" :
+                (String)data.get("operator");
 
         final Iterator<String[]> filteredIterator = filteredLines.iterator();
 
