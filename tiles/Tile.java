@@ -662,9 +662,10 @@ public abstract class Tile implements Cloneable {
                     // have to reset "filter" before passing it to getDrillFilter() method
                     params.put("filter", oldFilter);
 
+                    params.put("operator", operator);
+
                     final String newFilter = this.getDrillFilter(params);
 
-                    params.put("operator", operator);
                     params.put("filter", newFilter);
 
                     if (! this.getCellDrillFilters().contains(newFilter)) {
@@ -711,15 +712,10 @@ public abstract class Tile implements Cloneable {
 
                     final String alteration = info.get(timeField).toString();
 
-                    if (alteration.isEmpty()) {
-                        beginEndTime.put(timeField, originalTime);
-                    } else {
+                    final String adjustedTime = alteration.isEmpty() ? originalTime :
+                            this.getAdjustedTime(alteration, originalTime);
 
-                        final String adjustedTime =
-                                this.getAdjustedTime(alteration, originalTime);
-
-                        beginEndTime.put(timeField, adjustedTime);
-                    }
+                    beginEndTime.put(timeField, adjustedTime);
                 });
 
         return beginEndTime;
