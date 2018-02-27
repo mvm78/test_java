@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.lang.reflect.Method;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import test_java.ErrorsLog;
 import test_java.reports.Report;
@@ -33,7 +34,7 @@ public abstract class Tile implements Cloneable {
     private String[] filters;
     private LinkedHashMap<String, HashMap<String, Object>> filterColumns;
     private LinkedHashMap<String, HashMap<String, Object>> columns;
-    private final List<String> cellDrillFilters = new LinkedList<>();
+    private final List<String> cellDrillFilters = new ArrayList<>();
     private String splitChar = " ";
     private int columnIncrement = 1;
     private String lineTally;
@@ -653,7 +654,7 @@ public abstract class Tile implements Cloneable {
         final String oldFilter = (String)data.get("filter");
         final Map<String, Object> params = (Map)((HashMap)data).clone();
 
-        Arrays.stream(new String[] {null, "not"}).parallel()
+        Arrays.stream(new String[] {null, "not"}) // .parallel()
                 .filter(operator -> {
                     // may need to skip as row drill will perform the same action as call drill
                     return operator != null || ! (boolean)params.get("singleLine");
@@ -1232,14 +1233,14 @@ public abstract class Tile implements Cloneable {
 
         final String splitBy = this.getSplitChar();
         final int shift = this.getRemoveFirstItem() ? 1 : 0;
-        final List<String[]> result = Collections.synchronizedList(new ArrayList<>());
+        final CopyOnWriteArrayList<String[]> result = new CopyOnWriteArrayList();
 
         this.getQueryResults(finalCmd).lines().parallel()
                 .forEach(line -> {
                     result.add(Util.split(line.trim(), splitBy, shift));
                 });
 
-        return new ArrayList<>(result);
+        return new ArrayList(result);
     }
 
     //**************************************************************************
@@ -1283,8 +1284,9 @@ public abstract class Tile implements Cloneable {
 
     @SuppressWarnings("unchecked")
     private List<String[]> getArrayListIntersection(final Map<String, Object> data) {
-
-        final List<String[]> parentLines = (List)((ArrayList)data.get("parentLines")).clone();
+        // need to convert to thread safe CopyOnWriteArrayList in order to use removeIf()
+        final CopyOnWriteArrayList<String []> parentLines =
+                new CopyOnWriteArrayList((ArrayList)data.get("parentLines"));
         final List<String[]> filteredLines = (List)((ArrayList)data.get("lines")).clone();
         final String[] splitParent = (String[])((String[])data.get("splitParent")).clone();
         final int cellDrill = (int)data.get("cellDrill");
@@ -1292,51 +1294,27 @@ public abstract class Tile implements Cloneable {
         final String operator = data.get("operator") == null ? "" :
                 (String)data.get("operator");
 
-        final Iterator<String[]> filteredIterator = filteredLines.iterator();
+        final String parentValue = splitParent[cellDrill];
 
-        while (filteredIterator.hasNext()) {
+        filteredLines.parallelStream()
+                .filter(line -> Util.getBufferLineFilter(line))
+                .forEach(line -> {
 
-            final String[] filteredLine = filteredIterator.next();
+                    final boolean isEqual = parentValue.equals(line[cellDrill]);
 
-            if (! Util.getBufferLineFilter(filteredLine)) {
-                continue;
-            }
+                    if (operator.isEmpty() && ! isEqual || operator.equals("not") && isEqual) {
+                        this.logDrilledColumnError(new HashMap<String, Object>() {{
+                            put("message", "must not have");
+                            put("filter", filter);
+                            put("columnOrder", cellDrill);
+                            put("line", line);
+                        }});
+                    }
 
-            final String parentValue = splitParent[cellDrill];
-            final String filterValue = filteredLine[cellDrill];
-
-            final boolean isEqual = parentValue.equals(filterValue);
-
-            if (operator.isEmpty() && ! isEqual || operator.equals("not") && isEqual) {
-                this.logDrilledColumnError(new HashMap<String, Object>() {{
-                    put("message", "must not have");
-                    put("filter", filter);
-                    put("columnOrder", cellDrill);
-                    put("line", filteredLine);
-                }});
-            }
-
-            final Iterator<String[]> parentIterator = parentLines.iterator();
-
-            while (parentIterator.hasNext()) {
-
-                final String[] parentLine = parentIterator.next();
-
-                if (! Util.getBufferLineFilter(parentLine)) {
-
-                    parentIterator.remove();
-
-                    continue;
-                }
-
-                if (Arrays.equals(filteredLine, parentLine)) {
-
-                    parentIterator.remove();
-
-                    break;
-                }
-            }
-        }
+                    parentLines.removeIf(parent -> {
+                        return Arrays.equals(line, parent) || ! Util.getBufferLineFilter(parent);
+                    });
+                });
 
         return parentLines;
     }
