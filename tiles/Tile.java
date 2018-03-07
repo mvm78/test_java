@@ -1293,10 +1293,6 @@ public abstract class Tile implements Cloneable {
                 .filter(line -> Util.getBufferLineFilter(line))
                 .filter(line -> {
 
-//                    final boolean isEqual = compareLeft ?
-//                            line[cellDrill].startsWith(parentValue) :
-//                            line[cellDrill].equals(parentValue);
-//
                     final boolean isEqual = this.isEqual(parentValue,
                             line[cellDrill], columnTitle);
 
@@ -1394,9 +1390,7 @@ public abstract class Tile implements Cloneable {
             final boolean isChildInList =
                     Arrays.stream((String[])info.get().get("equalList")).parallel()
                             .anyMatch(value -> value.equals(child));
-System.err.println(Arrays.toString((String[])info.get().get("equalList")));
-System.err.println("isParentInList (" + parent + ") = " + String.valueOf(isParentInList));
-System.err.println("isChildInList (" + child + ") = " + String.valueOf(isChildInList));
+
             equalListEqual = isParentInList && isChildInList;
         }
 
