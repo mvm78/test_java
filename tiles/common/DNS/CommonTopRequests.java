@@ -34,6 +34,7 @@ public class CommonTopRequests extends Common {
                     "dns.name \"{{value}}\"",
                 });
                 put("cellDrill", new String[] {});
+                put("compareLeft", true);
             }});
             put("Resolved IP", new HashMap<String, Object>() {{
                 put("order", 3);
@@ -41,6 +42,7 @@ public class CommonTopRequests extends Common {
                     "dns.addr \"{{value}}\"",
                 });
                 put("cellDrill", new String[] {});
+                put("equalList", new String[] {"NA", "0.0.0.0", "::"});
             }});
             put("DNS Response Code", new HashMap<String, Object>() {{
                 put("order", 4);

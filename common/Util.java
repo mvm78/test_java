@@ -292,4 +292,15 @@ public class Util {
 
     //**************************************************************************
 
+    public static Map<String, Object> updateHashMap(
+            Map<String, Object> hashMap, String key, Object value
+    ) {
+
+        hashMap.put(key, value);
+
+        return hashMap;
+    }
+
+    //**************************************************************************
+
 }
