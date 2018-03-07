@@ -577,7 +577,7 @@ public abstract class Tile implements Cloneable {
 
 
         if (! filter.isEmpty() && ! this.getNoDrill()) {
-//            this.checkTallies(filter, testResults.get("tally"));
+            this.checkTallies(filter, testResults.get("tally"));
         }
 
         if (isCellDrill || splitParent.length == 0) {
@@ -1324,7 +1324,6 @@ public abstract class Tile implements Cloneable {
         final String filter = (String)data.get("filter");
         final String operator = data.get("operator") == null ? "" :
                 (String)data.get("operator");
-        final boolean compareLeft = (boolean)data.get("compareLeft");
         final String columnTitle = (String)data.get("columnTitle");
 
         filteredLines.parallelStream()
