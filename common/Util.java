@@ -292,13 +292,22 @@ public class Util {
 
     //**************************************************************************
 
-    public static Map<String, Object> updateHashMap(
-            Map<String, Object> hashMap, String key, Object value
-    ) {
+    @SuppressWarnings("unchecked")
+    public static <T> T updateMap(T hashMap, String key, Object value) {
 
-        hashMap.put(key, value);
+        ((HashMap<String, Object>)hashMap).put(key, value);
 
-        return hashMap;
+        return (T)hashMap;
+    }
+
+    //**************************************************************************
+
+    @SuppressWarnings("unchecked")
+    public static <T> T removeFromMap(T hashMap, String key) {
+
+        ((HashMap<String, Object>)hashMap).remove(key);
+
+        return (T)hashMap;
     }
 
     //**************************************************************************
