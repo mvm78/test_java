@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import test_java.ErrorsLog;
 import test_java.common.Consts;
@@ -13,10 +14,13 @@ import test_java.common.Util;
 
 public class Report implements Cloneable {
 
-    private final String beginTime = "10:50:00 02/15/2018";
-    private final String endTime = "10:50:03 02/15/2018";
+    private final String beginTime = "10:52:43.484002 06/05/2017";
+    private final String endTime = "10:52:44 03/01/2018";
     private final String hashKey = "1";
-    private final String appliance = "securityeng164";
+//    private final String appliance = "securityeng164";
+//    private final String appliance = "A-5110-Dev-30";
+    private final String appliance = "App5100-30";
+//    private final String appliance = "Appliance-PM_Perf";
     private final String pcap = "em1";
     private final int maxDrillLevel = 1;
 
@@ -28,7 +32,7 @@ public class Report implements Cloneable {
     private String appPath;
     private String refresh = "refreshTO 5.0";
     private String interval;
-    private Map<String, String> tiles;
+    private Map<String, String> tiles = new HashMap<>();
 
     //**************************************************************************
 
@@ -304,12 +308,15 @@ public class Report implements Cloneable {
             return;
         }
 
-        final Map<String, Map<String, Map<String, Object>>> results = new HashMap<>();
+        final AtomicReference<Map<String, Map<String, Map<String, Object>>>> results =
+                new AtomicReference<>(new HashMap<>());
 
-        final Map<String, Object> params = new HashMap<String, Object>() {{
-            put("filter", filter);
-            put("drillLevel", drillLevel);
-        }};
+        final AtomicReference<Map<String, Object>> params = new AtomicReference<>(
+                new HashMap<String, Object>() {{
+                    put("filter", filter);
+                    put("drillLevel", drillLevel);
+                }}
+        );
 
         this.setInterval();
 
@@ -318,25 +325,28 @@ public class Report implements Cloneable {
 
                     final Tile testTile = this.getTileInstance(tile);
 
-                    final Map<String, Map<String, Object>> result =
-                            testTile.test(params);
+                    final AtomicReference<Map<String, Map<String, Object>>> result =
+                            new AtomicReference<>(testTile.test(params.get()));
 
-                    result.put("columns", (Map)testTile.getColumns());
-                    result.put("info", new HashMap<String, Object>() {{
-                        put("title", testTile.getTitle());
-                    }});
+                    result.set(Util.updateMap(result.get(), "columns", (Map)testTile.getColumns()));
+                    result.set(Util.updateMap(result.get(), "info",
+                            new HashMap<String, Object>() {{
+                                put("title", testTile.getTitle());
+                            }})
+                    );
 
-                    results.put(testTile.getTrueName(), result);
+                    final String trueName = testTile.getTrueName();
+
+                    results.set(Util.updateMap(results.get(), trueName, result.get()));
                 });
 
         if (this.getTallyCheck() != null) {
-            this.checkTally(results, filter);
+            this.checkTally(results.get(), filter);
         }
     }
 
     //**************************************************************************
 
-    @SuppressWarnings("unchecked")
     private void checkTally(
             final Map<String, Map<String, Map<String, Object>>> results,
             final String filter
@@ -345,23 +355,32 @@ public class Report implements Cloneable {
         this.getTallyCheck().keySet().parallelStream()
                 .filter(tile -> results.get(tile) != null)
                 .forEach(tile -> {
+                    this.checkTallyExecute(results, filter, tile);
+                });
+    }
 
-                    final String[] checkTile = this.getTallyCheck().get(tile);
-                    AtomicBoolean isCompareToPrined = new AtomicBoolean(false);
-                    final Map<String, Map<String, Object>> compareToData =
-                            results.get(tile);
-                    final String description = filter.isEmpty() ? "" :
-                            " with filter \"" + filter + "\"";
+    //**************************************************************************
 
-                    final String caption =
-                            compareToData.get("info").get("title").toString() + description;
+    private void checkTallyExecute(
+            final Map<String, Map<String, Map<String, Object>>> results,
+            final String filter,
+            final String tile
+    ) {
 
-                    Arrays.stream(checkTile)
-                            .filter(item -> results.get(item) != null)
-                            .forEach(item -> {
-                                this.compareTallies(compareToData, (Map)results.get(item),
-                                        isCompareToPrined, caption);
-                            });
+        final String[] checkTile = this.getTallyCheck().get(tile);
+        AtomicBoolean isCompareToPrinted = new AtomicBoolean(false);
+
+        final String description = filter.isEmpty() ? "" :
+                " with filter \"" + filter + "\"";
+
+        final String caption = results.get(tile).get("info").get("title").toString() +
+                description;
+
+        Arrays.stream(checkTile)
+                .filter(item -> results.get(item) != null)
+                .forEach(item -> {
+                    this.compareTallies(results.get(tile), (Map)results.get(item),
+                            isCompareToPrinted, caption);
                 });
     }
 
@@ -371,36 +390,39 @@ public class Report implements Cloneable {
     private void compareTallies(
             final Map<String, Map<String, Object>> compareToTile,
             final Map<String, Map<String, Object>> compareTile,
-            AtomicBoolean isCompareToPrined,
+            AtomicBoolean isCompareToPrinted,
             final String caption
     ) {
 
-        AtomicBoolean isComparePrined = new AtomicBoolean(false);
+        AtomicBoolean isComparePrinted = new AtomicBoolean(false);
 
-        final Map<String, Object> columns = compareToTile.get("columns");
-        final Map<String, Object> compareToTally = compareToTile.get("tally");
-        final Map<String, Object> compareTally = compareTile.get("tally");
+        final AtomicReference<Map<String, Object>> columns =
+                new AtomicReference<>(compareToTile.get("columns"));
+        final AtomicReference<Map<String, Object>> compareToTally =
+                new AtomicReference<>(compareToTile.get("tally"));
+        final AtomicReference<Map<String, Object>> compareTally =
+                new AtomicReference<>(compareTile.get("tally"));
 
         final String logFile = "tallyErrors.log";
         final String compareTitle = compareTile.get("info").get("title").toString();
 
-        columns.keySet().stream().parallel()
-                .filter(column -> ((Map)columns.get(column)).get("compare") != null)
-                .filter(column -> compareToTally.get(column) != null)
-                .filter(column -> compareTally.get(column) != null)
+        columns.get().keySet().stream().parallel()
+                .filter(column -> ((Map)columns.get().get(column)).get("compare") != null)
+                .filter(column -> compareToTally.get().get(column) != null)
+                .filter(column -> compareTally.get().get(column) != null)
                 .forEach(column -> {
 
                     final String prettyToValue =
-                            Util.getPrettyNumber(compareToTally.get(column));
+                            Util.getPrettyNumber(compareToTally.get().get(column));
                     final String prettyValue =
-                            Util.getPrettyNumber(compareTally.get(column));
+                            Util.getPrettyNumber(compareTally.get().get(column));
 
                     if (! prettyToValue.equals(prettyValue)) {
-                        if (! isCompareToPrined.getAndSet(true)) {
+                        if (! isCompareToPrinted.getAndSet(true)) {
                             ErrorsLog.log("\n" + caption + " tally mismatch:", logFile);
                         }
 
-                        if (! isComparePrined.getAndSet(true)) {
+                        if (! isComparePrinted.getAndSet(true)) {
                             ErrorsLog.log("\t" + compareTitle, logFile);
                         }
 
@@ -449,18 +471,16 @@ public class Report implements Cloneable {
         final String startTime = this.getBeginTime();
         final String stopTime = this.getEndTime();
 
-        final Map<String, String> reportTime = new HashMap<String, String>() {{
+        final Tile tile = TileFactory.getTile(className, timeInterval);
+
+        tile.setReport(this);
+        tile.setReportTime(new HashMap<String, String>() {{
             put("interval", Util.getTimeInterval(startTime, stopTime));
             put("beginTime", Util.getTimeStamp(startTime));
             put("endTime", Util.getTimeStamp(stopTime));
             put("beginTimeString", startTime);
             put("endTimeString", stopTime);
-        }};
-
-        final Tile tile = TileFactory.getTile(className, timeInterval);
-
-        tile.setReport(this);
-        tile.setReportTime(reportTime);
+        }});
 
         return tile;
     }

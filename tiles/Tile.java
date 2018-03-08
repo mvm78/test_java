@@ -2,6 +2,7 @@ package test_java.tiles;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.*;
 import java.util.concurrent.atomic.*;
 import java.lang.reflect.Method;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -429,31 +430,23 @@ public abstract class Tile implements Cloneable {
     public BufferedReader getQueryResults(final String finalCmd) {
 
         final String shellFile = "run_query-" + UUID.randomUUID().toString() + ".sh";
+        final String brightRed = Consts.getBrightRed();
 
         try (final PrintWriter out = new PrintWriter(shellFile)) {
             out.println(finalCmd);
         } catch (FileNotFoundException e) {
-            System.err.println(Consts.getBrightRed() + "File " + shellFile + " was not found");
+            System.err.println(brightRed + "File " + shellFile + " was not found");
             System.exit(1);
         }
 
         try {
-
-            final AtomicReference<Runtime> runtime =
-                    new AtomicReference<>(Runtime.getRuntime());
-
-            final AtomicReference<Process> process =
-                    new AtomicReference<>(runtime.get().exec("sh " + shellFile));
-
-            final AtomicReference<InputStream> inputStream =
-                    new AtomicReference<>(process.get().getInputStream());
-
-            final AtomicReference<InputStreamReader> inputStreamReader =
-                    new AtomicReference<>(new InputStreamReader(inputStream.get()));
-
-            return new BufferedReader(inputStreamReader.get());
+            return new BufferedReader(
+                    new InputStreamReader(
+                            Runtime.getRuntime().exec("sh " + shellFile).getInputStream()
+                    )
+            );
         } catch (IOException e) {
-            System.err.println(Consts.getBrightRed() + "Error running " + shellFile);
+            System.err.println(brightRed + "Error running " + shellFile);
             System.exit(1);
         }
 
@@ -587,7 +580,6 @@ public abstract class Tile implements Cloneable {
             testResults.set(Util.updateMap(testResults.get(), "tally", drillTally.get()));
         }
 
-
         if (! filter.isEmpty() && ! this.getNoDrill()) {
             this.checkTallies(filter, testResults.get().get("tally"));
         }
@@ -675,7 +667,7 @@ public abstract class Tile implements Cloneable {
         final AtomicReference<Map<String, Object>> params =
                 new AtomicReference<>((Map)((HashMap)data).clone());
 
-        Arrays.stream(new String[] {null, "not"}).parallel()
+        Stream.of(null, "not").parallel()
                 .filter(operator -> {
                     // may need to skip as row drill will perform the same action as call drill
                     return operator != null || ! (boolean)params.get().get("singleLine");
@@ -998,7 +990,7 @@ public abstract class Tile implements Cloneable {
 
                     final String parent = splitParent[index];
 
-                    Arrays.stream(new String[] {"startTime", "stopTime"}).parallel()
+                    Stream.of("startTime", "stopTime").parallel()
                             .filter(field -> info.get(field) != null)
                             .forEach(field -> {
                                 timeInfo.set(Util.updateMap(timeInfo.get(), field, parent));
@@ -1081,7 +1073,7 @@ public abstract class Tile implements Cloneable {
             final int index = (Integer)info.get("order");
 
             if (info.get("filter") == null) {
-                Arrays.stream(new String[] {"startTime", "stopTime"}).parallel()
+                Stream.of("startTime", "stopTime").parallel()
                         .filter(item -> info.get(item) != null)
                         .forEach(dontNeed -> {
 
@@ -1166,16 +1158,15 @@ public abstract class Tile implements Cloneable {
 
     private boolean checkIfCustomRowFilter() {
 
-        Method isCustomRowFilter = null;
+        Method isFilter = null;
 
         try {
-            isCustomRowFilter = this.getClass()
-                    .getDeclaredMethod("getRowFilter", Map.class);
+            isFilter = this.getClass().getDeclaredMethod("getRowFilter", Map.class);
         } catch (NoSuchMethodException | SecurityException e) {
             // no need to catch errors
         }
 
-        return isCustomRowFilter != null;
+        return isFilter != null;
     }
 
     //**************************************************************************

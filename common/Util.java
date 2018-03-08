@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Arrays;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.atomic.AtomicReference;
 
 import test_java.ErrorsLog;
 
@@ -122,10 +123,11 @@ public class Util {
 
     public static String getTimeStamp(final String dateTime) {
 
-        final Map<String, Long> parsedTime = Util.getParsedTime(dateTime);
+        final AtomicReference<Map<String, Long>> parsedTime =
+                new AtomicReference<>(Util.getParsedTime(dateTime));
 
-        final Long unixTime = parsedTime.get("unixTime") / 1000;
-        final Long ms = parsedTime.get("ms");
+        final Long unixTime = parsedTime.get().get("unixTime") / 1000;
+        final Long ms = parsedTime.get().get("ms");
 
         final String milliseconds = ms == 0 ? "" : "." + String.valueOf(ms);
 
@@ -166,11 +168,13 @@ public class Util {
 
     public static String getTimeInterval(final String beginTime, final String endTime) {
 
-        final Map<String, Long> begin = Util.getParsedTime(beginTime);
-        final Map<String, Long> end = Util.getParsedTime(endTime);
+        final AtomicReference<Map<String, Long>> begin =
+                new AtomicReference<>(Util.getParsedTime(beginTime));
+        final AtomicReference<Map<String, Long>> end =
+                new AtomicReference<>(Util.getParsedTime(endTime));
 
-        final Long beginUnixTime = begin.get("unixTime") + begin.get("ms");
-        final Long endUnixTime = end.get("unixTime") + end.get("ms");
+        final Long beginUnixTime = begin.get().get("unixTime") + begin.get().get("ms");
+        final Long endUnixTime = end.get().get("unixTime") + end.get().get("ms");
 
         final Long timeInterval = endUnixTime - beginUnixTime;
 
