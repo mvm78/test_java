@@ -5,7 +5,6 @@ import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.lang.reflect.Method;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
 import test_java.ErrorsLog;
 import test_java.reports.Report;
@@ -481,18 +480,22 @@ public abstract class Tile implements Cloneable {
 
         final AtomicReference<Map<String, Object>> params =
                 new AtomicReference<>((Map)((HashMap)data).clone());
-        final Map<String, Object> matchedLinesParams = (Map)((HashMap)data).clone();
+        final AtomicReference<Map<String, Object>> matchedLinesParams =
+                new AtomicReference<>((Map)((HashMap)data).clone());
 
         params.set(Util.updateMap(params.get(), "splitParent", splitParent));
-        matchedLinesParams.put("splitParent", splitParent);
+        matchedLinesParams.set(Util.updateMap(matchedLinesParams.get(),
+                "splitParent", splitParent));
 
-        final Map<String, Object> debugParams = new HashMap<String, Object>() {{
-            put("parentLine", String.join(splitCharParam, splitParent));
-            put("skipCompare", isCellDrill);
-            put("gebug", gebugParam);
-            put("title", titleParam);
-            put("splitChar", splitCharParam);
-        }};
+        final AtomicReference<Map<String, Object>> debugParams =
+                new AtomicReference<> (new HashMap<String, Object>() {{
+                        put("parentLine", String.join(splitCharParam, splitParent));
+                        put("skipCompare", isCellDrill);
+                        put("gebug", gebugParam);
+                        put("title", titleParam);
+                        put("splitChar", splitCharParam);
+                    }}
+                );
 
         if (splitParent.length == 0 && drillLevel == 1) {
             this.getReport().resetSkipTiles();
@@ -518,17 +521,18 @@ public abstract class Tile implements Cloneable {
 
             if (! this.getNoDrill()) {
 
-                debugParams.put("finalCmd", finalCmd);
-                debugParams.put("lines", lines.get());
+                debugParams.set(Util.updateMap(debugParams.get(), "finalCmd", finalCmd));
+                debugParams.set(Util.updateMap(debugParams.get(), "lines", lines.get()));
 
-                Util.debugOutput(debugParams);
+                Util.debugOutput(debugParams.get());
             }
 
             if (isCellDrill) {
 
-                matchedLinesParams.put("lines", lines.get());
+                matchedLinesParams.set(Util.updateMap(matchedLinesParams.get(),
+                        "lines", lines.get()));
 
-                this.checkMatchedLines(matchedLinesParams);
+                this.checkMatchedLines(matchedLinesParams.get());
 
                 continue;
             }
@@ -564,26 +568,32 @@ public abstract class Tile implements Cloneable {
             }
         }
 
-        final Map<String, Map<String, Object>> testResults = new HashMap<>();
+        final AtomicReference<Map<String, Map<String, Object>>> testResults =
+                new AtomicReference<>(new HashMap<>());
 
         if (! isCellDrill) {
             // do not need to tally if drilling on a field
-            final Map<String, Object> drillTally = tally.get();
+            final AtomicReference<Map<String, Object>> drillTally =
+                new AtomicReference<>(tally.get());
 
             if (this.getLineTally() != null) {
-                drillTally.put(this.getLineTally(), (double)lineCount.get());
+
+                final double count = (double)lineCount.get();
+
+                drillTally.set(Util.updateMap(drillTally.get(),
+                        this.getLineTally(), count));
             }
 
-            testResults.put("tally", drillTally);
+            testResults.set(Util.updateMap(testResults.get(), "tally", drillTally.get()));
         }
 
 
         if (! filter.isEmpty() && ! this.getNoDrill()) {
-//            this.checkTallies(filter, testResults.get("tally"));
+            this.checkTallies(filter, testResults.get().get("tally"));
         }
 
         if (isCellDrill || splitParent.length == 0) {
-            return testResults;
+            return testResults.get();
         }
 
         if (lineCount.get() == 0) {
@@ -600,7 +610,7 @@ public abstract class Tile implements Cloneable {
             this.logError("\t" + lineErrorCaption + ":\n\t\tNO MATCH FOUND");
         }
 
-        return testResults;
+        return testResults.get();
     }
 
     //**************************************************************************
@@ -635,7 +645,8 @@ public abstract class Tile implements Cloneable {
     private void drillCell(final Map<String, Object> data) {
 
         final String filter = (String)data.get("filter");
-        final AtomicReference<Map<String, Object>> params = new AtomicReference<>(data);
+        final AtomicReference<Map<String, Object>> params =
+                new AtomicReference<>((Map)((HashMap)data).clone());
 
         params.set(Util.updateMap(params.get(), "isCellDrill", true));
         params.set(Util.updateMap(params.get(), "filter", filter));
@@ -661,27 +672,28 @@ public abstract class Tile implements Cloneable {
     private void drillCellExecute(final Map<String, Object> data) {
 
         final String oldFilter = (String)data.get("filter");
-        final Map<String, Object> params = (Map)((HashMap)data).clone();
+        final AtomicReference<Map<String, Object>> params =
+                new AtomicReference<>((Map)((HashMap)data).clone());
 
         Arrays.stream(new String[] {null, "not"}).parallel()
                 .filter(operator -> {
                     // may need to skip as row drill will perform the same action as call drill
-                    return operator != null || ! (boolean)params.get("singleLine");
+                    return operator != null || ! (boolean)params.get().get("singleLine");
                 })
                 .forEach(operator -> {
                     // have to reset "filter" before passing it to getDrillFilter() method
-                    params.put("filter", oldFilter);
-                    params.put("operator", operator);
+                    params.set(Util.updateMap(params.get(), "filter", oldFilter));
+                    params.set(Util.updateMap(params.get(), "operator", operator));
 
-                    final String newFilter = this.getDrillFilter(params);
+                    final String newFilter = this.getDrillFilter(params.get());
 
-                    params.put("filter", newFilter);
+                    params.set(Util.updateMap(params.get(), "filter", newFilter));
 
                     if (! this.getCellDrillFilters().contains(newFilter)) {
 
                         this.addCellDrillFilters(newFilter);
 
-                        this.test(params);
+                        this.test(params.get());
                     }
                 });
     }
@@ -693,10 +705,12 @@ public abstract class Tile implements Cloneable {
         final String beginTime = this.getReportTime().get("beginTime");
         final String endTime = this.getReportTime().get("endTime");
 
-        final Map<String, String> beginEndTime = new HashMap<String, String>() {{
-            put("startTime", beginTime);
-            put("stopTime", endTime);
-        }};
+        final AtomicReference<Map<String, String>> beginEndTime =
+                new AtomicReference<> (new HashMap<String, String>() {{
+                        put("startTime", beginTime);
+                        put("stopTime", endTime);
+                    }}
+                );
         // do not use parallelStream() as startTime/stopTime columns most likely are at the beginning of the column list
         this.getColumns().values().stream()
                 .filter(info -> info.get("startTime") != null || info.get("stopTime") != null)
@@ -709,12 +723,10 @@ public abstract class Tile implements Cloneable {
                     String originalTime = split[order];
 
                     if (originalTime.equals("NA") && this.getTitle().equals("Web Sessions")) {
-
                         originalTime = Long.toString(System.currentTimeMillis() / 1000L);
-
                     } else {
 
-                        Object index = info.get("concat");
+                        final Object index = info.get("concat");
 
                         originalTime += index == null ? "" : "." + split[(int)index];
                     }
@@ -724,10 +736,11 @@ public abstract class Tile implements Cloneable {
                     final String adjustedTime = alteration.isEmpty() ? originalTime :
                             this.getAdjustedTime(alteration, originalTime);
 
-                    beginEndTime.put(timeField, adjustedTime);
+                    beginEndTime.set(Util.updateMap(beginEndTime.get(),
+                            timeField, adjustedTime));
                 });
 
-        return beginEndTime;
+        return beginEndTime.get();
     }
 
     //**************************************************************************
@@ -780,7 +793,7 @@ public abstract class Tile implements Cloneable {
 
         this.getColumns().forEach((column, info) -> {
 
-            final int count = (Integer)info.get("order");
+            final int index = (int)info.get("order");
             final Object isTally = info.get("tally");
 
             if (isTally != null && isTally.toString().equals("true")) {
@@ -789,7 +802,7 @@ public abstract class Tile implements Cloneable {
 
                 tallied = tallied == null ? 0D : tallied;
 
-                tally.put(column, (double)tallied + Double.valueOf(split[count]));
+                tally.put(column, (double)tallied + Double.valueOf(split[index]));
             }
         });
 
@@ -805,7 +818,8 @@ public abstract class Tile implements Cloneable {
         final String[] splitParent = (String[])((String[])data.get("splitParent")).clone();
         final boolean isTileSingleLine = (boolean)data.get("isTileSingleLine");
 
-        final Map<String, Object> params = (Map)((HashMap)data).clone();
+        final AtomicReference<Map<String, Object>> params =
+                new AtomicReference<>((Map)((HashMap)data).clone());
 
         if (isTileSingleLine) {
             // there should be only one line on link drill
@@ -813,17 +827,17 @@ public abstract class Tile implements Cloneable {
                 return true;
             } else {
                 // original (parent) and result (after drill) lines do not match
-                params.put("isOutput", true);
+                params.set(Util.updateMap(params.get(), "isOutput", true));
 
-                this.lineErrors(params);
+                this.lineErrors(params.get());
 
                 return false;
             }
         } else {
             // there can be many lines on link drill. One of those lines should match
-            params.put("isOutput", false);
+            params.set(Util.updateMap(params.get(), "isOutput", false));
 
-            return this.lineErrors(params);
+            return this.lineErrors(params.get());
         }
     }
 
@@ -854,13 +868,13 @@ public abstract class Tile implements Cloneable {
                 })
                 .forEach(info -> {
 
-                    final int count = (int)info.getValue().get("order");
+                    final int index = (int)info.getValue().get("order");
 
                     final AtomicReference<Map<String, Object>> params =
                             new AtomicReference<>(
                                     new HashMap<String, Object>() {{
                                         put("filterColumn", info.getKey());
-                                        put("value", split[count]);
+                                        put("value", split[index]);
                                         put("filterCount", filterCount);
                                         put("cellDrill", cellDrill);
                                         put("split", split);
@@ -877,8 +891,8 @@ public abstract class Tile implements Cloneable {
 
                         infoValues.add(new HashMap<String, Object>() {{
                             put("column", info.getKey());
-                            put("order", count);
-                            put("value", split[count]);
+                            put("order", index);
+                            put("value", split[index]);
                         }});
 
                         filterInfo.set(infoValues);
@@ -934,10 +948,10 @@ public abstract class Tile implements Cloneable {
         // drilled row has some data so have to compare it with parent's row data
         this.getColumns().forEach((column, info) -> {
 
-            final int count = (Integer)info.get("order");
+            final int index = (Integer)info.get("order");
 
-            String parent = splitParent[count];
-            String drilled = splitLine[count];
+            String parent = splitParent[index];
+            String drilled = splitLine[index];
 
             final Object compare = info.get("compare");
             final Object filter = info.get("filter");
@@ -980,13 +994,14 @@ public abstract class Tile implements Cloneable {
                 .filter(dontNeed -> timeInfo.get().size() < 2)
                 .forEach(info -> {
 
-                    final int count = (int)info.get("order");
+                    final int index = (int)info.get("order");
+
+                    final String parent = splitParent[index];
 
                     Arrays.stream(new String[] {"startTime", "stopTime"}).parallel()
                             .filter(field -> info.get(field) != null)
                             .forEach(field -> {
-                                timeInfo.set(Util.updateMap(timeInfo.get(),
-                                        field, splitParent[count]));
+                                timeInfo.set(Util.updateMap(timeInfo.get(), field, parent));
                             });
                 });
 
@@ -1063,14 +1078,14 @@ public abstract class Tile implements Cloneable {
 
         this.getColumns().forEach((column, info) -> {
 
-            final int count = (Integer)info.get("order");
+            final int index = (Integer)info.get("order");
 
             if (info.get("filter") == null) {
                 Arrays.stream(new String[] {"startTime", "stopTime"}).parallel()
                         .filter(item -> info.get(item) != null)
                         .forEach(dontNeed -> {
 
-                            String output = Util.getFromTimestamp(split[count]);
+                            String output = Util.getFromTimestamp(split[index]);
 
                             timeRange.set(timeRange.get() + ", " + column + ": " + output);
                         });
@@ -1080,7 +1095,7 @@ public abstract class Tile implements Cloneable {
 
                 final String comma = prev.isEmpty() ? "" : ", ";
 
-                caption.set(prev + comma + column + " \"" + split[count] + "\"");
+                caption.set(prev + comma + column + " \"" + split[index] + "\"");
             }
         });
 
@@ -1181,13 +1196,14 @@ public abstract class Tile implements Cloneable {
 
         final String[] tallyOn = splitParent.length > 0 ? splitParent : split;
 
-        final Map<String, Object> tallyParam = isCellDrill ? (Map)data.get("tally") :
-                this.tally(tallyOn, (Map)data.get("tally"));
+        final AtomicReference<Map<String, Object>> tallyParam = new AtomicReference<>(
+                isCellDrill ? (Map)data.get("tally") : this.tally(tallyOn, (Map)data.get("tally"))
+        );
 
         if (this.getNoDrill() || isCellDrill || ! this.checkIsDrillable()) {
             // some tiles like charts or maps may not be subject to drilling
             return new HashMap<String, Object>() {{
-                put("tally", tallyParam);
+                put("tally", tallyParam.get());
                 put("isLineMatch", isLineMatch);
                 put("break", false);
             }};
@@ -1195,9 +1211,8 @@ public abstract class Tile implements Cloneable {
 
         if (splitParent.length == 0) {
 
-            final Map<String, String> drillTime = this.getDrillTime(split);
-
-            final String drillTileCmd = this.getReport().getCmd(this, drillTime);
+            final String drillTileCmd = this.getReport().getCmd(this,
+                    this.getDrillTime(split));
             final String drillCellCmd = this.getReport().getCmd(this);
 
             final AtomicReference<Map<String, Object>> params =
@@ -1231,7 +1246,7 @@ public abstract class Tile implements Cloneable {
 
             if (! isTileSingleLine && finalIsLineMatch) {
                 return new HashMap<String, Object>() {{
-                   put("tally", tallyParam);
+                   put("tally", tallyParam.get());
                    put("isLineMatch", finalIsLineMatch);
                    put("break", true);
                }};
@@ -1239,7 +1254,7 @@ public abstract class Tile implements Cloneable {
         }
 
         return new HashMap<String, Object>() {{
-            put("tally", tallyParam);
+            put("tally", tallyParam.get());
             put("isLineMatch", isLineMatch);
             put("break", false);
         }};
@@ -1451,8 +1466,8 @@ public abstract class Tile implements Cloneable {
         final AtomicReference<Map<String, Object>> params =
                 new AtomicReference<>(
                         new HashMap<String, Object>() {{
-                            put("filter", filter);
-                            put("drillLevel", 1);
+            put("filter", filter);
+            put("drillLevel", 1);
                         }}
                 );
 
