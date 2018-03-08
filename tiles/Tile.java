@@ -509,7 +509,7 @@ public abstract class Tile implements Cloneable {
 
             final String finalCmd = cmd + this.getQuerySuffix(filter, filterCount);
 
-            final AtomicReference<ArrayList<String[]>> lines =
+            final AtomicReference<List<String[]>> lines =
                     new AtomicReference<>(new ArrayList(this.getQueryLines(finalCmd)));
 
             if (! this.getNoDrill()) {
@@ -879,15 +879,18 @@ public abstract class Tile implements Cloneable {
 
                     if (! filterField.isEmpty()) {
 
-                        List<Map<String, Object>> infoValues = filterInfo.get();
+                        final AtomicReference<List<Map<String, Object>>> infoValues =
+                                new AtomicReference<>(filterInfo.get());
 
-                        infoValues.add(new HashMap<String, Object>() {{
-                            put("column", info.getKey());
-                            put("order", index);
-                            put("value", split[index]);
-                        }});
+                        infoValues.set(Util.addToList(infoValues.get(),
+                                new HashMap<String, Object>() {{
+                                    put("column", info.getKey());
+                                    put("order", index);
+                                    put("value", split[index]);
+                                }})
+                        );
 
-                        filterInfo.set(infoValues);
+                        filterInfo.set(infoValues.get());
 
                         String value = rowFilter.get();
 
@@ -1183,7 +1186,8 @@ public abstract class Tile implements Cloneable {
         final String filter = (String)data.get("filter");
         final int drillLevel = (int)data.get("drillLevel");
         final int lineCount = (int)data.get("lineCount");
-        final List<String[]> parentLines = (List)((ArrayList)data.get("parentLines")).clone();
+        final AtomicReference<List<String[]>> parentLines =
+                new AtomicReference((List)((ArrayList)data.get("parentLines")).clone());
 
         final String[] tallyOn = splitParent.length > 0 ? splitParent : split;
 
@@ -1214,7 +1218,7 @@ public abstract class Tile implements Cloneable {
                                 put("filter", filter);
                                 put("filterCount", filterCount);
                                 put("drillLevel", drillLevel);
-                                put("parentLines", parentLines);
+                                put("parentLines", parentLines.get());
                             }}
                     );
 
@@ -1257,14 +1261,16 @@ public abstract class Tile implements Cloneable {
 
         final String splitBy = this.getSplitChar();
         final int shift = this.getRemoveFirstItem() ? 1 : 0;
-        final CopyOnWriteArrayList<String[]> result = new CopyOnWriteArrayList();
+        final AtomicReference<List<String[]>> result =
+                new AtomicReference<>(new ArrayList());
 
         this.getQueryResults(finalCmd).lines().parallel()
                 .forEach(line -> {
-                    result.add(Util.split(line.trim(), splitBy, shift));
+                    result.set(Util.addToList(result.get(),
+                            Util.split(line.trim(), splitBy, shift)));
                 });
 
-        return new ArrayList(result);
+        return result.get();
     }
 
     //**************************************************************************
@@ -1331,7 +1337,8 @@ public abstract class Tile implements Cloneable {
         // need to convert to thread safe CopyOnWriteArrayList in order to use removeIf()
         final CopyOnWriteArrayList<String []> parentLines =
                 new CopyOnWriteArrayList((ArrayList)data.get("parentLines"));
-        final List<String[]> filteredLines = (List)((ArrayList)data.get("lines")).clone();
+        final AtomicReference<List<String[]>> filteredLines =
+                new AtomicReference<>((List)((ArrayList)data.get("lines")).clone());
         final String parentValue = (String)data.get("parentValue");
         final int cellDrill = (int)data.get("cellDrill");
         final String filter = (String)data.get("filter");
@@ -1339,7 +1346,7 @@ public abstract class Tile implements Cloneable {
                 (String)data.get("operator");
         final String columnTitle = (String)data.get("columnTitle");
 
-        filteredLines.parallelStream()
+        filteredLines.get().parallelStream()
                 .filter(line -> Util.getBufferLineFilter(line))
                 .forEach(line -> {
 

@@ -18,7 +18,8 @@ public class Util {
     public static void debugOutput(final Map<String, Object> data) {
 
         final String finalCmd = (String)data.get("finalCmd");
-        final List<String[]> lines = (List)((ArrayList)data.get("lines")).clone();
+        final AtomicReference<List<String[]>> lines =
+                new AtomicReference<>((List)((ArrayList)data.get("lines")).clone());
         final String parentLine = (String)data.get("parentLine");
         final boolean skipCompare = data.get("skipCompare") == null ? true :
                 (boolean)data.get("skipCompare");
@@ -49,10 +50,10 @@ public class Util {
             return;
         }
 
-        if (lines.isEmpty()) {
+        if (lines.get().isEmpty()) {
             System.out.println(Consts.getRed() + "\t" + "NO DATA");
         } else {
-            lines.forEach(split -> {
+            lines.get().forEach(split -> {
 
                     final String line = String.join(splitChar, split);
 
@@ -140,22 +141,27 @@ public class Util {
 
         Long unixValue = 0L;
 
-        final String[] splitDateTime = dateTime.split("\\s+");
+        final AtomicReference<String[]> splitDateTime =
+                new AtomicReference<>(dateTime.split("\\s+"));
 
-        final String[] splitTime = splitDateTime[0].split("\\.");
+        final AtomicReference<String[]> splitTime =
+                new AtomicReference<>(splitDateTime.get()[0].split("\\."));
 
         final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy");
 
+        final String time = splitTime.get()[0];
+        final String date = splitDateTime.get()[1];
+
         try {
 
-            final Date parsedEndDate = dateFormat.parse(splitTime[0] + " " + splitDateTime[1]);
+            final Date parsedEndDate = dateFormat.parse(time + " " + date);
 
             unixValue = parsedEndDate.getTime();
         } catch (ParseException e) {
             System.err.println(Consts.getBrightRed() + "Invalid End Time");
         }
 
-        final Long ms = splitTime.length > 1 ? Long.valueOf(splitTime[1]) : 0;
+        final Long ms = splitTime.get().length > 1 ? Long.valueOf(splitTime.get()[1]) : 0;
         final Long unixTime = unixValue;
 
         return new HashMap<String, Long>() {{
@@ -299,7 +305,7 @@ public class Util {
     @SuppressWarnings("unchecked")
     public static <T> T updateMap(T hashMap, String key, Object value) {
 
-        ((HashMap<String, Object>)hashMap).put(key, value);
+        ((Map)hashMap).put(key, value);
 
         return (T)hashMap;
     }
@@ -309,9 +315,19 @@ public class Util {
     @SuppressWarnings("unchecked")
     public static <T> T removeFromMap(T hashMap, String key) {
 
-        ((HashMap<String, Object>)hashMap).remove(key);
+        ((Map)hashMap).remove(key);
 
         return (T)hashMap;
+    }
+
+    //**************************************************************************
+
+    @SuppressWarnings("unchecked")
+    public static <T> T addToList(T list, Object value) {
+
+        ((List)list).add(value);
+
+        return (T)list;
     }
 
     //**************************************************************************

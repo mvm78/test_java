@@ -367,7 +367,8 @@ public class Report implements Cloneable {
             final String tile
     ) {
 
-        final String[] checkTile = this.getTallyCheck().get(tile);
+        final AtomicReference<String[]> checkTile =
+                new AtomicReference<>(this.getTallyCheck().get(tile));
         AtomicBoolean isCompareToPrinted = new AtomicBoolean(false);
 
         final String description = filter.isEmpty() ? "" :
@@ -376,7 +377,7 @@ public class Report implements Cloneable {
         final String caption = results.get(tile).get("info").get("title").toString() +
                 description;
 
-        Arrays.stream(checkTile)
+        Arrays.stream(checkTile.get())
                 .filter(item -> results.get(item) != null)
                 .forEach(item -> {
                     this.compareTallies(results.get(tile), (Map)results.get(item),
@@ -442,9 +443,10 @@ public class Report implements Cloneable {
         this.getTileList().keySet().parallelStream()
                 .forEach(type -> {
 
-                    final String[] typeTiles = this.getTilesByType(type);
+                    final AtomicReference<String[]> typeTiles =
+                            new AtomicReference<>(this.getTilesByType(type));
 
-                    Arrays.stream(typeTiles).parallel()
+                    Arrays.stream(typeTiles.get()).parallel()
                             .filter(tile -> this.getSkipTile(tile) == null)
                             .forEach(tile -> this.addTile(tile, type));
                 });
