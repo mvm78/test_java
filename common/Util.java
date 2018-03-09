@@ -7,6 +7,8 @@ import java.util.*;
 import java.util.Arrays;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Stream;
 
 import test_java.ErrorsLog;
 
@@ -99,18 +101,21 @@ public class Util {
             return "0";
         }
 
-        final double number = Double.valueOf(stringValue);
+        final AtomicReference<Double> number =
+                new AtomicReference<>(Double.valueOf(stringValue));
 
-        final long intPart = (long)number;
+        final AtomicLong intPart = new AtomicLong(Long.valueOf(stringValue));
 
-        final String fracPart = String.valueOf(number - intPart);
+        final String fracPart = String.valueOf(number.get() - intPart.get());
 
-        final float decimals = Math.round(Float.valueOf(fracPart) * 1000F) / 1000F;
+        final AtomicReference<Float> decimals = new AtomicReference<>(
+                Math.round(Float.valueOf(fracPart) * 1000F) / 1000F
+        );
 
-        final String decPart = decimals == 0 ? "" :
-                String.valueOf(decimals).substring(1);
+        final String decPart = decimals.get() == 0 ? "" :
+                String.valueOf(decimals.get()).substring(1);
 
-        return String.format("%,d", intPart) + decPart;
+        return String.format("%,d", intPart.get()) + decPart;
     }
 
     //**************************************************************************
@@ -127,19 +132,21 @@ public class Util {
         final AtomicReference<Map<String, Long>> parsedTime =
                 new AtomicReference<>(Util.getParsedTime(dateTime));
 
-        final Long unixTime = parsedTime.get().get("unixTime") / 1000;
-        final Long ms = parsedTime.get().get("ms");
+        final AtomicLong unixTime =
+                new AtomicLong(parsedTime.get().get("unixTime") / 1000);
+        final AtomicLong ms = new AtomicLong(parsedTime.get().get("ms"));
 
-        final String milliseconds = ms == 0 ? "" : "." + String.valueOf(ms);
+        final String milliseconds = ms.get() == 0 ? "" :
+                "." + String.valueOf(ms.get());
 
-        return String.valueOf(unixTime) + milliseconds;
+        return String.valueOf(unixTime.get()) + milliseconds;
     }
 
     //**************************************************************************
 
     private static Map<String, Long> getParsedTime(final String dateTime) {
 
-        Long unixValue = 0L;
+        AtomicLong unixValue = new AtomicLong(0L);
 
         final AtomicReference<String[]> splitDateTime =
                 new AtomicReference<>(dateTime.split("\\s+"));
@@ -147,26 +154,25 @@ public class Util {
         final AtomicReference<String[]> splitTime =
                 new AtomicReference<>(splitDateTime.get()[0].split("\\."));
 
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy");
+        final AtomicReference<SimpleDateFormat> dateFormat =
+                new AtomicReference<>(new SimpleDateFormat("HH:mm:ss MM/dd/yyyy"));
 
         final String time = splitTime.get()[0];
         final String date = splitDateTime.get()[1];
 
         try {
 
-            final Date parsedEndDate = dateFormat.parse(time + " " + date);
+            final AtomicReference<Date> parsedEndDate =
+                    new AtomicReference<>(dateFormat.get().parse(time + " " + date));
 
-            unixValue = parsedEndDate.getTime();
+            unixValue.set(parsedEndDate.get().getTime());
         } catch (ParseException e) {
             System.err.println(Consts.getBrightRed() + "Invalid End Time");
         }
 
-        final Long ms = splitTime.get().length > 1 ? Long.valueOf(splitTime.get()[1]) : 0;
-        final Long unixTime = unixValue;
-
         return new HashMap<String, Long>() {{
-            put("unixTime", unixTime);
-            put("ms", ms);
+            put("unixTime", unixValue.get());
+            put("ms", splitTime.get().length > 1 ? Long.valueOf(splitTime.get()[1]) : 0);
         }};
     }
 
@@ -179,10 +185,13 @@ public class Util {
         final AtomicReference<Map<String, Long>> end =
                 new AtomicReference<>(Util.getParsedTime(endTime));
 
-        final Long beginUnixTime = begin.get().get("unixTime") + begin.get().get("ms");
-        final Long endUnixTime = end.get().get("unixTime") + end.get().get("ms");
+        final AtomicLong beginUnixTime =
+                new AtomicLong(begin.get().get("unixTime") + begin.get().get("ms"));
+        final AtomicLong endUnixTime =
+                new AtomicLong(end.get().get("unixTime") + end.get().get("ms"));
 
-        final Long timeInterval = endUnixTime - beginUnixTime;
+        final AtomicLong timeInterval =
+                new AtomicLong(endUnixTime.get() - beginUnixTime.get());
 
         return String.valueOf(timeInterval.floatValue() / 1000);
     }
@@ -222,18 +231,18 @@ public class Util {
 //       [^"]*      - Finally 0 or more non-quotes
 //       $          - Till the end  (This is necessary, else every comma will satisfy the condition)
 //    )
-        final String[] split = line.split(pattern, -1);
+        final AtomicReference<String[]> split =
+                new AtomicReference(line.split(pattern, -1));
 
-        return shift > 0 ? Arrays.copyOfRange(split, shift, split.length) : split;
+        return shift > 0 ? Arrays.copyOfRange(split.get(), shift, split.get().length) :
+                split.get();
     }
 
     //**************************************************************************
 
     public static boolean getBufferLineFilter(final String[] line) {
 
-        final String[] ignore = new String[] {"#I;", "window", "t=Refresh;"};
-
-        return ! Arrays.stream(ignore).parallel()
+        return ! Stream.of("#I;", "window", "t=Refresh;").parallel()
                 .anyMatch(item -> item.equals(line[0]));
     }
 
@@ -241,51 +250,61 @@ public class Util {
 
     public static String getBase64(final String value) {
 
-        final byte[] authBytes = value.getBytes(StandardCharsets.UTF_8);
+        final AtomicReference<byte[]> authBytes =
+                new AtomicReference<>(value.getBytes(StandardCharsets.UTF_8));
 
-        return "BASE6464BASE" + Base64.getEncoder().encodeToString(authBytes);
+        return "BASE6464BASE" + Base64.getEncoder().encodeToString(authBytes.get());
     }
 
     //**************************************************************************
 
     public static String getFromTimestamp(final String value) {
 
-        final String[] splitTime = value.split("\\.");
+        final AtomicReference<String[]> splitTime =
+                new AtomicReference<>(value.split("\\."));
 
-        final Date date = new Date(Long.valueOf(splitTime[0]) * 1000L);
-        final SimpleDateFormat textFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        final String milliseconds = splitTime.length > 1 ?
-                "." + splitTime[1].substring(0, 6) : "";
+        final AtomicReference<Date> date = new AtomicReference<>(
+                new Date(Long.valueOf(splitTime.get()[0]) * 1000L)
+        );
+        final AtomicReference<SimpleDateFormat> textFormat = new AtomicReference<>(
+                new SimpleDateFormat("MM/dd/yyyy HH:mm:ss")
+        );
+        final String milliseconds = splitTime.get().length > 1 ?
+                "." + splitTime.get()[1].substring(0, 6) : "";
 
-        final String dateTime = textFormat.format(date) + milliseconds;
+        final String dateTime = textFormat.get().format(date) + milliseconds;
 
-        final String[] splitDateTime = dateTime.split("\\s+");
+        final AtomicReference<String[]> splitDateTime =
+                new AtomicReference<>(dateTime.split("\\s+"));
 
-        return splitDateTime[1] + " " + splitDateTime[0];
+        return splitDateTime.get()[1] + " " + splitDateTime.get()[0];
     }
 
     //**************************************************************************
 
     public static void removeLogs() {
 
-        final File[] files = Arrays.stream(ErrorsLog.getLogFiles()).parallel()
-                .map(file -> new File(Consts.getFolder() + file))
-                .toArray(File[]::new);
-
-        Util.removeFiles(files);
+        Util.removeFiles(
+                // array of File[]
+                Arrays.stream(ErrorsLog.getLogFiles()).parallel()
+                        .map(file -> new File(Consts.getFolder() + file))
+                        .toArray(File[]::new)
+        );
     }
 
     //**************************************************************************
 
     public static void removeShellFiles() {
 
-        final File folder = new File(Consts.getFolder());
+        final AtomicReference<File> folder =
+                new AtomicReference<>(new File(Consts.getFolder()));
 
-        final File[] files = folder.listFiles((final File dontneed, final String name) -> {
-            return name.startsWith("run_query");
-        });
-
-        Util.removeFiles(files);
+        Util.removeFiles(
+                // array of File[]
+                folder.get().listFiles((final File dontneed, final String name) -> {
+                    return name.startsWith("run_query");
+                })
+        );
     }
 
     //**************************************************************************
