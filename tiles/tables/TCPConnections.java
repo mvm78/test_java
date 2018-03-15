@@ -1,6 +1,6 @@
 package test_java.tiles.tables;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -20,7 +20,7 @@ public class TCPConnections extends Table {
 
         final String instancePrefix = this.getCommon().getPrefix();
         final String instanceWindow = this.getCommon().getWindow();
-        final LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
+        final LinkedHashMap<String, ConcurrentHashMap<String, Object>> instanceColumns =
                 this.getCommon().getFilterColumns();
 
         this.setPrefix(instancePrefix);

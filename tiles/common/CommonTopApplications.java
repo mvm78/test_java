@@ -1,6 +1,6 @@
 package test_java.tiles.common;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;;
 import java.util.LinkedHashMap;
 
 public class CommonTopApplications extends Common {
@@ -30,10 +30,10 @@ public class CommonTopApplications extends Common {
     //**************************************************************************
 
     @Override
-    public LinkedHashMap<String, HashMap<String, Object>> getFilterColumns() {
+    public LinkedHashMap<String, ConcurrentHashMap<String, Object>> getFilterColumns() {
 
-        return new LinkedHashMap<String, HashMap<String, Object>>() {{
-            put("Application", new HashMap<String, Object>() {{
+        return new LinkedHashMap<String, ConcurrentHashMap<String, Object>>() {{
+            put("Application", new ConcurrentHashMap<String, Object>() {{
                 put("order", 1);
                 put("filter", new String[] {
                     "apptype none and app_port {{value}}",

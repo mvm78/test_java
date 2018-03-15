@@ -1,7 +1,7 @@
 package test_java.tiles.common.Web;
 
 import test_java.tiles.common.*;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;;
 import java.util.LinkedHashMap;
 
 public class CommonTopWebServers extends Common {
@@ -17,16 +17,16 @@ public class CommonTopWebServers extends Common {
     //**************************************************************************
 
     @Override
-    public LinkedHashMap<String, HashMap<String, Object>> getFilterColumns() {
+    public LinkedHashMap<String, ConcurrentHashMap<String, Object>> getFilterColumns() {
 
-        return new LinkedHashMap<String, HashMap<String, Object>>() {{
-            put("Host", new HashMap<String, Object>() {{
+        return new LinkedHashMap<String, ConcurrentHashMap<String, Object>>() {{
+            put("Host", new ConcurrentHashMap<String, Object>() {{
                 put("order", 1);
                 put("filter", new String[] {
                     "hosthttp \"{{value}}\"",
                 });
             }});
-            put("Destination", new HashMap<String, Object>() {{
+            put("Destination", new ConcurrentHashMap<String, Object>() {{
                 put("order", 2);
                 put("filter", new String[] {
                     "host {{value}}",

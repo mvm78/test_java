@@ -1,6 +1,6 @@
 package test_java.tiles.charts;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;;
 import java.util.LinkedHashMap;
 
 import test_java.tiles.Tile;
@@ -51,9 +51,9 @@ public abstract class Chart extends Tile {
 
         this.setCommonBy(commonBy);
 
-        final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =
-                new LinkedHashMap<String, HashMap<String, Object>>() {};
-        final LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
+        final LinkedHashMap<String, ConcurrentHashMap<String, Object>> instanceFilterColumns =
+                new LinkedHashMap<String, ConcurrentHashMap<String, Object>>() {};
+        final LinkedHashMap<String, ConcurrentHashMap<String, Object>> instanceColumns =
                 commonBy.appendCompareColumns(instanceFilterColumns, this.getColumnIncrement());
 
         this.setFields(new String[] {

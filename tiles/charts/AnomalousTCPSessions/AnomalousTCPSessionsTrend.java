@@ -1,6 +1,6 @@
 package test_java.tiles.charts.AnomalousTCPSessions;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;;
 import java.util.LinkedHashMap;
 
 import test_java.tiles.charts.*;
@@ -23,8 +23,8 @@ public class AnomalousTCPSessionsTrend extends Chart {
         this.setPrefix(instancePrefix);
         this.setFields();
         this.setFilters(instanceFilters);
-        this.setColumns(new LinkedHashMap<String, HashMap<String, Object>>() {{
-            put("Connections", new HashMap<String, Object>() {{
+        this.setColumns(new LinkedHashMap<String, ConcurrentHashMap<String, Object>>() {{
+            put("Connections", new ConcurrentHashMap<String, Object>() {{
                 put("order", 1);
                 put("tally", "true");
                 put("compare", "true");

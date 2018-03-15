@@ -1,6 +1,6 @@
 package test_java.reports;
 
-import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SNMP extends Report {
 
@@ -12,7 +12,7 @@ public class SNMP extends Report {
         this.setTitle("SNMP");
         this.setTilesFolder("SNMP");
 
-        this.setTileList(new HashMap<String, String[]>() {{
+        this.setTileList(new ConcurrentHashMap<String, String[]>() {{
             put("charts", new String[] {
                 "SNMPVariablesChart",
             });
@@ -22,7 +22,7 @@ public class SNMP extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String[]>() {{
+        this.setTallyCheck(new ConcurrentHashMap<String, String[]>() {{
             put("SNMPTopDeviceInterface", new String[] {
                 "SNMPVariables",
                 "SNMPVariablesChart",

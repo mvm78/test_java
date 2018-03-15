@@ -64,37 +64,43 @@ public class ErrorsLog {
                     final File file = new File(fileName);
 
                     if (file.exists() && ! file.isDirectory()) {
-                        try {
-
-                            String line;
-                            final FileReader fileReader = new FileReader(fileName);
-
-                            System.out.println(fileName + ":");
-
-                            try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-                                while((line = bufferedReader.readLine()) != null) {
-                                    System.out.println(Consts.getRed() + line);
-                                }
-
-                                System.out.println(Consts.getResetColor());
-
-                                bufferedReader.close();
-                            } catch (IOException e) {
-                                System.err.println(Consts.getBrightRed() +
-                                        "Error reading " + fileName);
-                                System.exit(1);
-                            }
-                        } catch (FileNotFoundException e) {
-                            System.err.println(Consts.getBrightRed() +
-                                    "Error reading " + fileName);
-                            System.exit(1);
-                        }
+                        ErrorsLog.outputLogExecute(fileName);
                     } else {
                         System.out.println(fileName + ":");
                         System.out.println(Consts.getDarkGreen() + "No error was found");
                         System.out.println(Consts.getResetColor());
                     }
                 });
+    }
+
+    //**************************************************************************
+
+    public static void outputLogExecute(final String fileName) {
+
+        try {
+            String line;
+            final FileReader fileReader = new FileReader(fileName);
+
+            System.out.println(fileName + ":");
+
+            try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+                while((line = bufferedReader.readLine()) != null) {
+                    System.out.println(Consts.getRed() + line);
+                }
+
+                System.out.println(Consts.getResetColor());
+
+                bufferedReader.close();
+            } catch (IOException e) {
+                System.err.println(Consts.getBrightRed() +
+                        "Error reading " + fileName);
+                System.exit(1);
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println(Consts.getBrightRed() +
+                    "Error reading " + fileName);
+            System.exit(1);
+        }
     }
 
     //**************************************************************************

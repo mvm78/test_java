@@ -1,6 +1,6 @@
 package test_java.tiles.common.SIP_KPIs;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;;
 import java.util.LinkedHashMap;
 
 import test_java.tiles.common.Common;
@@ -10,10 +10,10 @@ public class CommonTopSIPVLAN extends Common {
     //**************************************************************************
 
     @Override
-    public LinkedHashMap<String, HashMap<String, Object>> getFilterColumns() {
+    public LinkedHashMap<String, ConcurrentHashMap<String, Object>> getFilterColumns() {
 
-        return new LinkedHashMap<String, HashMap<String, Object>>() {{
-            put("VLAN", new HashMap<String, Object>() {{
+        return new LinkedHashMap<String, ConcurrentHashMap<String, Object>>() {{
+            put("VLAN", new ConcurrentHashMap<String, Object>() {{
                 put("order", 0);
                 put("filter", new String[] {
                     "vlan {{value}}",

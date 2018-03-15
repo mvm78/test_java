@@ -1,6 +1,6 @@
 package test_java.reports;
 
-import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class NetFlow extends Report {
 
@@ -11,7 +11,7 @@ public class NetFlow extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg");
         this.setTitle("NetFlow");
 
-        this.setTileList(new HashMap<String, String[]>() {{
+        this.setTileList(new ConcurrentHashMap<String, String[]>() {{
             put("tables", new String[] {
                 "NetFlow.NetFlowDevicesByBytesAndPackets",
                 "NetFlow.NetFlowInputInterfacesByBytesAndPackets",
@@ -26,7 +26,7 @@ public class NetFlow extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String[]>() {{
+        this.setTallyCheck(new ConcurrentHashMap<String, String[]>() {{
             put("NetFlowDevicesByBytesAndPackets", new String[] {
                 "NetFlowInputInterfacesByBytesAndPackets",
                 "NetFlowOutputInterfacesByBytesAndPackets",

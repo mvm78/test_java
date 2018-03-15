@@ -1,6 +1,6 @@
 package test_java.reports;
 
-import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SIP_KPIs extends Report {
 
@@ -13,7 +13,7 @@ public class SIP_KPIs extends Report {
         this.setTitle("SIP KPIs");
         this.setTilesFolder("SIP_KPIs");
 
-        this.setTileList(new HashMap<String, String[]>() {{
+        this.setTileList(new ConcurrentHashMap<String, String[]>() {{
             put("tables", new String[] {
                 "TopSIPStatusCodes",
                 "TopSIPCallingNumbers",

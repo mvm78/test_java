@@ -1,6 +1,6 @@
 package test_java.reports;
 
-import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TopApplications extends Report {
 
@@ -11,7 +11,7 @@ public class TopApplications extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg");
         this.setTitle("Top Applications");
 
-        this.setTileList(new HashMap<String, String[]>() {{
+        this.setTileList(new ConcurrentHashMap<String, String[]>() {{
             put("charts", new String[] {
                 "ThroughputVsGoodput",
             });
@@ -23,7 +23,7 @@ public class TopApplications extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String[]>() {{
+        this.setTallyCheck(new ConcurrentHashMap<String, String[]>() {{
             put("TopTCPApplicationsByBytes", new String[] {
                 "TopApplicationsByResponseTimeAndRetransmittedBytes",
             });

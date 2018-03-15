@@ -1,6 +1,6 @@
 package test_java.reports;
 
-import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TopApplicationPorts extends Report {
 
@@ -11,7 +11,7 @@ public class TopApplicationPorts extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg");
         this.setTitle("Top Application Ports");
 
-        this.setTileList(new HashMap<String, String[]>() {{
+        this.setTileList(new ConcurrentHashMap<String, String[]>() {{
             put("charts", new String[] {
                 "BitRateAndPacketRate",
                 "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
@@ -25,7 +25,7 @@ public class TopApplicationPorts extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String[]>() {{
+        this.setTallyCheck(new ConcurrentHashMap<String, String[]>() {{
             put("TopApplicationPortsByBytesAndPackets", new String[] {
                 "BitRateAndPacketRate",
             });

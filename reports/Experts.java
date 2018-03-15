@@ -1,6 +1,6 @@
 package test_java.reports;
 
-import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Experts extends Report {
 
@@ -11,7 +11,7 @@ public class Experts extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg-multi");
         this.setTitle("Experts - Network vs Web Application Weight");
 
-        this.setTileList(new HashMap<String, String[]>() {{
+        this.setTileList(new ConcurrentHashMap<String, String[]>() {{
             put("tables", new String[] {
                 "Web.WebSessions",
                 "Experts.ExpertsTCPSessions",

@@ -1,6 +1,6 @@
 package test_java.reports;
 
-import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class WebPerformance extends Report {
 
@@ -13,7 +13,7 @@ public class WebPerformance extends Report {
         this.setTitle("Web Performance");
         this.setTilesFolder("Web");
 
-        this.setTileList(new HashMap<String, String[]>() {{
+        this.setTileList(new ConcurrentHashMap<String, String[]>() {{
             put("tables", new String[] {
                 "TopWebServers",
                 "TopWebResponsePhrases",
@@ -22,7 +22,7 @@ public class WebPerformance extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String[]>() {{
+        this.setTallyCheck(new ConcurrentHashMap<String, String[]>() {{
             put("TopWebServers", new String[] {
                 "TopWebResponsePhrases",
                 "TopWebUserAgents",

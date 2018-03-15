@@ -1,6 +1,6 @@
 package test_java.reports;
 
-import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class DatabasePerformance extends Report {
 
@@ -12,7 +12,7 @@ public class DatabasePerformance extends Report {
         this.setTitle("Database Performance");
         this.setTilesFolder("Database");
 
-        this.setTileList(new HashMap<String, String[]>() {{
+        this.setTileList(new ConcurrentHashMap<String, String[]>() {{
             put("charts", new String[] {
                 "DatabaseLatencyAndRecordsOverTime",
             });
@@ -27,7 +27,7 @@ public class DatabasePerformance extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String[]>() {{
+        this.setTallyCheck(new ConcurrentHashMap<String, String[]>() {{
             put("DatabaseLatencyAndRecordsOverTime", new String[] {
                 "DatabaseTopQueryTypes",
                 "DatabaseTopQueryStatus",

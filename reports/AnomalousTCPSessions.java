@@ -1,6 +1,6 @@
 package test_java.reports;
 
-import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AnomalousTCPSessions extends Report {
 
@@ -12,7 +12,7 @@ public class AnomalousTCPSessions extends Report {
         this.setTitle("Anomalous TCP Sessions");
         this.setTilesFolder("AnomalousTCPSessions");
 
-        this.setTileList(new HashMap<String, String[]>() {{
+        this.setTileList(new ConcurrentHashMap<String, String[]>() {{
             put("charts", new String[] {
                 "UnacknowledgedTCPSessionsTrend",
                 "ServerResetNoBytesTCPSessionsTrend",
@@ -35,7 +35,7 @@ public class AnomalousTCPSessions extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String[]>() {{
+        this.setTallyCheck(new ConcurrentHashMap<String, String[]>() {{
             put("UnacknowledgedTCPSessionsTrend", new String[] {
                 "UnacknowledgedTCPSessions",
             });

@@ -1,6 +1,6 @@
 package test_java.reports;
 
-import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PerformanceOverview extends Report {
 
@@ -11,7 +11,7 @@ public class PerformanceOverview extends Report {
         this.setAppPath("/usr/local/mercury/bin/agg");
         this.setTitle("Performance Overview");
 
-        this.setTileList(new HashMap<String, String[]>() {{
+        this.setTileList(new ConcurrentHashMap<String, String[]>() {{
             put("charts", new String[] {
                 "BitRateAndPacketRate",
                 "ConnectionsNetworkTimeResponseTimeAndRetransmittedBytes",
@@ -31,7 +31,7 @@ public class PerformanceOverview extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String[]>() {{
+        this.setTallyCheck(new ConcurrentHashMap<String, String[]>() {{
             put("TopApplicationPortsByBytesAndPackets", new String[] {
                 "BitRateAndPacketRate",
                 "TopSourcesByBytesAndPackets",

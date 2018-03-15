@@ -1,6 +1,6 @@
 package test_java.reports;
 
-import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class RTP_KPIs extends Report {
 
@@ -12,7 +12,7 @@ public class RTP_KPIs extends Report {
         this.setTitle("RTP KPIs");
         this.setTilesFolder("RTP_KPIs");
 
-        this.setTileList(new HashMap<String, String[]>() {{
+        this.setTileList(new ConcurrentHashMap<String, String[]>() {{
             put("charts", new String[] {
                 "RTPPacketsSessionsAndLoss",
             });
@@ -25,7 +25,7 @@ public class RTP_KPIs extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String[]>() {{
+        this.setTallyCheck(new ConcurrentHashMap<String, String[]>() {{
             put("RTPPacketsSessionsAndLoss", new String[] {
                 "TopRTPCodec",
                 "TopRTPSources",

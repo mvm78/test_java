@@ -1,16 +1,16 @@
 package test_java.tiles.common;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
-import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class Common {
 
     protected String window = "0.0";
     protected String prefix;
 
-    public abstract LinkedHashMap<String, HashMap<String, Object>> getFilterColumns();
+    public abstract LinkedHashMap<String, ConcurrentHashMap<String, Object>> getFilterColumns();
 
     //**************************************************************************
 
@@ -75,35 +75,34 @@ public abstract class Common {
     @SuppressWarnings("unchecked")
     public static String getRowFilter(Map<String, Object> data) {
 
-        final AtomicReference<Map<String, HashMap<String, Object>>> columns =
-                new AtomicReference<>((Map)((LinkedHashMap)data.get("columns")).clone());
-        final String filterColumn = (String)data.get("filterColumn");
-        final String value = (String)data.get("value");
-        final int count = (int)data.get("filterCount");
-        final int cellDrill = (int)data.get("cellDrill");
+        Map<String, ConcurrentHashMap<String, Object>> columns =
+                (Map)((LinkedHashMap)data.get("columns")).clone();
+        String filterColumn = (String)data.get("filterColumn");
+        String value = (String)data.get("value");
+        int count = (int)data.get("filterCount");
+        int cellDrill = (int)data.get("cellDrill");
 
-        final AtomicReference<Map<String, Object>> column =
-                new AtomicReference<>((Map)columns.get().get(filterColumn));
+        Map<String, Object> column = (ConcurrentHashMap)columns.get(filterColumn);
 
         String escaped;
 
-        if (column.get().get("valueFunction") == null) {
+        if (column.get("valueFunction") == null) {
 
-            escaped = column.get().get("escapeDoubleQuote") != null
-                  && (boolean)column.get().get("escapeDoubleQuote") ?
+            escaped = column.get("escapeDoubleQuote") != null
+                  && (boolean)column.get("escapeDoubleQuote") ?
                     value.replace("\"", "\\\"") : value;
 
-            escaped = column.get().get("escapeSingleQuote") != null
-                  && (boolean)column.get().get("escapeSingleQuote") ?
+            escaped = column.get("escapeSingleQuote") != null
+                  && (boolean)column.get("escapeSingleQuote") ?
                     escaped.replace("\'", "\\\'") : escaped;
 
         } else {
 
-            final String valueFunction = (String)column.get().get("valueFunction");
+            String valueFunction = (String)column.get("valueFunction");
 
             try {
 
-                final Method method = Class.forName("test_java.common.Util")
+                Method method = Class.forName("test_java.common.Util")
                         .getDeclaredMethod(valueFunction, String.class);
 
                 escaped = (String)method.invoke(null, value);
@@ -113,12 +112,10 @@ public abstract class Common {
             }
         }
 
-        final String[] cellDrillInfo = (String[])column.get().get("cellDrill");
-
-        final String type = cellDrill > 0 && cellDrillInfo.length > 0 ?
+        String type = cellDrill > 0 && ((String[])column.get("cellDrill")).length > 0 ?
                 "cellDrill" : "filter";
 
-        final String[] filters = (String[])column.get().get(type);
+        String[] filters = (String[])column.get(type);
 
         return filters[count].replace("{{value}}", escaped);
     }

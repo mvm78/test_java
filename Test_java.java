@@ -7,12 +7,7 @@ import test_java.reports.*;
 
 public class Test_java {
 
-    public static void main(final String[] args) {
-
-        Util.removeLogs();
-        Util.removeShellFiles();
-
-        final String[] reports = {
+    private static final String[] REPORTS = {
             "PerformanceOverview",
             "TopApplications",
             "TopApplicationPorts",
@@ -30,9 +25,23 @@ public class Test_java {
             "FlowBasedRTP_KPIs",
             "Experts",
             "NetFlow",
-        };
+    };
 
-        Arrays.stream(reports).parallel()
+    //**************************************************************************
+
+    private static String[] getReports() {
+
+        return Test_java.REPORTS;
+    }
+
+    //**************************************************************************
+
+    public static void main(final String[] args) {
+
+        Util.removeLogs();
+        Util.removeShellFiles();
+
+        Arrays.stream(Test_java.getReports()).parallel()
                 .forEach(report -> {
                     ReportFactory.getReport("test_java.reports." + report).tests();
                 });

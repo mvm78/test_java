@@ -1,6 +1,6 @@
 package test_java.tiles.tables;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;;
 import java.util.LinkedHashMap;
 
 import test_java.tiles.Tile;
@@ -36,9 +36,9 @@ public abstract class Table extends Tile {
         final String[] instanceFields = common.getFields().clone();
         final String commonByFields = commonBy.getFields();
         final String[] instanceFilters = common.getFilters();
-        final LinkedHashMap<String, HashMap<String, Object>> instanceFilterColumns =
+        final LinkedHashMap<String, ConcurrentHashMap<String, Object>> instanceFilterColumns =
                 common.getFilterColumns();
-        final LinkedHashMap<String, HashMap<String, Object>> instanceColumns =
+        final LinkedHashMap<String, ConcurrentHashMap<String, Object>> instanceColumns =
                 commonBy.appendCompareColumns(instanceFilterColumns, this.getColumnIncrement());
 
         this.setFields(instanceFields);

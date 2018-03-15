@@ -1,6 +1,6 @@
 package test_java.reports;
 
-import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class FlowBasedRTP_KPIs extends Report {
 
@@ -12,7 +12,7 @@ public class FlowBasedRTP_KPIs extends Report {
         this.setTitle("Media Flow");
         this.setTilesFolder("MediaFlow");
 
-        this.setTileList(new HashMap<String, String[]>() {{
+        this.setTileList(new ConcurrentHashMap<String, String[]>() {{
             put("tables", new String[] {
                 "MediaFlow",
             });

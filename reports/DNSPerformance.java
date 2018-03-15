@@ -1,6 +1,6 @@
 package test_java.reports;
 
-import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class DNSPerformance extends Report {
 
@@ -12,7 +12,7 @@ public class DNSPerformance extends Report {
         this.setTitle("DNS Performance");
         this.setTilesFolder("DNS");
 
-        this.setTileList(new HashMap<String, String[]>() {{
+        this.setTileList(new ConcurrentHashMap<String, String[]>() {{
             put("charts", new String[] {
                 "DNSRateAndLatency",
             });
@@ -25,7 +25,7 @@ public class DNSPerformance extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String[]>() {{
+        this.setTallyCheck(new ConcurrentHashMap<String, String[]>() {{
             put("TopDNSRequestTypes", new String[] {
                 "DNSRateAndLatency",
                 "TopDNSResponses",

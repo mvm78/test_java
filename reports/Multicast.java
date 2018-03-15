@@ -1,6 +1,6 @@
 package test_java.reports;
 
-import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Multicast extends Report {
 
@@ -12,7 +12,7 @@ public class Multicast extends Report {
         this.setTitle("Multicast");
         this.setTilesFolder("Multicast");
 
-        this.setTileList(new HashMap<String, String[]>() {{
+        this.setTileList(new ConcurrentHashMap<String, String[]>() {{
             put("tables", new String[] {
                 "TopSourcesByBytesAndPackets",
                 "TopGroupsByBytesAndPackets",
@@ -20,7 +20,7 @@ public class Multicast extends Report {
             });
         }});
 
-        this.setTallyCheck(new HashMap<String, String[]>() {{
+        this.setTallyCheck(new ConcurrentHashMap<String, String[]>() {{
             put("TopTalkerPairsByBytesAndPackets", new String[] {
                 "TopSourcesByBytesAndPackets",
                 "TopGroupsByBytesAndPackets",

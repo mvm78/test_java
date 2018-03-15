@@ -2,7 +2,7 @@ package test_java.tiles.common;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;;
 import java.util.LinkedHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,8 +20,8 @@ public abstract class CommonBy {
 
     //**************************************************************************
 
-    public LinkedHashMap<String, HashMap<String, Object>> appendCompareColumns(
-            final LinkedHashMap<String, HashMap<String, Object>> _columns,
+    public LinkedHashMap<String, ConcurrentHashMap<String, Object>> appendCompareColumns(
+            final LinkedHashMap<String, ConcurrentHashMap<String, Object>> _columns,
             final int columnIncrement
     ) {
 
@@ -33,7 +33,7 @@ public abstract class CommonBy {
         AtomicInteger count = new AtomicInteger(start);
 
         this.getCompareColumns().forEach((column, value) -> {
-            _columns.put(column, new HashMap<String, Object>() {{
+            _columns.put(column, new ConcurrentHashMap<String, Object>() {{
 
                 put("order", count.getAndAdd(1));
                 put("compare", value);
