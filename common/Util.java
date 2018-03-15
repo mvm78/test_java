@@ -224,7 +224,7 @@ public class Util {
 
         final String[] ignore = new String[] {"#I;", "window", "t=Refresh;"};
 
-        return ! Arrays.stream(ignore) // .parallel()
+        return ! Arrays.stream(ignore).parallel()
                 .anyMatch(item -> item.equals(line[0]));
     }
 
@@ -259,7 +259,7 @@ public class Util {
 
     public static void removeLogs() {
 
-        final File[] files = Arrays.stream(ErrorsLog.getLogFiles()) // .parallel()
+        final File[] files = Arrays.stream(ErrorsLog.getLogFiles()).parallel()
                 .map(file -> new File(Consts.getFolder() + file))
                 .toArray(File[]::new);
 
@@ -283,7 +283,7 @@ public class Util {
 
     private static void removeFiles(final File[] files) {
 
-        Arrays.stream(files) // .parallel()
+        Arrays.stream(files).parallel()
                 .filter(file -> file.exists() && ! file.isDirectory())
                 .filter(file -> ! file.delete())
                 .forEach(file -> {
