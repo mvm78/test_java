@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import test_java.ErrorsLog;
 import test_java.common.Consts;
@@ -26,15 +27,15 @@ public class Report implements Cloneable {
     private final String pcap = "em1";
     private final int maxDrillLevel = 1;
 
-    private String title;
-    private Map<String, String[]> tileList = new ConcurrentHashMap<>();
-    private Map<String, String[]> tallyCheck = new ConcurrentHashMap<>();
-    private Map<String, Boolean> skipTiles = new ConcurrentHashMap<>();
-    private String tilesFolder = "";
-    private String appPath;
-    private String refresh = "refreshTO 5.0";
-    private String interval;
-    private Map<String, String> tiles = new ConcurrentHashMap<>();
+    private final AtomicReference<String> title = new AtomicReference<>();
+    private final AtomicReference<Map<String, String[]>> tileList = new AtomicReference<>(new HashMap<>());
+    private final AtomicReference<Map<String, String[]>> tallyCheck = new AtomicReference<>(new HashMap<>());
+    private final AtomicReference<Map<String, Boolean>> skipTiles = new AtomicReference<>(new HashMap<>());
+    private final AtomicReference<String> tilesFolder = new AtomicReference<>("");
+    private final AtomicReference<String> appPath = new AtomicReference<>();
+    private final AtomicReference<String> refresh = new AtomicReference<>("refreshTO 5.0");
+    private final AtomicReference<String> interval = new AtomicReference<>();
+    private final AtomicReference<Map<String, String>> tiles = new AtomicReference<>(new HashMap<>());
 
     //**************************************************************************
 
@@ -47,21 +48,21 @@ public class Report implements Cloneable {
 
     public final String getTitle() {
 
-        return this.title;
+        return this.title.get();
     }
 
     //**************************************************************************
 
     final protected void setTitle(final String title) {
 
-        this.title = title;
+        this.title.set(title);
     }
 
     //**************************************************************************
 
     private Map<String, String[]> getTileList() {
 
-        return this.tileList;
+        return this.tileList.get();
     }
 
     //**************************************************************************
@@ -75,28 +76,28 @@ public class Report implements Cloneable {
 
     final protected void setTileList(final ConcurrentHashMap<String, String[]> tileList) {
 
-        this.tileList = tileList;
+        this.tileList.set(tileList);
     }
 
     //**************************************************************************
 
     private Map<String, String[]> getTallyCheck() {
 
-        return this.tallyCheck;
+        return this.tallyCheck.get();
     }
 
     //**************************************************************************
 
     final protected void setTallyCheck(final ConcurrentHashMap<String, String[]> tallyCheck) {
 
-        this.tallyCheck = tallyCheck;
+        this.tallyCheck.set(tallyCheck);
     }
 
     //**************************************************************************
 
     private Map<String, Boolean> getSkipTiles() {
 
-        return this.skipTiles;
+        return this.skipTiles.get();
     }
 
     //**************************************************************************
@@ -110,28 +111,28 @@ public class Report implements Cloneable {
 
     final public void addSkipTile(final String skipTile) {
 
-        this.skipTiles.put(skipTile, true);
+        this.skipTiles.set(Util.updateMap(this.skipTiles.get(), skipTile, true));
     }
 
     //**************************************************************************
 
     final public void resetSkipTiles() {
 
-        this.skipTiles = new ConcurrentHashMap<>();
+        this.skipTiles.set(new ConcurrentHashMap<>());
     }
 
     //**************************************************************************
 
     final protected String getTilesFolder() {
 
-        return this.tilesFolder;
+        return this.tilesFolder.get();
     }
 
     //**************************************************************************
 
     final protected void setTilesFolder(final String tilesFolder) {
 
-        this.tilesFolder = tilesFolder;
+        this.tilesFolder.set(tilesFolder);
     }
 
     //**************************************************************************
@@ -152,14 +153,14 @@ public class Report implements Cloneable {
 
     final public Map<String, String> getTiles() {
 
-        return this.tiles;
+        return this.tiles.get();
     }
 
     //**************************************************************************
 
     private void resetTiles() {
 
-        this.tiles = new ConcurrentHashMap<String, String>() {};
+        this.tiles.set(new ConcurrentHashMap<String, String>() {});
     }
 
     //**************************************************************************
@@ -173,35 +174,35 @@ public class Report implements Cloneable {
 
     private void addTile(final String tile, final String type) {
 
-        this.tiles.put(tile, type);
+        this.tiles.set(Util.updateMap(this.tiles.get(), tile, type));
     }
 
     //**************************************************************************
 
     private String getAppPath() {
 
-        return this.appPath;
+        return this.appPath.get();
     }
 
     //**************************************************************************
 
     final protected void setAppPath(final String appPath) {
 
-        this.appPath = appPath;
+        this.appPath.set(appPath);
     }
 
     //**************************************************************************
 
     final protected String getRefresh() {
 
-        return this.refresh;
+        return this.refresh.get();
     }
 
     //**************************************************************************
 
     final protected void setRefresh(final String refresh) {
 
-        this.refresh = refresh;
+        this.refresh.set(refresh);
     }
 
     //**************************************************************************
@@ -247,10 +248,8 @@ public class Report implements Cloneable {
 
     public String getCmdTime() {
 
-        final String startTime = Util.getTimeStamp(this.beginTime);
-        final String stopTime = Util.getTimeStamp(this.endTime);
-
-        return " B " + startTime + " E " + stopTime;
+        return " B " + Util.getTimeStamp(this.beginTime) +
+               " E " + Util.getTimeStamp(this.endTime);
     }
 
     //**************************************************************************
@@ -284,14 +283,14 @@ public class Report implements Cloneable {
 
     public final void setInterval() {
 
-        this.interval = Util.getTimeInterval(this.getBeginTime(), this.getEndTime());
+        this.interval.set(Util.getTimeInterval(this.getBeginTime(), this.getEndTime()));
     }
 
     //**************************************************************************
 
     public final String getInterval() {
 
-        return this.interval;
+        return this.interval.get();
     }
 
     //**************************************************************************

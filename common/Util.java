@@ -293,4 +293,34 @@ public class Util {
 
     //**************************************************************************
 
+    @SuppressWarnings("unchecked")
+    public static <T> T updateMap(T hashMap, String key, Object value) {
+
+        ((Map)hashMap).put(key, value);
+
+        return (T)hashMap;
+    }
+
+    //**************************************************************************
+
+    @SuppressWarnings("unchecked")
+    public static <T> T removeFromMap(T hashMap, String key) {
+
+        ((Map)hashMap).remove(key);
+
+        return (T)hashMap;
+    }
+
+    //**************************************************************************
+
+    @SuppressWarnings("unchecked")
+    public static <T> T addToList(T list, Object value) {
+
+        ((List)list).add(value);
+
+        return (T)list;
+    }
+
+    //**************************************************************************
+
 }
