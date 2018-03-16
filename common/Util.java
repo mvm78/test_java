@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Arrays;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -20,7 +19,7 @@ public class Util {
     public static void debugOutput(final Map<String, Object> data) {
 
         final String finalCmd = (String)data.get("finalCmd");
-        final List<String[]> lines = (List)((CopyOnWriteArrayList)data.get("lines")).clone();
+        final List<String[]> lines = (List)((ArrayList)data.get("lines")).clone();
         final String parentLine = (String)data.get("parentLine");
         final boolean skipCompare = data.get("skipCompare") == null ? true :
                 (boolean)data.get("skipCompare");
@@ -144,7 +143,7 @@ public class Util {
 
     private static Map<String, Long> getParsedTime(final String dateTime) {
 
-        AtomicLong unixValue = new AtomicLong(0L);
+        final AtomicLong unixValue = new AtomicLong(0L);
 
         final AtomicReference<String[]> splitDateTime =
                 new AtomicReference<>(dateTime.split("\\s+"));
@@ -169,15 +168,12 @@ public class Util {
             System.err.println(Consts.getBrightRed() + "Invalid End Time");
         }
 
-        final AtomicReference<String> ms = new AtomicReference(
-                splitTime.get().length < 2 ? "0" :
-                        String.format("%-6s", splitTime.get()[1]).replace(' ', '0')
-
-        );
+        final String ms = splitTime.get().length < 2 ? "0" :
+                String.format("%-6s", splitTime.get()[1]).replace(' ', '0');
 
         return new HashMap<String, Long>() {{
             put("unixTime", unixValue.get());
-            put("ms", Long.valueOf(ms.get()));
+            put("ms", Long.valueOf(ms));
         }};
     }
 
@@ -320,6 +316,16 @@ public class Util {
     public static <T> T updateMap(T hashMap, String key, Object value) {
 
         ((Map)hashMap).put(key, value);
+
+        return (T)hashMap;
+    }
+
+    //**************************************************************************
+
+    @SuppressWarnings("unchecked")
+    public static <T> T updateMap(T hashMap, T params) {
+
+        ((Map)params).forEach((key, value) -> ((Map)hashMap).put(key, value));
 
         return (T)hashMap;
     }

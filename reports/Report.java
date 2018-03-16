@@ -1,5 +1,8 @@
 package test_java.reports;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,14 +18,9 @@ import test_java.common.Util;
 
 public class Report implements Cloneable {
 
-    private final String beginTime = "11:00:00 03/15/2018";
-    private final String endTime = "11:00:01 03/15/2018";
+    private final String beginTime = "15:35:00 03/16/2018";
+    private final String endTime = "15:35:00.5 03/16/2018";
     private final String hashKey = "1";
-//    private final String appliance = "A-5120-Nightly-42";
-//    private final String appliance = "securityeng164";
-//    private final String appliance = "A-5110-Dev-30";
-    private final String appliance = "App5100-30";
-//    private final String appliance = "Appliance-PM_Perf";
     private final String pcap = "em1";
     private final int maxDrillLevel = 1;
 
@@ -239,8 +237,36 @@ public class Report implements Cloneable {
     public String getCmdAppliance() {
 
         return " U " + this.hashKey +
-                " r " + this.appliance +
+                " r " + this.fetchAppliance(this.pcap) +
                 " i " + this.pcap;
+    }
+
+    //**************************************************************************
+
+    private String fetchAppliance(final String pcap) {
+
+        final AtomicReference<Process> process = new AtomicReference<>();
+
+        try {
+            process.set(Runtime.getRuntime().exec("/usr/local/mercury/bin/vls"));
+        } catch (IOException e) {
+            System.err.println(Consts.getBrightRed() + "Error running vls");
+            System.exit(1);
+        }
+
+        final AtomicReference<BufferedReader> stdInput = new AtomicReference<>(
+                new BufferedReader(
+                        new InputStreamReader(process.get().getInputStream())
+                )
+        );
+
+        final String line = stdInput.get().lines().parallel()
+                .filter(row -> row.substring(row.lastIndexOf('/') + 1).equals(pcap))
+                .findFirst()
+                .toString();
+
+        return line.substring(0, line.lastIndexOf('/'))
+                .replace("Optional[", "");
     }
 
     //**************************************************************************
