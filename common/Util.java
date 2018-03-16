@@ -7,6 +7,8 @@ import java.util.*;
 import java.util.Arrays;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 
 import test_java.ErrorsLog;
 
@@ -125,43 +127,57 @@ public class Util {
 
     public static String getTimeStamp(final String dateTime) {
 
-        final Map<String, Long> parsedTime = Util.getParsedTime(dateTime);
+        final AtomicReference<Map<String, Long>> parsedTime =
+                new AtomicReference<>(Util.getParsedTime(dateTime));
 
-        final Long unixTime = parsedTime.get("unixTime") / 1000;
-        final Long ms = parsedTime.get("ms");
+        final AtomicLong unixTime =
+                new AtomicLong(parsedTime.get().get("unixTime") / 1000);
+        final AtomicLong ms = new AtomicLong(parsedTime.get().get("ms"));
 
-        final String milliseconds = ms == 0 ? "" : "." + String.valueOf(ms);
+        final String milliseconds = ms.get() == 0 ? "" :
+                "." + String.format("%06d", ms.get());
 
-        return String.valueOf(unixTime) + milliseconds;
+        return String.valueOf(unixTime.get()) + milliseconds;
     }
 
     //**************************************************************************
 
     private static Map<String, Long> getParsedTime(final String dateTime) {
 
-        Long unixValue = 0L;
+        AtomicLong unixValue = new AtomicLong(0L);
 
-        final String[] splitDateTime = dateTime.split("\\s+");
+        final AtomicReference<String[]> splitDateTime =
+                new AtomicReference<>(dateTime.split("\\s+"));
 
-        final String[] splitTime = splitDateTime[0].split("\\.");
+        final AtomicReference<String[]> splitTime =
+                new AtomicReference<>(splitDateTime.get()[0].split("\\."));
 
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy");
+        final AtomicReference<SimpleDateFormat> dateFormat =
+                new AtomicReference<>(new SimpleDateFormat("HH:mm:ss MM/dd/yyyy"));
+
+        final String time = splitTime.get()[0];
+        final String date = splitDateTime.get()[1];
 
         try {
 
-            final Date parsedEndDate = dateFormat.parse(splitTime[0] + " " + splitDateTime[1]);
+            final AtomicReference<Date> parsedEndDate = new AtomicReference<>(
+                    dateFormat.get().parse(time + " " + date)
+            );
 
-            unixValue = parsedEndDate.getTime();
+            unixValue.set(parsedEndDate.get().getTime());
         } catch (ParseException e) {
             System.err.println(Consts.getBrightRed() + "Invalid End Time");
         }
 
-        final Long ms = splitTime.length > 1 ? Long.valueOf(splitTime[1]) : 0;
-        final Long unixTime = unixValue;
+        final AtomicReference<String> ms = new AtomicReference(
+                splitTime.get().length < 2 ? "0" :
+                        String.format("%-6s", splitTime.get()[1]).replace(' ', '0')
+
+        );
 
         return new HashMap<String, Long>() {{
-            put("unixTime", unixTime);
-            put("ms", ms);
+            put("unixTime", unixValue.get());
+            put("ms", Long.valueOf(ms.get()));
         }};
     }
 
@@ -169,13 +185,18 @@ public class Util {
 
     public static String getTimeInterval(final String beginTime, final String endTime) {
 
-        final Map<String, Long> begin = Util.getParsedTime(beginTime);
-        final Map<String, Long> end = Util.getParsedTime(endTime);
+        final AtomicReference<Map<String, Long>> begin =
+                new AtomicReference<>(Util.getParsedTime(beginTime));
+        final AtomicReference<Map<String, Long>> end =
+                new AtomicReference<>(Util.getParsedTime(endTime));
 
-        final Long beginUnixTime = begin.get("unixTime") + begin.get("ms");
-        final Long endUnixTime = end.get("unixTime") + end.get("ms");
+        final AtomicLong beginUnixTime =
+                new AtomicLong(begin.get().get("unixTime") + begin.get().get("ms"));
+        final AtomicLong endUnixTime =
+                new AtomicLong(end.get().get("unixTime") + end.get().get("ms"));
 
-        final Long timeInterval = endUnixTime - beginUnixTime;
+        final AtomicLong timeInterval =
+                new AtomicLong(endUnixTime.get() - beginUnixTime.get());
 
         return String.valueOf(timeInterval.floatValue() / 1000);
     }
