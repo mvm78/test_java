@@ -52,15 +52,17 @@ public class Util {
         if (lines.isEmpty()) {
             System.out.println(Consts.getRed() + "\t" + "NO DATA");
         } else {
-            lines.forEach(split -> {
+            // do not use parallel so that lines are output in the order they were fetched
+            lines.stream()
+                    .forEach(split -> {
 
-                    final String line = String.join(splitChar, split);
+                        final String line = String.join(splitChar, split);
 
-                    final String lineColor = skipCompare ? Consts.getDarkGrey() :
-                            Util.getLineColor(line, parentLine);
+                        final String color = skipCompare ? Consts.getDarkGrey() :
+                                Util.getLineColor(line, parentLine);
 
-                    System.out.println(resetColor + lineColor + "\t" + line + resetColor);
-                });
+                        System.out.println(resetColor + color + "\t" + line + resetColor);
+                    });
         }
 
         System.out.println(resetColor);
