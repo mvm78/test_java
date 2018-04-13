@@ -27,9 +27,6 @@ public class TopApplications extends Report {
             put("TopTCPApplicationsByBytes", new String[] {
                 "TopApplicationsByResponseTimeAndRetransmittedBytes",
             });
-            put("TopApplicationsByThroughput", new String[] {
-                "ThroughputVsGoodput",
-            });
         }});
     }
 

@@ -39,7 +39,7 @@ public class DatabaseTopVLAN extends Table {
         data.put("columns", this.getColumns());
 
         String cmd = "/usr/local/mercury/bin/agg" +
-                report.getCmdAppliance() +
+                " i " + report.getIface() +
                 report.getCmdTime() +
                 " NetDist dst app_port src sport" +
                 " q '" + Common.getRowFilter(data) + "'" +

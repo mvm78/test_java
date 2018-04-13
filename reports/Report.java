@@ -1,8 +1,5 @@
 package test_java.reports;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,10 +15,9 @@ import test_java.common.Util;
 
 public class Report implements Cloneable {
 
-    private final String beginTime = "15:35:00 03/16/2018";
-    private final String endTime = "15:35:00.5 03/16/2018";
-    private final String hashKey = "1";
-    private final String pcap = "em1";
+    private final String beginTime = "14:35:00 04/13/2018";
+    private final String endTime = "14:35:00.1 04/13/2018";
+    private final String iface = "em1";
     private final int maxDrillLevel = 1;
 
     private final AtomicReference<String> title = new AtomicReference<>();
@@ -234,39 +230,9 @@ public class Report implements Cloneable {
 
     //**************************************************************************
 
-    public String getCmdAppliance() {
+    public String getIface() {
 
-        return " U " + this.hashKey +
-                " r " + this.fetchAppliance(this.pcap) +
-                " i " + this.pcap;
-    }
-
-    //**************************************************************************
-
-    private String fetchAppliance(final String pcap) {
-
-        final AtomicReference<Process> process = new AtomicReference<>();
-
-        try {
-            process.set(Runtime.getRuntime().exec("/usr/local/mercury/bin/vls"));
-        } catch (IOException e) {
-            System.err.println(Consts.getBrightRed() + "Error running vls");
-            System.exit(1);
-        }
-
-        final AtomicReference<BufferedReader> stdInput = new AtomicReference<>(
-                new BufferedReader(
-                        new InputStreamReader(process.get().getInputStream())
-                )
-        );
-
-        final String line = stdInput.get().lines().parallel()
-                .filter(row -> row.substring(row.lastIndexOf('/') + 1).equals(pcap))
-                .findFirst()
-                .toString();
-
-        return line.substring(0, line.lastIndexOf('/'))
-                .replace("Optional[", "");
+        return this.iface;
     }
 
     //**************************************************************************
@@ -298,7 +264,7 @@ public class Report implements Cloneable {
 
         final String path = tileAppPath == null ? this.getAppPath() : tileAppPath;
 
-        return path + this.getCmdAppliance() +
+        return path + " i " + this.getIface() +
                 " " + this.getRefresh() +
                 " B " + drillTime.get("startTime") +
                 " E " + drillTime.get("stopTime");
@@ -357,7 +323,7 @@ public class Report implements Cloneable {
                     result.set(Util.updateMap(result.get(), "columns", (Map)testTile.getColumns()));
                     result.set(Util.updateMap(result.get(), "info",
                             new HashMap<String, Object>() {{
-                        put("title", testTile.getTitle());
+                                put("title", testTile.getTitle());
                             }})
                     );
 
@@ -384,7 +350,7 @@ public class Report implements Cloneable {
                 .forEach(tile -> {
 
                     final String[] checkTile = this.getTallyCheck().get(tile);
-                    AtomicBoolean isCompareToPrined = new AtomicBoolean(false);
+                    final AtomicBoolean isCompareToPrined = new AtomicBoolean(false);
                     final Map<String, Map<String, Object>> compareToData =
                             results.get(tile);
                     final String description = filter.isEmpty() ? "" :
@@ -408,7 +374,7 @@ public class Report implements Cloneable {
     private void compareTallies(
             final Map<String, Map<String, Object>> compareToTile,
             final Map<String, Map<String, Object>> compareTile,
-            AtomicBoolean isCompareToPrined,
+            final AtomicBoolean isCompareToPrined,
             final String caption
     ) {
 

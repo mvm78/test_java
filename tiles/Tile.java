@@ -713,21 +713,16 @@ public abstract class Tile implements Cloneable {
                 .filter(info -> info.get("startTime") != null || info.get("stopTime") != null)
                 .forEach(info -> {
 
-                    final int order = (int)info.get("order");
                     final String timeField = info.get("startTime") == null ?
                             "stopTime" : "startTime";
 
-                    String originalTime = split[order];
+                    String originalTime = split[(int)info.get("order")];
 
                     if (originalTime.equals("NA") && this.getTitle().equals("Web Sessions")) {
-
                         originalTime = Long.toString(System.currentTimeMillis() / 1000L);
-
                     } else {
-
-                        Object index = info.get("concat");
-
-                        originalTime += index == null ? "" : "." + split[(int)index];
+                        originalTime += info.get("concat") == null ? "" :
+                                "." + split[(int)info.get("concat")];
                     }
 
                     final String alteration = info.get(timeField).toString();
@@ -918,8 +913,8 @@ public abstract class Tile implements Cloneable {
 
         final String lineErrorCaption = this.getLineErrorCaption(splitParent);
 
-        AtomicBoolean isCaptionPrined = new AtomicBoolean(false);
-        AtomicBoolean isError = new AtomicBoolean(false);
+        final AtomicBoolean isCaptionPrined = new AtomicBoolean(false);
+        final AtomicBoolean isError = new AtomicBoolean(false);
 
         if (lineCount == 1) {
             // check if drilled row Start/Stop Time data do not contradict report's Begin/End Time
