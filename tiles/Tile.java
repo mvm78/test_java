@@ -1152,16 +1152,11 @@ public abstract class Tile implements Cloneable {
 
     private boolean checkIfCustomRowFilter() {
 
-        Method isCustomRowFilter = null;
-
         try {
-            isCustomRowFilter = this.getClass()
-                    .getDeclaredMethod("getRowFilter", ConcurrentHashMap.class);
+            return this.getClass().getDeclaredMethod("getRowFilter", Map.class) != null;
         } catch (NoSuchMethodException | SecurityException e) {
-            // no need to catch errors
+            return false; // no need to catch errors
         }
-
-        return isCustomRowFilter != null;
     }
 
     //**************************************************************************
