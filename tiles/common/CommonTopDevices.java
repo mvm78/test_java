@@ -1,6 +1,7 @@
 package test_java.tiles.common;
 
-import java.util.concurrent.ConcurrentHashMap;;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class CommonTopDevices extends Common {
@@ -24,10 +25,10 @@ public class CommonTopDevices extends Common {
     //**************************************************************************
 
     @Override
-    public LinkedHashMap<String, ConcurrentHashMap<String, Object>> getFilterColumns() {
+    public LinkedHashMap<String, Map<String, Object>> getFilterColumns() {
 
-        return new LinkedHashMap<String, ConcurrentHashMap<String, Object>>() {{
-            put("Device", new ConcurrentHashMap<String, Object>() {{
+        return new LinkedHashMap<String, Map<String, Object>>() {{
+            put("Device", new HashMap<String, Object>() {{
                 put("order", 1);
                 put("filter", new String[] {
                     "device {{value}}",

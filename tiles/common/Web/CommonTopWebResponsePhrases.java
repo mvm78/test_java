@@ -1,7 +1,8 @@
 package test_java.tiles.common.Web;
 
 import test_java.tiles.common.*;
-import java.util.concurrent.ConcurrentHashMap;;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class CommonTopWebResponsePhrases extends Common {
@@ -17,16 +18,16 @@ public class CommonTopWebResponsePhrases extends Common {
     //**************************************************************************
 
     @Override
-    public LinkedHashMap<String, ConcurrentHashMap<String, Object>> getFilterColumns() {
+    public LinkedHashMap<String, Map<String, Object>> getFilterColumns() {
 
-        return new LinkedHashMap<String, ConcurrentHashMap<String, Object>>() {{
-            put("Request Method", new ConcurrentHashMap<String, Object>() {{
+        return new LinkedHashMap<String, Map<String, Object>>() {{
+            put("Request Method", new HashMap<String, Object>() {{
                 put("order", 1);
                 put("filter", new String[] {
                     "method {{value}}",
                 });
             }});
-            put("Response Phrase", new ConcurrentHashMap<String, Object>() {{
+            put("Response Phrase", new HashMap<String, Object>() {{
                 put("order", 2);
                 put("filter", new String[] {
                     "reason {{value}}",

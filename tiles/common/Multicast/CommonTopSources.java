@@ -1,7 +1,8 @@
 package test_java.tiles.common.Multicast;
 
 import test_java.tiles.common.*;
-import java.util.concurrent.ConcurrentHashMap;;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class CommonTopSources extends Common {
@@ -25,10 +26,10 @@ public class CommonTopSources extends Common {
     //**************************************************************************
 
     @Override
-    public LinkedHashMap<String, ConcurrentHashMap<String, Object>> getFilterColumns() {
+    public LinkedHashMap<String, Map<String, Object>> getFilterColumns() {
 
-        return new LinkedHashMap<String, ConcurrentHashMap<String, Object>>() {{
-            put("Source", new ConcurrentHashMap<String, Object>() {{
+        return new LinkedHashMap<String, Map<String, Object>>() {{
+            put("Source", new HashMap<String, Object>() {{
                 put("order", 1);
                 put("filter", new String[] {
                     "host {{value}}",

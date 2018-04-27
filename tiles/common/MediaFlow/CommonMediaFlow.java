@@ -1,7 +1,8 @@
 package test_java.tiles.common.MediaFlow;
 
 import test_java.tiles.common.*;
-import java.util.concurrent.ConcurrentHashMap;;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class CommonMediaFlow extends Common {
@@ -24,90 +25,90 @@ public class CommonMediaFlow extends Common {
     //**************************************************************************
 
     @Override
-    public LinkedHashMap<String, ConcurrentHashMap<String, Object>> getFilterColumns() {
+    public LinkedHashMap<String, Map<String, Object>> getFilterColumns() {
 
-        return new LinkedHashMap<String, ConcurrentHashMap<String, Object>>() {{
-            put("Start Time", new ConcurrentHashMap<String, Object>() {{
+        return new LinkedHashMap<String, Map<String, Object>>() {{
+            put("Start Time", new HashMap<String, Object>() {{
                 put("order", 0);
                 put("startTime", "");
             }});
-            put("Stop Time", new ConcurrentHashMap<String, Object>() {{
+            put("Stop Time", new HashMap<String, Object>() {{
                 put("order", 1);
                 put("stopTime", "+ 1 μs");
             }});
-            put("Protocol", new ConcurrentHashMap<String, Object>() {{
+            put("Protocol", new HashMap<String, Object>() {{
                 put("order", 2);
                 put("cellDrill", new String[] {
                     "proto {{value}}",
                 });
             }});
-            put("Source", new ConcurrentHashMap<String, Object>() {{
+            put("Source", new HashMap<String, Object>() {{
                 put("order", 3);
                 put("filter", new String[] {
                     "host {{value}}",
                 });
             }});
-            put("Destination", new ConcurrentHashMap<String, Object>() {{
+            put("Destination", new HashMap<String, Object>() {{
                 put("order", 4);
                 put("filter", new String[] {
                     "host {{value}}",
                 });
             }});
-            put("Client Port", new ConcurrentHashMap<String, Object>() {{
+            put("Client Port", new HashMap<String, Object>() {{
                 put("order", 5);
                 put("filter", new String[] {
                     "port {{value}}",
                 });
             }});
-            put("Server Port", new ConcurrentHashMap<String, Object>() {{
+            put("Server Port", new HashMap<String, Object>() {{
                 put("order", 6);
                 put("filter", new String[] {
                     "app_port {{value}}",
                 });
             }});
-            put("T Channel", new ConcurrentHashMap<String, Object>() {{
+            put("T Channel", new HashMap<String, Object>() {{
                 put("order", 8);
                 put("cellDrill", new String[] {
                     "tchannel {{value}}",
                 });
             }});
-            put("Device", new ConcurrentHashMap<String, Object>() {{
+            put("Device", new HashMap<String, Object>() {{
                 put("order", 9);
                 put("cellDrill", new String[] {
                     "device {{value}}",
                 });
             }});
-            put("Data link connection identifier", new ConcurrentHashMap<String, Object>() {{
+            put("Data link connection identifier", new HashMap<String, Object>() {{
                 put("order", 10);
                 put("cellDrill", new String[] {
                     "dlci {{value}}",
                 });
             }});
-            put("EtherType", new ConcurrentHashMap<String, Object>() {{
+            put("EtherType", new HashMap<String, Object>() {{
                 put("order", 12);
                 put("cellDrill", new String[] {
                     "ether proto {{value}}",
                 });
             }});
-            put("Ingress VLAN", new ConcurrentHashMap<String, Object>() {{
+            put("Ingress VLAN", new HashMap<String, Object>() {{
                 put("order", 13);
                 put("cellDrill", new String[] {
                     "srcvlan {{value}}",
                 });
             }});
-            put("Engress VLAN", new ConcurrentHashMap<String, Object>() {{
+            put("Engress VLAN", new HashMap<String, Object>() {{
                 put("order", 14);
                 put("cellDrill", new String[] {
                     "dstvlan {{value}}",
                 });
             }});
-            put("Synchronization Source", new ConcurrentHashMap<String, Object>() {{
+            put("Synchronization Source", new HashMap<String, Object>() {{
                 put("order", 15);
                 put("cellDrill", new String[] {
                     "ssrc {{value}}",
                 });
             }});
-            put("Codec", new ConcurrentHashMap<String, Object>() {{
+            put("Codec", new HashMap<String, Object>() {{
                 put("order", 16);
                 put("cellDrill", new String[] {
                     "codec {{value}}",

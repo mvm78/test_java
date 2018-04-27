@@ -1,7 +1,7 @@
 package test_java.tiles.common;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;;
+import java.util.Map;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
 
@@ -10,7 +10,7 @@ public abstract class Common {
     protected String window = "0.0";
     protected String prefix;
 
-    public abstract LinkedHashMap<String, ConcurrentHashMap<String, Object>> getFilterColumns();
+    public abstract LinkedHashMap<String, Map<String, Object>> getFilterColumns();
 
     //**************************************************************************
 
@@ -75,14 +75,14 @@ public abstract class Common {
     @SuppressWarnings("unchecked")
     public static String getRowFilter(Map<String, Object> data) {
 
-        Map<String, ConcurrentHashMap<String, Object>> columns =
+        final Map<String, Map<String, Object>> columns =
                 (Map)((LinkedHashMap)data.get("columns")).clone();
-        String filterColumn = (String)data.get("filterColumn");
-        String value = (String)data.get("value");
-        int count = (int)data.get("filterCount");
-        int cellDrill = (int)data.get("cellDrill");
+        final String filterColumn = (String)data.get("filterColumn");
+        final String value = (String)data.get("value");
+        final int count = (int)data.get("filterCount");
+        final int cellDrill = (int)data.get("cellDrill");
 
-        Map<String, Object> column = (ConcurrentHashMap)columns.get(filterColumn);
+        final Map<String, Object> column = (Map)columns.get(filterColumn);
 
         String escaped;
 
@@ -98,11 +98,11 @@ public abstract class Common {
 
         } else {
 
-            String valueFunction = (String)column.get("valueFunction");
+            final String valueFunction = (String)column.get("valueFunction");
 
             try {
 
-                Method method = Class.forName("test_java.common.Util")
+                final Method method = Class.forName("test_java.common.Util")
                         .getDeclaredMethod(valueFunction, String.class);
 
                 escaped = (String)method.invoke(null, value);
@@ -112,10 +112,10 @@ public abstract class Common {
             }
         }
 
-        String type = cellDrill > 0 && ((String[])column.get("cellDrill")).length > 0 ?
+        final String type = cellDrill > 0 && ((String[])column.get("cellDrill")).length > 0 ?
                 "cellDrill" : "filter";
 
-        String[] filters = (String[])column.get(type);
+        final String[] filters = (String[])column.get(type);
 
         return filters[count].replace("{{value}}", escaped);
     }

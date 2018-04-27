@@ -1,7 +1,8 @@
 package test_java.tiles.common.Web;
 
 import test_java.tiles.common.*;
-import java.util.concurrent.ConcurrentHashMap;;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class CommonTopWebUserAgents extends Common {
@@ -17,10 +18,10 @@ public class CommonTopWebUserAgents extends Common {
     //**************************************************************************
 
     @Override
-    public LinkedHashMap<String, ConcurrentHashMap<String, Object>> getFilterColumns() {
+    public LinkedHashMap<String, Map<String, Object>> getFilterColumns() {
 
-        return new LinkedHashMap<String, ConcurrentHashMap<String, Object>>() {{
-            put("User-Agent", new ConcurrentHashMap<String, Object>() {{
+        return new LinkedHashMap<String, Map<String, Object>>() {{
+            put("User-Agent", new HashMap<String, Object>() {{
                 put("order", 1);
                 put("filter", new String[] {
                     "useragent {{value}}",

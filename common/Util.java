@@ -55,6 +55,7 @@ public class Util {
         } else {
             // do not use parallel so that lines are output in the order they were fetched
             lines.stream()
+                    .filter(split -> split != null) // split sometimes a null (I guess it is because of running parallel threads)
                     .forEach(split -> {
 
                         final String line = String.join(splitChar, split);

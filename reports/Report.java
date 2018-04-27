@@ -15,8 +15,8 @@ import test_java.common.Util;
 
 public class Report implements Cloneable {
 
-    private final String beginTime = "14:35:00 04/13/2018";
-    private final String endTime = "14:35:00.1 04/13/2018";
+    private final String beginTime = "11:26:00 04/27/2018";
+    private final String endTime = "11:26:00.5 04/27/2018";
     private final String iface = "em1";
     private final int maxDrillLevel = 1;
 

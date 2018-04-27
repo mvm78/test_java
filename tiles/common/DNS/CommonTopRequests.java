@@ -1,6 +1,7 @@
 package test_java.tiles.common.DNS;
 
-import java.util.concurrent.ConcurrentHashMap;;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import test_java.tiles.common.*;
@@ -18,17 +19,17 @@ public class CommonTopRequests extends Common {
     //**************************************************************************
 
     @Override
-    public LinkedHashMap<String, ConcurrentHashMap<String, Object>> getFilterColumns() {
+    public LinkedHashMap<String, Map<String, Object>> getFilterColumns() {
 
-        return new LinkedHashMap<String, ConcurrentHashMap<String, Object>>() {{
-            put("DNS Type", new ConcurrentHashMap<String, Object>() {{
+        return new LinkedHashMap<String, Map<String, Object>>() {{
+            put("DNS Type", new HashMap<String, Object>() {{
                 put("order", 1);
                 put("filter", new String[] {
                     "dns.type \"{{value}}\"",
                 });
                 put("cellDrill", new String[] {});
             }});
-            put("Domain Name", new ConcurrentHashMap<String, Object>() {{
+            put("Domain Name", new HashMap<String, Object>() {{
                 put("order", 2);
                 put("filter", new String[] {
                     "dns.name \"{{value}}\"",
@@ -36,7 +37,7 @@ public class CommonTopRequests extends Common {
                 put("cellDrill", new String[] {});
                 put("compareLeft", true);
             }});
-            put("Resolved IP", new ConcurrentHashMap<String, Object>() {{
+            put("Resolved IP", new HashMap<String, Object>() {{
                 put("order", 3);
                 put("filter", new String[] {
                     "dns.addr \"{{value}}\"",
@@ -44,20 +45,20 @@ public class CommonTopRequests extends Common {
                 put("cellDrill", new String[] {});
                 put("equalList", new String[] {"NA", "0.0.0.0", "::"});
             }});
-            put("DNS Response Code", new ConcurrentHashMap<String, Object>() {{
+            put("DNS Response Code", new HashMap<String, Object>() {{
                 put("order", 4);
                 put("filter", new String[] {
                     "dns.rcode \"{{value}}\"",
                 });
                 put("cellDrill", new String[] {});
             }});
-            put("Destination", new ConcurrentHashMap<String, Object>() {{
+            put("Destination", new HashMap<String, Object>() {{
                 put("order", 5);
                 put("filter", new String[] {
                     "host \"{{value}}\"",
                 });
             }});
-            put("DNS Response Data", new ConcurrentHashMap<String, Object>() {{
+            put("DNS Response Data", new HashMap<String, Object>() {{
                 put("order", 6);
                 put("filter", new String[] {
                     "dns.rdata \"{{value}}\"",

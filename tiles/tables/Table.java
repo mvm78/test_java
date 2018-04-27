@@ -1,7 +1,8 @@
 package test_java.tiles.tables;
 
-import java.util.concurrent.ConcurrentHashMap;;
+import java.util.Map;
 import java.util.LinkedHashMap;
+import java.util.stream.IntStream;
 
 import test_java.tiles.Tile;
 import test_java.tiles.common.Common;
@@ -36,16 +37,15 @@ public abstract class Table extends Tile {
         final String[] instanceFields = common.getFields().clone();
         final String commonByFields = commonBy.getFields();
         final String[] instanceFilters = common.getFilters();
-        final LinkedHashMap<String, ConcurrentHashMap<String, Object>> instanceFilterColumns =
+        final LinkedHashMap<String, Map<String, Object>> instanceFilterColumns =
                 common.getFilterColumns();
-        final LinkedHashMap<String, ConcurrentHashMap<String, Object>> instanceColumns =
+        final LinkedHashMap<String, Map<String, Object>> instanceColumns =
                 commonBy.appendCompareColumns(instanceFilterColumns, this.getColumnIncrement());
 
         this.setFields(instanceFields);
 
-        for (int count=0; count<this.getFields().length; count++) {
-            this.setField(count, this.getField(count) + " " + commonByFields);
-        }
+        IntStream.range(0, this.getFields().length).parallel()
+                .forEach(count -> this.setField(count, this.getField(count) + " " + commonByFields));
 
         this.setFilters(instanceFilters);
         this.setFilterColumns(instanceFilterColumns);
